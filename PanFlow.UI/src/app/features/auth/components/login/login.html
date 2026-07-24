@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="img">
+    <img class="think" src="Images/lamb.png" alt="Lamb" />
+    <img class="normal" src="Images/normal.png" alt="Normal" />
+  </div>
+
+  <form class="form" [formGroup]="loginService.loginForm" (ngSubmit)="loginService.onSubmit(cdr)">
+    <fieldset>
+      <legend class="title">panflow</legend>
+
+      @if (loginService.serverError) {
+        <div class="serverError">
+          {{ loginService.serverError }}
+        </div>
+      }
+
+      <app-auth-input controlName="email" label="email" type="email"></app-auth-input>
+
+      <app-password-input 
+        label="password" 
+        [control]="passwordControl">
+      </app-password-input>
+
+      <div class="submit">
+        <button type="submit" [class.disable]="loginService.isLoading"
+          [disabled]="loginService.isLoading || loginService.loginForm.invalid">
+          {{ loginService.isLoading ? 'loading...' : 'login' }}
+        </button>
+      </div>
+
+      <div class="login">
+        <p>don't have an account? <a routerLink="/register">sign up</a></p>
+      </div>
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+@if(aspectService.mode() === 'view'){
+<app-view-mode></app-view-mode>
+}
+@else if (aspectService.mode() === 'create')
+{
+  <app-create-mode></app-create-mode>
+}
+@else if (aspectService.mode() === 'edit')
+{
+  <app-edit-mode></app-edit-mode>
+}
+@else if (aspectService.mode() === 'list') {
+  <app-list-mode></app-list-mode>
+}

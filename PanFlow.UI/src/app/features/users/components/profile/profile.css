@@ -1,0 +1,310 @@
+button {
+  font-family: 'Caveat', 'Kalam', cursive;
+}
+
+/* ───────── Overlay ───────── */
+.container {
+  min-height: 100dvh;
+  width: 100vw;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* ───────── Card ───────── */
+.card {
+  width: min(100%, 760px);
+  padding: clamp(20px, 2.6vw, 32px);
+  background: var(--clr-bg);
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 32px var(--clr-shadow);
+  color: var(--clr-text-body);
+}
+
+/* ───────── Header ───────── */
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--clr-primary);
+}
+.title h2 {
+  margin: 0;
+  color: var(--clr-primary-dark);
+}
+
+.exit {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--clr-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.exit:hover {
+  background-color: var(--clr-bg-page);
+  color: var(--clr-error);
+  transform: scale(1.05);
+}
+
+.divider {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid var(--clr-bg-page);
+}
+
+/* ───────── Form Layout (GRID) ───────── */
+.profileForm {
+  display: grid;
+  gap: 16px;
+}
+
+.profileRow {
+  position: relative;
+  /* 🌟 overflow: visible مهمة جداً هنا عشان الـ Autocomplete dropdown ميتغطاش */
+  overflow: visible;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: var(--clr-bg-page);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* التفاعل الجمالي على الشمال (Line Indicator) */
+.profileRow::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 12px;
+  background: linear-gradient(180deg, var(--clr-primary), var(--clr-primary-light));
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  border-radius: 4px 0 0 4px;
+}
+.profileRow:hover,
+.profileRow:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px var(--clr-shadow);
+}
+.profileRow:hover::before,
+.profileRow:focus-within::before {
+  transform: scaleY(1);
+}
+
+/* ───────── Labels & Icons ───────── */
+.fieldLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fieldIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--clr-primary-glow);
+  color: var(--clr-primary);
+}
+.fieldLabel p {
+  margin: 0;
+  font-weight: bold;
+  color: var(--clr-text-body);
+}
+
+/* ───────── Values ───────── */
+.fieldValue {
+  overflow: visible;
+} /* عشان الـ dropdowns */
+.fieldValue p {
+  margin: 0;
+  font-weight: 500;
+  color: var(--clr-text-body);
+  text-transform: none;
+}
+.maskedValue {
+  letter-spacing: 3px;
+  font-size: 1.2rem;
+}
+.passwordStack {
+  display: grid;
+  gap: 12px;
+}
+
+/* ───────── Actions (Buttons) ───────── */
+.fieldActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.fieldActions button {
+  min-width: 90px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Primary Button (Save) */
+.fieldActions .primary {
+  background: var(--clr-primary);
+  color: white;
+  border: none;
+}
+.fieldActions .primary:hover:not([disabled]) {
+  background: var(--clr-primary-dark);
+  box-shadow: 0 4px 12px var(--clr-primary-glow);
+  transform: translateY(-1px);
+}
+.fieldActions .primary[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ghost Button (Change / Cancel) */
+.fieldActions .ghost {
+  background: transparent;
+  color: var(--clr-primary);
+  border: 2px solid var(--clr-primary);
+}
+.fieldActions .ghost:hover {
+  background: var(--clr-primary);
+  color: white;
+}
+
+/* ───────── Danger Zone ───────── */
+.deleteBox {
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--clr-bg-page);
+}
+.dangerLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--clr-error);
+}
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--clr-error);
+  border: 2px solid var(--clr-error);
+  border-radius: var(--radius-pill);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.deleteBtn:hover {
+  background: var(--clr-error);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(176, 0, 32, 0.2);
+}
+
+/* ───────── Errors ───────── */
+.serverError,
+.passwordError {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--clr-error);
+  background-color: rgba(176, 0, 32, 0.1);
+  border: 1px solid rgba(176, 0, 32, 0.2);
+}
+
+/* ───────── Responsive ───────── */
+@media (max-width: 768px) {
+  .profileRow {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+  .fieldActions {
+    justify-content: flex-start;
+  }
+}
+/* ───────── Profile Loader Styles ───────── */
+.profile-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  animation: fadeInLoader 0.3s ease-in-out;
+}
+
+/* شكل الدائرة اللي بتلف */
+.profile-loader .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1); /* دايرة خلفية خفيفة */
+  border-top-color: #3b82f6; /* لون الـ Accent الأساسي بتاعك (أو اللون الأزرق) */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* النص اللي تحت الـ Spinner */
+.profile-loader p {
+  color: var(--text-secondary, #94a3b8); /* بيقرأ من الـ Variables بتاعتك لو موجودة */
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ───────── Animations ───────── */
+
+/* حركة اللف والدوران */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* حركة ظهور الـ Loader بنعومة */
+@keyframes fadeInLoader {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,93 @@
+/* ───────── Overlay ───────── */
+.container {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* ───────── Card ───────── */
+.card {
+  width: min(100%, 700px);
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 12px 40px var(--clr-shadow);
+  color: var(--clr-text-body);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ───────── Header ───────── */
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--clr-primary);
+}
+
+.title h2 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--clr-primary-dark);
+}
+
+/* ───────── Close Button ───────── */
+.exit {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--clr-border);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.exit:hover {
+  background: var(--clr-bg-page);
+  color: var(--clr-error);
+  transform: scale(1.08);
+}
+
+.exit:active {
+  transform: scale(0.96);
+}
+
+/* ───────── Habit Info ───────── */
+.habitInfo {
+  display: flex;
+  justify-content: center;
+}
+
+.habitInfo p {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--clr-text-body);
+}

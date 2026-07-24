@@ -1,0 +1,65 @@
+.input-box {
+  position: relative;
+  margin-bottom: clamp(10px, 2.5vh, 25px);
+}
+
+input {
+  display: block;
+  width: 100%;
+  text-transform: none;
+  height: clamp(40px, 7vh, 60px);
+  background-color: var(--clr-bg);
+  border: 2px solid var(--clr-border);
+  border-radius: var(--radius-pill);
+  outline: none;
+  padding: 0 clamp(30px, 6vw, 60px) 0 clamp(15px, 3vw, 35px);
+  font-size: clamp(13px, 2.2vh, 20px);
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+label {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--clr-label);
+  font-size: clamp(12px, 2.2vh, 20px);
+  border-radius: 10px;
+  background-color: var(--clr-bg);
+  padding: 0 5px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+input:hover {
+  border-color: var(--clr-primary-light);
+  background-color: var(--clr-primary-subtle);
+}
+
+input:focus {
+  border: 2px solid var(--clr-primary);
+  box-shadow: 0 0 0 4px var(--clr-primary-glow);
+  background-color: var(--clr-bg);
+}
+
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  top: 0;
+  color: var(--clr-primary);
+  font-size: clamp(10px, 1.6vh, 14px);
+  font-weight: bold;
+}
+
+.Error {
+  color: var(--clr-error);
+  font-size: clamp(10px, 1.5vh, 14px);
+  margin-top: -6px;
+  margin-bottom: 10px;
+  padding-left: 18px;
+  line-height: 1.2;
+}
+
+.Error p {
+  margin-top: 2px;
+}

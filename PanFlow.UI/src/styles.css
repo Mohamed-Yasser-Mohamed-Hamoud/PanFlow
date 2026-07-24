@@ -1,0 +1,73 @@
+/* ── Imports ─────────────────────────── */
+@import 'animate.css/animate.min.css';
+
+:root {
+  /* ── Colors ──────────────────────────── */
+  --clr-primary: #cc8500;
+  --clr-primary-dark: #a86b00;
+  --clr-primary-light: #e09a1a;
+  --clr-primary-glow: rgba(204, 133, 0, 0.15);
+  --clr-error: #B00020;
+  --clr-bg: #ffffff;
+  --clr-bg-page: #dadada;
+  --clr-bg-page-end: #e2e2e2;
+  --clr-border: #a6a5a5;
+  --clr-text-body: #3f3f3f;
+  --clr-shadow: rgba(0, 0, 0, 0.1);
+
+  /* ── Radii ───────────────────────────── */
+  --radius-pill: 70px;
+  --radius-card: 15px;
+  --radius-form-mobile: 20px;
+  --radius-form-desktop: 25px;
+
+  /* ── Sidebar & Layout ────────────────── */
+  --sidebar-w: 260px;
+  --sidebar-w-collapsed: 70px;
+  --sidebar-w-mobile: 75px;
+
+  /* ── Card & Content ──────────────────── */
+  --card-max-w: 520px;
+  --card-h: clamp(420px, 82vh, 720px);
+  --card-header-h: clamp(54px, 7vh, 65px);
+  --card-padding-x: 20px;
+
+  /* ── Font sizes ──────────────────────── */
+  --fs-date: clamp(1rem, 1.5vw + 0.3rem, 1.2rem);
+  --fs-day: clamp(1.1rem, 1.5vw + 0.3rem, 1.4rem);
+  --fs-btn: clamp(0.9rem, 1vw + 0.3rem, 1rem);
+
+  /* ── Shadow additions ── */
+  --shadow-soft: 0px -5px 30px rgba(0, 0, 0, 0.1);
+  --shadow-hard: -5px 0px 40px var(--clr-shadow);
+
+  /* ── Form Radii ── */
+  --radius-form-mobile: 20px;
+  --radius-form-desktop: 25px;
+}
+
+/* ── Global Resets ───────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-transform: capitalize;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Caveat', 'Kalam', cursive ,'Playpen Sans Arabic', sans-serif;
+  background-color: var(--clr-bg-page);
+}
+
+/* ── Animation Helpers ───────────────── */
+.my-popup {
+  --animate-duration: 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

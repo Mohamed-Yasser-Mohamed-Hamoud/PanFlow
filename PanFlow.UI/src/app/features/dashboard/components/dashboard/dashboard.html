@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-date">
+    <button class="date-arrow" aria-label="Previous day" (click)="dashboardService.previouseDay()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M13 9a1 1 0 0 1-1-1V4.707a.707.707 0 0 0-1.207-.5l-6.94 6.94a1.207 1.207 0 0 0 0 1.707l6.94 6.94a.707.707 0 0 0 1.207-.5V16a1 1 0 0 1 1-1h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z"
+        />
+        <path d="M20 9v6" />
+      </svg>
+    </button>
+
+    <p>{{ dashboardService.today }}</p>
+
+    <button class="date-arrow" aria-label="Next day" (click)="dashboardService.nextDay()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M11 9a1 1 0 0 0 1-1V4.707a.707.707 0 0 1 1.207-.5l6.94 6.94a1.207 1.207 0 0 1 0 1.707l-6.94 6.94a.707.707 0 0 1-1.207-.5V16a1 1 0 0 0-1-1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"
+        />
+        <path d="M4 9v6" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="card-title">
+    <button class="add-task" (click)="dashboardService.popUp()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M8 12h8" />
+        <path d="M12 8v8" />
+      </svg>
+      <span class="add-task__label">add task</span>
+    </button>
+
+    <p>{{ dashboardService.dayName }}</p>
+
+    <span class="percent-ring">
+      <span class="percent-num">0%</span>
+    </span>
+  </div>
+
+  <hr class="card-divider" />
+
+  <div class="card-body"></div>
+</div>

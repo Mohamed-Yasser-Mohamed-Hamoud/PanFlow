@@ -1,0 +1,138 @@
+<div class="container">
+  @if (aspectService.isLoading()) {
+    <div class="aspects-loader">
+      <div class="spinner"></div>
+      <p>Loading aspects information...</p>
+    </div>
+  } @else if (aspectService.aspects().length === 0) {
+    <div class="empty-state">
+      <h1>There are no aspects</h1>
+      <p>Create your first aspect to get started.</p>
+    </div>
+
+    <div class="addAspect">
+      <button (click)="aspectService.openCreateMode()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-circle-plus-icon lucide-circle-plus"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M8 12h8" />
+          <path d="M12 8v8" />
+        </svg>
+
+        <span>Add Aspect</span>
+      </button>
+    </div>
+  } @else {
+    <main class="cards">
+      @for (aspect of aspectService.aspects(); track aspect.aspectId) {
+        <div class="card" [style.--clr-card-color]="aspect.aspectColor">
+          <div class="title">
+            <p>{{ aspect.aspectName }}</p>
+          </div>
+
+          <div class="buttons">
+            <button
+              class="delete-btn"
+              (click)="aspectService.delete({ aspectId: aspect.aspectId })"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-trash2-icon lucide-trash-2"
+              >
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                <path d="M3 6h18" />
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              </svg>
+            </button>
+
+            <button class="edit-btn" (click)="aspectService.openEditMode(aspect)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-pencil-icon lucide-pencil"
+              >
+                <path
+                  d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                />
+                <path d="m15 5 4 4" />
+              </svg>
+            </button>
+
+            <button
+              class="show-btn"
+              (click)="aspectService.openViewMode({ aspectId: aspect.aspectId })"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-eye-icon lucide-eye"
+              >
+                <path
+                  d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      }
+    </main>
+
+    <div class="addAspect">
+      <button (click)="aspectService.openCreateMode()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-circle-plus-icon lucide-circle-plus"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M8 12h8" />
+          <path d="M12 8v8" />
+        </svg>
+
+        <span>Add Aspect</span>
+      </button>
+    </div>
+  }
+</div>

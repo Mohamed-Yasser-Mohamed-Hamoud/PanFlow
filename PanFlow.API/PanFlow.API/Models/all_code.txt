@@ -1,0 +1,108 @@
+===== D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\Models\Aspect.cs =====
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PanFlow.API.Models
+{
+    public class Aspect
+    {
+        //Attributes
+        [Key]
+        public string AspectId { get; set; } = Guid.NewGuid().ToString();
+        [Required]
+        public string AspectName { get; set; }
+        public string AspectColor { get; set; } ="#FFFFFF" ;
+        public bool IsDeleted { get; set; } = false;
+        [Required]
+        public string UserId { get; set; }
+
+
+
+        // Navigation properties
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+        public ICollection<Habit> Habits { get; set; }
+
+    }
+
+}
+
+===== D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\Models\Day.cs =====
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PanFlow.API.Models
+{
+    public class Day
+    {
+        [Key]
+        public string DayId { get; set; } = Guid.NewGuid().ToString();
+
+        public DateOnly DayDate { get; set; } = DateOnly.FromDateTime(DateTime.Now) ;
+
+
+
+
+        //Navigation properties
+        public ICollection<DayHabit> DayHabits { get; set; }
+
+    }
+}
+
+===== D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\Models\DayHabit.cs =====
+using Microsoft.EntityFrameworkCore;
+
+namespace PanFlow.API.Models
+{
+    [PrimaryKey(nameof(HabitId) , nameof(DayId))]
+    public class DayHabit
+    {
+        public string HabitId { get; set; } 
+        public string DayId { get; set; } 
+        public bool IsChecked { get; set; } = false;
+
+        //Navigation properties
+        public Day Day { get; set; }
+        public Habit Habit { get; set; }
+
+    }
+}
+
+===== D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\Models\Habit.cs =====
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PanFlow.API.Models
+{
+    public class Habit
+    {
+        //attributes : HabitId, HabitName, IsDeleted, AspectId
+
+        [Key]
+        public string HabitId { get; set; } = Guid.NewGuid().ToString();
+        [Required]
+        public required string HabitName { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        [Required]
+        public required string AspectId { get; set; }
+
+
+
+        //Navigation properties
+        [ForeignKey("AspectId")]
+        public Aspect? Aspect { get; set; }
+        public ICollection<DayHabit>? DayHabits { get; set; }
+    }
+}
+
+===== D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\Models\User.cs =====
+using Microsoft.AspNetCore.Identity;
+
+namespace PanFlow.API.Models
+{
+    public class User : IdentityUser
+    {
+        public ICollection<Aspect> Aspects { get; set; }
+    }
+}
+

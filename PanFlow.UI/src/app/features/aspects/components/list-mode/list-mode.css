@@ -1,0 +1,249 @@
+.container {
+  height: 100%;
+  position: relative;
+}
+
+.empty-state {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.empty-state h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.empty-state p {
+  color: #94a3b8;
+  margin: 0;
+}
+.addAspect {
+  position: absolute;
+  bottom: 20px;
+
+  /* السحر هنا للتوسيط */
+  left: 50%;
+  transform: translateX(-50%);
+
+  max-width: 150px;
+  width: 100%;
+}
+.addAspect button {
+  background-color: var(--clr-bg);
+  border: 2px solid var(--clr-border);
+  padding: 5px;
+  border-radius: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+.addAspect button:hover {
+  color: var(--clr-bg);
+  background-color: var(--clr-primary);
+  border-color: var(--clr-primary);
+  transform: translateY(-5px);
+}
+
+.addAspect button span {
+  font-family: 'Caveat', 'Kalam', cursive;
+  font-weight: bold;
+  word-spacing: 2px;
+  letter-spacing: 2px;
+}
+
+.cards {
+  overflow: auto;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap; /* السحر اللي هيخليهم ينزلوا سطر جديد تلقائي */
+  padding: 10px 10px 60px 10px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--clr-primary-light) 20%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
+}
+
+.card {
+  /* 1. الألوان والخلفية (ستايل نظيف ومريح) */
+  background-color: color-mix(in srgb, var(--clr-card-color) 10%, transparent);
+  border: 2px solid color-mix(in srgb, var(--clr-card-color) 40%, transparent);
+  border-radius: 16px; /* حواف دائرية ناعمة وشيك */
+
+  /* 2. تأثير الـ Shadow (بيخلي الكارد يطفو على الشاشة) */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+  margin: 10px;
+  /* 3. الأبعاد والـ Flexbox */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 220px; /* كبرناه سنة عشان ياخد راحته */
+  height: 100%;
+  max-height: 190px;
+  padding: 24px 16px; /* مساحات داخلية مريحة */
+  box-sizing: border-box;
+
+  /* 4. حركة ناعمة للكارد كله عند التفاعل */
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.card .title {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* تأثير صايع لما تقف بالماوس على الكارد نفسه */
+.card:hover {
+  transform: translateY(-6px); /* الكارد يرتفع لفوق سنة */
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* حاوية الزراير جوه الكارد */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto; /* بيركن الزراير تحت خالص */
+  gap: 8px;
+}
+
+/* التنسيق الجديد للزراير (ستايل الـ Buttons المودرن) */
+.buttons button {
+  border-radius: 8px; /* حواف متناسقة مع الكارد */
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* زرار التعديل / الأساسي (مثلاً) */
+.buttons button.edit-btn {
+  background-color: #f1f5f9;
+  color: #0a4be1;
+}
+.buttons button.edit-btn:hover {
+  background-color: #e2e8f0;
+}
+/* زرار المسح (هادي ومش فاقع، بيحمر بس لما تقف عليه) */
+.buttons button.delete-btn {
+  background-color: #fff1f2;
+  color: #df1c1c;
+}
+.buttons button.delete-btn:hover {
+  background-color: #ffe4e6;
+  transform: scale(1.03); /* تكبير خفيف جداً */
+}
+
+.buttons button.show-btn {
+  background-color: #f3f3f3;
+}
+.buttons button.show-btn:hover {
+  background-color: #e1e0e0;
+}
+
+/* ───────── Profile Loader Styles ───────── */
+.aspects-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  animation: fadeInLoader 0.3s ease-in-out;
+}
+
+/* شكل الدائرة اللي بتلف */
+.aspects-loader .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1); /* دايرة خلفية خفيفة */
+  border-top-color: #3b82f6; /* لون الـ Accent الأساسي بتاعك (أو اللون الأزرق) */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* النص اللي تحت الـ Spinner */
+.aspects-loader p {
+  color: var(--text-secondary, #94a3b8); /* بيقرأ من الـ Variables بتاعتك لو موجودة */
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ───────── Animations ───────── */
+
+/* حركة اللف والدوران */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* حركة ظهور الـ Loader بنعومة */
+@keyframes fadeInLoader {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+.deletedAspects {
+  position: absolute;
+  bottom: 10px;        /* نفس الارتفاع من تحت */
+  left: 15px;          /* في الجهه المقابلة بالظبط */
+  width: 48px;         /* نفس الحجم */
+  height: 48px;        /* نفس الحجم */
+  background-color: #fff1f2; /* لون الخلفية الهادي اللي اخترته */
+  color: var(--clr-error);   /* لون الأيقونة أو التكست الأحمر */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* نفس سرعة الحركة */
+  z-index: 1;
+}
+
+
+/* تأثير الـ Hover للمراية (الأحمر) */
+.deletedAspects:hover {
+  background-color: #ffe4e6; /* بيفتح سنة عند الهوفر */
+  box-shadow: 0 4px 15px rgba(223, 28, 28, 0.2); /* شادو أحمر خفيف يتناسب مع لونه */
+  transform: scale(1.05);    /* نفس نسبة التكبير بالظبط */
+}

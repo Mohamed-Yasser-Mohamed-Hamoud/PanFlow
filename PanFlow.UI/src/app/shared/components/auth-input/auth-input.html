@@ -1,0 +1,20 @@
+<div class="input-box">
+  <input 
+    [type]="type" 
+    [id]="controlName" 
+    placeholder=" " 
+    [formControlName]="controlName" />
+  <label [for]="controlName">{{ label }}</label>
+</div>
+
+<div class="Error" *ngIf="parentForm?.get(controlName)?.touched">
+
+  <p *ngIf="parentForm?.get(controlName)?.hasError('required')">
+    *{{ label }} is required
+  </p>
+
+  <p *ngIf="parentForm?.get(controlName)?.hasError('email')">
+    *should contain &#64;...
+  </p>
+  
+</div>

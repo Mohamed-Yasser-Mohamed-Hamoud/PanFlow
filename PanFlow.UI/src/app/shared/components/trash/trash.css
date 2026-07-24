@@ -1,0 +1,150 @@
+button {
+  font-family: 'Caveat', 'Kalam', cursive;
+}
+
+/* ───────── Overlay ───────── */
+.container {
+  min-height: 100dvh;
+  width: 100vw;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* ───────── Card ───────── */
+.card {
+  width: min(100%, 760px);
+  min-height: 70%;
+  padding: clamp(20px, 2.6vw, 32px);
+  background: var(--clr-bg);
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 32px var(--clr-shadow);
+  color: var(--clr-text-body);
+}
+
+/* ───────── Header ───────── */
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.title h2 {
+  margin: 0;
+  color: var(--clr-error);
+}
+
+.exit {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--clr-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.exit:hover {
+  background-color: var(--clr-bg-page);
+  color: var(--clr-error);
+  transform: scale(1.05);
+}
+
+.divider {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid var(--clr-bg-page);
+}
+
+
+.segmented-control {
+  display:flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  width: 100%;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--clr-bg-page);
+  border-radius: 14px;
+}
+
+.segment {
+  border: none;
+  background: transparent;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.segment.active {
+  background-color: var(--clr-bg);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.trash-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.trash-table th,
+.trash-table td {
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.trash-table thead {
+  border-bottom: 1px solid var(--clr-bg-page);
+}
+
+.trash-table tbody tr {
+  border-bottom: 1px solid var(--clr-bg-page);
+}
+
+.color-preview {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--clr-bg-page);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.2s ease;
+}
+
+.restore-btn:hover {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}

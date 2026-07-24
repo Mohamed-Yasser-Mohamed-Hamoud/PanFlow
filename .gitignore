@@ -1,0 +1,17 @@
+# Angular / Node
+PanFlow.UI/node_modules/
+PanFlow.UI/dist/
+PanFlow.UI/.angular/
+
+# .NET
+PanFlow.API/bin/
+PanFlow.API/obj/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Environment files
+.env

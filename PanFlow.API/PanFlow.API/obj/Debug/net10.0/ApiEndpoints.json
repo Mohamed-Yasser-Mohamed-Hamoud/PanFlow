@@ -1,0 +1,334 @@
+[
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "Create",
+    "RelativePath": "api/Aspects/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Aspects.DTOs.Create.CreateAspectRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "Delete",
+    "RelativePath": "api/Aspects/delete",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Aspects.DTOs.Delete.DeleteAspectRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "DeleteForEver",
+    "RelativePath": "api/Aspects/delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Aspects.DTOs.Delete.DeleteAspectRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "GetById",
+    "RelativePath": "api/Aspects/get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AspectId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "GetAll",
+    "RelativePath": "api/Aspects/get-all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "GetDeleted",
+    "RelativePath": "api/Aspects/get-deleted",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "Restore",
+    "RelativePath": "api/Aspects/restore",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Aspects.DTOs.Restore.RestoreAspectRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
+    "Method": "Update",
+    "RelativePath": "api/Aspects/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Aspects.DTOs.Update.UpdateAspectRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Auth.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Auth.DTOs.Login.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Auth.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/Auth/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Auth.DTOs.Register.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "aspectHabit",
+    "RelativePath": "api/Habits/aspectHabit",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AspectId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "create",
+    "RelativePath": "api/Habits/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Habits.DTOs.Create.CreateHabitRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "deleteForever",
+    "RelativePath": "api/Habits/delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Habits.DTOs.Delete.DeleteHabitRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "delete",
+    "RelativePath": "api/Habits/delete",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Habits.DTOs.Delete.DeleteHabitRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "deletedHabit",
+    "RelativePath": "api/Habits/deletedHabit",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "read",
+    "RelativePath": "api/Habits/read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "HabitId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "readAll",
+    "RelativePath": "api/Habits/readAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "restore",
+    "RelativePath": "api/Habits/restore",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Habits.DTOs.Restore.RestoreHabitRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
+    "Method": "update",
+    "RelativePath": "api/Habits/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Habits.DTOs.Update.UpdateHabitRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Users.Controllers.UsersController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Users/profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Users.Controllers.UsersController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Users/profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Users.DTOs.Update.UpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Users.Controllers.UsersController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Users/profile",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Users.Controllers.UsersController",
+    "Method": "UpdatePassword",
+    "RelativePath": "api/Users/profile/update-password",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Users.DTOs.Update.UpdatePasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
