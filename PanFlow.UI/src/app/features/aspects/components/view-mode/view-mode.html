@@ -32,22 +32,35 @@
 
     <hr />
     <div class="aspectInfo">
-      <p class="aspectColor" [style.background-color]="aspectService.selectedAspect()?.aspectColor" ></p>
-      <p>{{aspectService.selectedAspect()?.aspectName}}</p>
+      <p
+        class="aspectColor"
+        [style.background-color]="aspectService.selectedAspect()?.aspectColor"
+      ></p>
+      <p>{{ aspectService.selectedAspect()?.aspectName }}</p>
     </div>
     <hr />
 
     <div class="aspectHabit">
-
       <div class="titleText">
         <p class="eyebrow">aspect</p>
         <h3>habits</h3>
       </div>
+    </div>
 
-      <div class="addBTN">
-        <button class="addHabitBTN" (click)="aspectService.Popup()">add habit</button>
-      </div>
+    <div class="habits">
+      @if (aspectService.aspectHabits().length === 0) {
+        <p>No habits for this aspect</p>
+      } @else {
+        @for (habit of aspectService.aspectHabits(); track habit.habitId) {
+          <div class="habitCard">
+            <span class="habitColor" [style.background-color]="habit.habitColor"> </span>
 
+            <p>
+              {{ habit.habitName }}
+            </p>
+          </div>
+        }
+      }
     </div>
   </div>
 </div>

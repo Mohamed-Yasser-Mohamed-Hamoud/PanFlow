@@ -8,21 +8,111 @@
   padding: 24px;
   box-sizing: border-box;
 }
+.habits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
+  margin-top: 20px;
+
+  height: 250px;   /* مهم جدا */
+
+  overflow-y: auto;
+
+  padding-right: 8px;
+}
+
+.habits::-webkit-scrollbar {
+  width: 6px;
+}
+
+.habits::-webkit-scrollbar-thumb {
+  background: var(--clr-primary);
+  border-radius: 10px;
+}
+
+.habits::-webkit-scrollbar-track {
+  background: transparent;
+}
+.habitCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  border: 1px solid #eaeaea;
+
+  transition: 0.25s ease;
+}
+
+
+.habitCard:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+
+.habitColor {
+
+  width: 14px;
+
+  height: 14px;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+
+}
+
+
+.habitCard p {
+
+  margin: 0;
+
+  font-size: 16px;
+
+  font-weight: 500;
+
+  color: #333;
+
+}
+
+
+
+.habits > p {
+
+  text-align: center;
+
+  color: #888;
+
+  padding: 20px;
+
+}
 /* ───────── Card ───────── */
 .card {
   width: min(100%, 700px);
-  min-height: 500px;
+
+  height: 550px;   /* بدل min-height و max-height */
+
   padding: clamp(24px, 3vw, 36px);
+  margin-top: -50px;
   background: var(--clr-bg);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-card);
   box-shadow: 0 12px 40px var(--clr-shadow);
+
   color: var(--clr-text-body);
 
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  overflow: hidden;
 }
 
 /* ───────── Header ───────── */

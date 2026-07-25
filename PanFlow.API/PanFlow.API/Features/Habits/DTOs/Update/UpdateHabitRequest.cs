@@ -9,6 +9,10 @@ namespace PanFlow.API.Features.Habits.DTOs.Update
         [JsonPropertyName("habitId")]
         public required string HabitId { get; set; }
 
+        [Required]
+        [JsonPropertyName("aspectId")]
+        public required string AspectId { get; set; }
+
 
         [Required]
         [JsonPropertyName("habitName")]

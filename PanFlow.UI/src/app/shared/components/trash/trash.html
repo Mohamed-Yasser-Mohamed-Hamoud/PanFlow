@@ -44,10 +44,14 @@
       </button>
     </div>
 
-    @if (trashService.isLoading()) {
+    @if (
+      (trashService.selectedTap === 'aspects' && trashService.isLoading()) ||
+      (trashService.selectedTap === 'habits' && trashService.isLoadingHabit())
+    ) {
       <div class="aspects-loader">
         <div class="spinner"></div>
-        <p>Loading deleted aspects...</p>
+        <p></p>
+        <p>Loading...</p>
       </div>
     } @else if (trashService.selectedTap === 'aspects') {
       <table class="trash-table">
@@ -69,7 +73,12 @@
               </td>
 
               <td class="actions">
-                <button type="button" class="action-btn restore-btn" (click)="trashService.restoreAspect(aspect.aspectId)" aria-label="Restore aspect">
+                <button
+                  type="button"
+                  class="action-btn restore-btn"
+                  (click)="trashService.restoreAspect(aspect.aspectId)"
+                  aria-label="Restore aspect"
+                >
                   <!-- Archive Restore Icon -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,8 +99,85 @@
                   </svg>
                 </button>
 
-                <button type="button" class="action-btn delete-btn" (click)="trashService.deleteAspectPermanently(aspect.aspectId)" aria-label="Delete permanently">
+                <button
+                  type="button"
+                  class="action-btn delete-btn"
+                  (click)="trashService.deleteAspectPermanently(aspect.aspectId)"
+                  aria-label="Delete permanently"
+                >
                   <!-- Trash Icon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                    <path d="M3 6h18" />
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else if (trashService.selectedTap === 'habits') {
+      <table class="trash-table">
+        <thead>
+          <tr>
+            <th>Habit Name</th>
+            <th>Color</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (habit of trashService.deletedHabits(); track habit.habitId) {
+            <tr>
+              <td>{{ habit.habitName }}</td>
+
+              <td>
+                <span class="color-preview" [style.background-color]="habit.habitColor"> </span>
+              </td>
+
+              <td class="actions">
+                <button
+                  type="button"
+                  class="action-btn restore-btn"
+                  (click)="trashService.restoreHabit(habit.habitId)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect width="20" height="5" x="2" y="3" rx="1" />
+                    <path d="M4 8v11a2 2 0 0 0 2 2h2" />
+                    <path d="M20 8v11a2 2 0 0 1-2 2h-2" />
+                    <path d="m9 15 3-3 3 3" />
+                    <path d="M12 12v9" />
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="action-btn delete-btn"
+                  (click)="trashService.deleteHabitPermanently(habit.habitId)"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"

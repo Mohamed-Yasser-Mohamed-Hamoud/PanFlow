@@ -32,17 +32,21 @@ namespace PanFlow.API.Features.Habits.Services
         {
 
             // find habit 
-            var habit = await _context.Habits.FindAsync(request.HabitId);
-
+            var habit = await _context.Habits
+                .Include(h => h.Aspect)
+                .FirstOrDefaultAsync(h => h.HabitId == request.HabitId);
             if (habit == null)
             {
                 return GeneralResponseDto<ReadHabitResponse>.Failure("can't find habit");
             }
 
             // create response 
-            var responseData = new ReadHabitResponse {
+            var responseData = new ReadHabitResponse
+            {
                 HabitName = habit.HabitName,
                 HabitId = habit.HabitId,
+                AspectId = habit.AspectId,
+                HabitColor = habit.Aspect.AspectColor
             };
 
             return GeneralResponseDto<ReadHabitResponse>.Success("find Habit", responseData);
@@ -96,6 +100,9 @@ namespace PanFlow.API.Features.Habits.Services
             return GeneralResponseDto<object>.Success("deleted habit successfully");
         }
 
+
+
+
         public async Task<GeneralResponseDto<object>> DeleteForEver(DeleteHabitRequest request)
         {
             // find habit 
@@ -144,21 +151,30 @@ namespace PanFlow.API.Features.Habits.Services
 
         public async Task<GeneralResponseDto<object>> Update(UpdateHabitRequest request)
         {
-            // find habit 
             var habit = await _context.Habits.FindAsync(request.HabitId);
 
-            if (habit == null) {
+            if (habit == null)
+            {
                 return GeneralResponseDto<object>.Failure("can't find habit");
             }
 
-            if (habit.HabitName == request.HabitName)
+            if (
+                habit.HabitName == request.HabitName &&
+                habit.AspectId == request.AspectId
+            )
             {
                 return GeneralResponseDto<object>.Success("No changes detected");
             }
 
             habit.HabitName = request.HabitName;
+            habit.AspectId = request.AspectId;
 
-            await _context.SaveChangesAsync();
+            var row = await _context.SaveChangesAsync();
+
+            if (row == 0)
+            {
+                return GeneralResponseDto<object>.Failure("Update failed");
+            }
 
             return GeneralResponseDto<object>.Success("Updated successfully");
         }
@@ -175,10 +191,12 @@ namespace PanFlow.API.Features.Habits.Services
             if (user == null) {
                 return GeneralResponseDto<ReadAllHabitResponse>.Failure("User Is Not Esixt");
             }
-            var allHabits = await _context.Habits.Where(h => h.Aspect.UserId == userId && h.IsDeleted == false).Select(habit => new ReadHabitResponse 
+            var allHabits = await _context.Habits.Where(h => h.Aspect.UserId == userId && h.IsDeleted == false).Select(habit => new ReadHabitResponse
             {
                 HabitName = habit.HabitName,
                 HabitId = habit.HabitId,
+                AspectId = habit.AspectId,
+                HabitColor = habit.Aspect.AspectColor
             }).ToListAsync();
             var response = new ReadAllHabitResponse { Habits = allHabits };
 
@@ -190,7 +208,13 @@ namespace PanFlow.API.Features.Habits.Services
         {
             var habits = await _context.Habits
                 .Where(h => h.AspectId == request.AspectId && h.IsDeleted == false)
-                .Select(habits => new ReadHabitResponse { HabitName = habits.HabitName , HabitId = habits.HabitId })
+                .Select(habit => new ReadHabitResponse
+                {
+                    HabitName = habit.HabitName,
+                    HabitId = habit.HabitId,
+                    AspectId = habit.AspectId,
+                    HabitColor = habit.Aspect.AspectColor
+                })
                 .ToListAsync();
             var response = new ReadAllHabitResponse { Habits = habits };
             return GeneralResponseDto<ReadAllHabitResponse>.Success(" successfully ", response);
@@ -216,6 +240,8 @@ namespace PanFlow.API.Features.Habits.Services
             {
                 HabitName = habit.HabitName,
                 HabitId = habit.HabitId,
+                AspectId = habit.AspectId,
+                HabitColor = habit.Aspect.AspectColor
             }).ToListAsync();
             var response = new ReadAllHabitResponse { Habits = allHabits };
 

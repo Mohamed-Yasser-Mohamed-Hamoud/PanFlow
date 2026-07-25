@@ -505,3 +505,4 @@ D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\obj\Debug\net10.0\refint\PanFl
 D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\obj\Debug\net10.0\PanFlow.API.pdb
 D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\obj\Debug\net10.0\PanFlow.API.genruntimeconfig.cache
 D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\obj\Debug\net10.0\ref\PanFlow.API.dll
+D:\System\Desktop\PanFlow\PanFlow.API\PanFlow.API\obj\Debug\net10.0\PanFlow.API.sourcelink.json

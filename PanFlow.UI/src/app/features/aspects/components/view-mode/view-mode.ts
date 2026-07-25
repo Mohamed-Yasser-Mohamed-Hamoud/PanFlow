@@ -1,5 +1,6 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { AspectService } from '../aspects/aspect-service';
+import { HabitService } from '../../../habits/components/habits/habit-service';
 
 @Component({
   selector: 'app-view-mode',
@@ -9,6 +10,7 @@ import { AspectService } from '../aspects/aspect-service';
 })
 export class ViewMode {
   public aspectService = inject(AspectService)
+  habitService = inject(HabitService)
 
    @Output() close = new EventEmitter<void>();
 

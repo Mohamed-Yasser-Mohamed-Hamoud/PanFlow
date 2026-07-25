@@ -17,9 +17,10 @@ export class Trash implements OnInit{
     this.close.emit();
   }
 
-  ngOnInit(): void {
-    this.trashService.loadDeletedAspects();
-  }
+ngOnInit(): void {
+  this.trashService.loadDeletedAspects();
+  this.trashService.loadDeletedHabits();
+}
 
 
 }

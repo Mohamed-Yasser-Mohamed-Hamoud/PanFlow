@@ -730,12 +730,17 @@
       },
       "UpdateHabitRequest": {
         "required": [
+          "aspectId",
           "habitId",
           "habitName"
         ],
         "type": "object",
         "properties": {
           "habitId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "aspectId": {
             "minLength": 1,
             "type": "string"
           },

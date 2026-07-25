@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="card">
+    <div class="title">
+      <div class="titleText">
+        <p class="eyebrow">create</p>
+        <h2>habit</h2>
+      </div>
+      <button
+        type="button"
+        (click)="habitService.openListMode()"
+        class="exit"
+        aria-label="Close profile"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-circle-x-icon lucide-circle-x"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="m15 9-6 6" />
+          <path d="m9 9 6 6" />
+        </svg>
+      </button>
+    </div>
+
+    <form class="form" [formGroup]="habitService.habitForm" (ngSubmit)="habitService.createHabit()">
+      <div class="aspectSelect">
+        <label for="aspectId">aspect</label>
+        <select id="aspectId" formControlName="aspectId">
+          <option value="" disabled>choose an aspect</option>
+          @for (aspect of habitService.aspects(); track aspect.aspectId) {
+            <option [value]="aspect.aspectId">{{ aspect.aspectName }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="habitName">
+        <app-auth-input label="habit name" controlName="habitName"></app-auth-input>
+      </div>
+
+      <div class="submit">
+        <button
+          type="submit"
+          [class.disabled]="habitService.habitForm.invalid || habitService.isLoadingCreate()"
+          [disabled]="habitService.habitForm.invalid || habitService.isLoadingCreate()"
+        >
+          {{ habitService.isLoadingCreate() ? 'loading...' : 'create' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\habits\\controllers\\habitscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\habits\\controllers\\habitscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\habits\\services\\habitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\habits\\services\\habitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\habits\\dtos\\read\\readhabitresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\habits\\dtos\\read\\readhabitresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\habits\\dtos\\update\\updatehabitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\habits\\dtos\\update\\updatehabitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\habits\\dtos\\delete\\deletehabitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\habits\\dtos\\delete\\deletehabitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\habits\\dtos\\create\\createhabitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\habits\\dtos\\create\\createhabitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HabitsController.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\Controllers\\HabitsController.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Habits\\Controllers\\HabitsController.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\Controllers\\HabitsController.cs",
-              "RelativeToolTip": "PanFlow.API\\Features\\Habits\\Controllers\\HabitsController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAzwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-24T07:25:12.178Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "UpdateHabitRequest.cs",
               "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Update\\UpdateHabitRequest.cs",
               "RelativeDocumentMoniker": "PanFlow.API\\Features\\Habits\\DTOs\\Update\\UpdateHabitRequest.cs",
               "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Update\\UpdateHabitRequest.cs",
               "RelativeToolTip": "PanFlow.API\\Features\\Habits\\DTOs\\Update\\UpdateHabitRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-24T07:24:46.886Z",
+              "WhenOpened": "2026-07-25T15:31:25.031Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DeleteHabitRequest.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Delete\\DeleteHabitRequest.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Habits\\DTOs\\Delete\\DeleteHabitRequest.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Delete\\DeleteHabitRequest.cs",
-              "RelativeToolTip": "PanFlow.API\\Features\\Habits\\DTOs\\Delete\\DeleteHabitRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "ReadHabitResponse.cs",
+              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Read\\ReadHabitResponse.cs",
+              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Habits\\DTOs\\Read\\ReadHabitResponse.cs",
+              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Read\\ReadHabitResponse.cs",
+              "RelativeToolTip": "PanFlow.API\\Features\\Habits\\DTOs\\Read\\ReadHabitResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-24T07:23:13.448Z",
+              "WhenOpened": "2026-07-25T15:07:20.948Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CreateHabitRequest.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Create\\CreateHabitRequest.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Habits\\DTOs\\Create\\CreateHabitRequest.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\DTOs\\Create\\CreateHabitRequest.cs",
-              "RelativeToolTip": "PanFlow.API\\Features\\Habits\\DTOs\\Create\\CreateHabitRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "HabitService.cs",
+              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\Services\\HabitService.cs",
+              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Habits\\Services\\HabitService.cs",
+              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Habits\\Services\\HabitService.cs",
+              "RelativeToolTip": "PanFlow.API\\Features\\Habits\\Services\\HabitService.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAowLMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-24T07:22:38.61Z",
+              "WhenOpened": "2026-07-25T14:59:40.646Z",
               "EditorCaption": ""
             }
           ]
