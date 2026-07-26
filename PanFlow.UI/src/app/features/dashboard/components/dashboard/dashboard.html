@@ -41,34 +41,83 @@
     </button>
   </div>
 
-  <div class="card-title">
-    <button class="add-task" (click)="dashboardService.popUp()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <path d="M8 12h8" />
-        <path d="M12 8v8" />
-      </svg>
-      <span class="add-task__label">add task</span>
-    </button>
+  <!-- الجزء ده بس اللي بيتعمله Blur لما اليوم يكون لسه مقفول (مش متعمل) -->
+  <div class="lockable" [class.locked]="dashboardService.isLocked()">
+    <div class="card-title">
+      <button class="add-task" (click)="dashboardService.openAddTaskModal()" [disabled]="dashboardService.isLocked()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M8 12h8" />
+          <path d="M12 8v8" />
+        </svg>
+        <span class="add-task__label">add task</span>
+      </button>
 
-    <p>{{ dashboardService.dayName }}</p>
+      <p>{{ dashboardService.dayName }}</p>
 
-    <span class="percent-ring">
-      <span class="percent-num">0%</span>
-    </span>
+      <span class="percent-ring">
+        <span class="percent-num">{{ dashboardService.currentDay()?.completionPercentage ?? 0 }}%</span>
+      </span>
+    </div>
+
+    <hr class="card-divider" />
+
+    <div class="card-body">
+      @if (dashboardService.isLoadingCard()) {
+        <div class="card-loader">
+          <div class="spinner"></div>
+        </div>
+      } @else if ((dashboardService.currentDay()?.habits?.length ?? 0) === 0) {
+        <div class="empty-hint">
+          <p>مفيش عادات مضافة النهارده لسه. دوس "add task" عشان تضيف.</p>
+        </div>
+      } @else {
+        <ul class="habitsList">
+          @for (habit of dashboardService.currentDay()?.habits; track habit.habitId) {
+            <li class="habitItem" [style.border-left]="'6px solid ' + habit.habitColor">
+              <label class="habitLabel">
+                <input
+                  type="checkbox"
+                  [checked]="habit.isChecked"
+                  (change)="dashboardService.toggleHabit(habit)"
+                />
+                <span [class.done]="habit.isChecked">{{ habit.habitName }}</span>
+              </label>
+            </li>
+          }
+        </ul>
+      }
+    </div>
   </div>
 
-  <hr class="card-divider" />
-
-  <div class="card-body"></div>
+  <!-- زرار الـ Unlock بيظهر بس لما اليوم يكون مقفول، فوق الطبقة المموّهة -->
+  @if (dashboardService.isLocked() && !dashboardService.isLoadingCard()) {
+    <div class="unlock-overlay">
+      <button
+        class="unlock-btn"
+        (click)="dashboardService.unlockDay()"
+        [disabled]="dashboardService.isUnlocking()"
+      >
+        {{ dashboardService.isUnlocking() ? 'جاري الإنشاء...' : 'Unlock this Day' }}
+      </button>
+    </div>
+  }
 </div>
+
+@if (dashboardService.showAddTaskModal()) {
+  <app-add-task-modal
+    [excludeHabitIds]="dashboardService.excludedHabitIds()"
+    (close)="dashboardService.closeAddTaskModal()"
+    (confirm)="dashboardService.confirmAddHabits($event)"
+  ></app-add-task-modal>
+}

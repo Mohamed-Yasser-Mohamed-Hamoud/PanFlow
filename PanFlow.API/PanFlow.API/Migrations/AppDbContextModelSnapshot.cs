@@ -190,7 +190,13 @@ namespace PanFlow.API.Migrations
                     b.Property<DateOnly>("DayDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("DayId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Days");
                 });
@@ -358,6 +364,17 @@ namespace PanFlow.API.Migrations
                         .WithMany("Aspects")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PanFlow.API.Models.Day", b =>
+                {
+                    b.HasOne("PanFlow.API.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

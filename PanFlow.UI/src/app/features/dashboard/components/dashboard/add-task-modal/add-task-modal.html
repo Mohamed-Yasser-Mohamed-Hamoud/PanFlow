@@ -1,0 +1,61 @@
+<div class="modal-backdrop" (click)="onClose()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>ضيف عادة لليوم</h3>
+      <button class="modal-close" (click)="onClose()" aria-label="Close">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="section-label">اختار الجانب</p>
+
+      @if (isLoadingAspects()) {
+        <p class="hint">جاري تحميل الجوانب...</p>
+      } @else if (aspects().length === 0) {
+        <p class="hint">مفيش جوانب لسه. ضيف جانب الأول.</p>
+      } @else {
+        <div class="aspects-row">
+          @for (aspect of aspects(); track aspect.aspectId) {
+            <button
+              class="aspect-chip"
+              [class.active]="selectedAspectId() === aspect.aspectId"
+              [style.border-color]="aspect.aspectColor"
+              (click)="selectAspect(aspect.aspectId)"
+            >
+              {{ aspect.aspectName }}
+            </button>
+          }
+        </div>
+      }
+
+      @if (selectedAspectId()) {
+        <p class="section-label">اختار العادات</p>
+
+        @if (isLoadingHabits()) {
+          <p class="hint">جاري تحميل العادات...</p>
+        } @else if (habits().length === 0) {
+          <p class="hint">مفيش عادات متاحة في الجانب ده (يمكن كلها مضافة بالفعل).</p>
+        } @else {
+          <ul class="habits-list">
+            @for (habit of habits(); track habit.habitId) {
+              <li>
+                <label class="habit-label">
+                  <input
+                    type="checkbox"
+                    [checked]="isSelected(habit.habitId)"
+                    (change)="toggleHabit(habit.habitId)"
+                  />
+                  <span>{{ habit.habitName }}</span>
+                </label>
+              </li>
+            }
+          </ul>
+        }
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="onClose()">إلغاء</button>
+      <button class="btn-primary" (click)="onConfirm()">Add</button>
+    </div>
+  </div>
+</div>

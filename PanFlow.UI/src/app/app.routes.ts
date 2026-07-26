@@ -7,6 +7,7 @@ import { DashboardLayout } from './features/dashboard/components/dashboard-layou
 import { Dashboard } from './features/dashboard/components/dashboard/dashboard';
 import { Aspects } from './features/aspects/components/aspects/aspects';
 import { Habits } from './features/habits/components/habits/habits';
+import { Day } from './features/day/components/day/day';
 
 export const routes: Routes = [
   { path: 'register', component: Register },
@@ -20,7 +21,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: Dashboard },
       { path: 'aspects', component: Aspects },
-      {path:'habits' , component: Habits}
+      {path:'habits' , component: Habits},
+      {path: 'days' , component: Day}
     ]
   },
 ];

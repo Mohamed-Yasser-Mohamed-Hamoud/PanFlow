@@ -43,12 +43,19 @@
 }
 
 /* ───────── Cards Grid ───────── */
+
 .cards {
+  height: 100%;
+  overflow-y: auto;
+
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.25rem;
-  padding: 1rem;
+
+  padding: 1rem 1rem 70px; /* عشان زر Add Habit */
+  box-sizing: border-box;
 }
+
 
 .card {
   background: var(--clr-bg);
@@ -57,20 +64,14 @@
   border-radius: var(--radius-card);
   box-shadow: 0 8px 24px var(--clr-shadow);
   padding: 1.25rem;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
-
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 32px var(--clr-shadow);
-}
-
 .card .title p {
   margin: 0;
   font-size: 1.15rem;
@@ -98,7 +99,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
 }
 
 .buttons button:hover {
@@ -118,29 +122,51 @@
 
 /* ───────── Add Habit Button ───────── */
 .addHabit {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem 1rem;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 170px;
 }
 
 .addHabit button {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: space-around;
+
   padding: 10px 22px;
   border: 2px solid var(--clr-primary);
   border-radius: 30px;
   background: var(--clr-bg);
   color: var(--clr-primary);
+
   font-family: 'Caveat', 'Kalam', cursive;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.4s ease;
 }
-
 .addHabit button:hover {
   background-color: var(--clr-primary);
   color: var(--clr-bg);
   transform: translateY(-5px);
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--clr-primary-light) 20%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
 }

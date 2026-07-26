@@ -266,6 +266,145 @@
         }
       }
     },
+    "/api/Day/create": {
+      "post": {
+        "tags": [
+          "Day"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/addHabitsToDay": {
+      "post": {
+        "tags": [
+          "Day"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddHabitsToDayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddHabitsToDayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddHabitsToDayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/today": {
+      "get": {
+        "tags": [
+          "Day"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/updateHabitStatus": {
+      "put": {
+        "tags": [
+          "Day"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHabitDayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHabitDayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHabitDayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/read": {
+      "get": {
+        "tags": [
+          "Day"
+        ],
+        "parameters": [
+          {
+            "name": "DayId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/readAll": {
+      "get": {
+        "tags": [
+          "Day"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Habits/create": {
       "post": {
         "tags": [
@@ -572,6 +711,26 @@
   },
   "components": {
     "schemas": {
+      "AddHabitsToDayRequest": {
+        "required": [
+          "dayId",
+          "habitIds"
+        ],
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "habitIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateAspectRequest": {
         "required": [
           "aspectColor",
@@ -586,6 +745,24 @@
           "aspectColor": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDayRequest": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "habitIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -728,6 +905,28 @@
         },
         "additionalProperties": false
       },
+      "UpdateHabitDayRequest": {
+        "required": [
+          "dayId",
+          "habitId",
+          "isChecked"
+        ],
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "habitId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isChecked": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateHabitRequest": {
         "required": [
           "aspectId",
@@ -806,6 +1005,9 @@
     },
     {
       "name": "Auth"
+    },
+    {
+      "name": "Day"
     },
     {
       "name": "Habits"

@@ -148,6 +148,90 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "addHabitsToDay",
+    "RelativePath": "api/Day/addHabitsToDay",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Day.DTOs.AddHabits.AddHabitsToDayRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "create",
+    "RelativePath": "api/Day/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Day.DTOs.Create.CreateDayRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "read",
+    "RelativePath": "api/Day/read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "DayId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "readAll",
+    "RelativePath": "api/Day/readAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "today",
+    "RelativePath": "api/Day/today",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "updateHabitStatus",
+    "RelativePath": "api/Day/updateHabitStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Day.DTOs.Update.UpdateHabitDayRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PanFlow.API.Features.Habits.Controllers.HabitsController",
     "Method": "aspectHabit",
     "RelativePath": "api/Habits/aspectHabit",

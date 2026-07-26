@@ -1,0 +1,6 @@
+@if (dayService.mode() === 'view') {
+  <app-view-mode></app-view-mode>
+}
+@else if (dayService.mode() === 'list') {
+  <app-list-mode></app-list-mode>
+}

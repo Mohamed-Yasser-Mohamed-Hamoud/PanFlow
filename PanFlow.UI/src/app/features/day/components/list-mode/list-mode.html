@@ -1,0 +1,28 @@
+<div class="container">
+  <!-- <div class="startDay">
+    <button (click)="dayService.startToday()" [disabled]="dayService.isLoadingStart()">
+      {{ dayService.isLoadingStart() ? 'loading...' : 'start today' }}
+    </button>
+  </div> -->
+
+  @if (dayService.isLoading()) {
+    <div class="days-loader">
+      <div class="spinner"></div>
+      <p>Loading days information...</p>
+    </div>
+  } @else if (dayService.days().length === 0) {
+    <div class="empty-state">
+      <h1>There are no days yet</h1>
+      <p>Start today to begin tracking your habits.</p>
+    </div>
+  } @else {
+    <main class="cards">
+      @for (day of dayService.days(); track day.dayId) {
+        <button class="mini-card" (click)="dayService.openViewMode(day.dayId)">
+          <p class="mini-date">{{ day.date }}</p>
+          <span class="mini-completion">{{ day.completionPercentage }}%</span>
+        </button>
+      }
+    </main>
+  }
+</div>

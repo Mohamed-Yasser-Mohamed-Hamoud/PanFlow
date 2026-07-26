@@ -6,6 +6,7 @@ using Microsoft.OpenApi;
 using PanFlow.API.Data;
 using PanFlow.API.Features.Aspects.Services;
 using PanFlow.API.Features.Auth.Services;
+using PanFlow.API.Features.Day.Services;
 using PanFlow.API.Features.Habits.Services;
 using PanFlow.API.Features.Users.Services;
 using PanFlow.API.Models;
@@ -111,6 +112,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService , UserService>();
 builder.Services.AddScoped<IAspectService, AspectService>();
 builder.Services.AddScoped<IHabitService, HabitService>();
+builder.Services.AddScoped<IDayService, DayService>();
 
 var app = builder.Build();
 
