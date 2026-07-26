@@ -1,17 +1,40 @@
+# =========================
 # Angular / Node
-PanFlow.UI/node_modules/
-PanFlow.UI/dist/
-PanFlow.UI/.angular/
+# =========================
+**/node_modules/
+**/dist/
+**/.angular/
 
+# =========================
 # .NET
-PanFlow.API/bin/
-PanFlow.API/obj/
+# =========================
+**/bin/
+**/obj/
 
+# =========================
+# Visual Studio
+# =========================
+.vs/
+**/.vs/
+
+# =========================
 # VS Code
+# =========================
 .vscode/
 
+# =========================
 # Logs
+# =========================
 *.log
 
-# Environment files
+# =========================
+# Environment
+# =========================
 .env
+.env.*
+
+# =========================
+# Windows
+# =========================
+desktop.ini
+Thumbs.db
