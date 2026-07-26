@@ -2,14 +2,14 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">day</p>
+        <p class="eyebrow">{{ 'days.eyebrow' | translate }}</p>
         <h2>{{ dayService.selectedDay()?.date }}</h2>
       </div>
       <button
         type="button"
         (click)="dayService.openListMode()"
         class="exit"
-        aria-label="Close day"
+        [attr.aria-label]="'days.closeDay' | translate"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
     @if (dayService.isLoadingDay()) {
       <div class="day-loader">
         <div class="spinner"></div>
-        <p>Loading day information...</p>
+        <p>{{ 'days.loading' | translate }}</p>
       </div>
     } @else {
       <div class="progress">
@@ -44,11 +44,11 @@
           [style.width.%]="dayService.selectedDay()?.completionPercentage"
         ></div>
       </div>
-      <p class="completionText">{{ dayService.selectedDay()?.completionPercentage }}% completed</p>
+      <p class="completionText">{{ dayService.selectedDay()?.completionPercentage }}% {{ 'days.completed' | translate }}</p>
 
       @if (dayService.selectedDay()?.habits?.length === 0) {
         <div class="empty-habits">
-          <p>No habits added yet for this day. Add some from the dashboard.</p>
+          <p>{{ 'days.noHabits' | translate }}</p>
         </div>
       } @else {
         <ul class="habitsList">

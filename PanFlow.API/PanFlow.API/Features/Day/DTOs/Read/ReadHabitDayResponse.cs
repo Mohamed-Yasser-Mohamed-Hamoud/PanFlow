@@ -3,14 +3,18 @@ using System.Text.Json.Serialization;
 
 namespace PanFlow.API.Features.Day.DTOs.Read
 {
-    // عادة واحدة جوه اليوم مع حالة إنجازها
-    // ملحوظة: HabitDayId اتشالت لأن DayHabit مالهاش PK مستقل
-    // الهوية بتاعتها بقت composite: (HabitId + DayId), والـ DayId معروف من الـ ReadDayResponse نفسه
     public record ReadHabitDayResponse
     {
         [Required]
         [JsonPropertyName("habitId")]
         public required string HabitId { get; set; }
+
+
+        [Required]
+        [JsonPropertyName("dayId")]
+        public required string DayId { get; set; }
+
+
 
         [Required]
         [JsonPropertyName("habitName")]
@@ -23,5 +27,9 @@ namespace PanFlow.API.Features.Day.DTOs.Read
         [Required]
         [JsonPropertyName("isChecked")]
         public required bool IsChecked { get; set; }
+
+        [Required]
+        [JsonPropertyName("order")]
+        public int Order { get; set; }
     }
 }

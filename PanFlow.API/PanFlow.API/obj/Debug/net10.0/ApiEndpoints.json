@@ -1,5 +1,15 @@
 [
   {
+    "ContainingType": "PanFlow.API.Features.Analysis.Controllers.AnalysisController",
+    "Method": "read",
+    "RelativePath": "api/Analysis/read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PanFlow.API.Features.Aspects.Controllers.AspectsController",
     "Method": "Create",
     "RelativePath": "api/Aspects/create",
@@ -149,8 +159,8 @@
   },
   {
     "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
-    "Method": "addHabitsToDay",
-    "RelativePath": "api/Day/addHabitsToDay",
+    "Method": "AddHabits",
+    "RelativePath": "api/Day/addHabits",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -181,18 +191,44 @@
   },
   {
     "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
-    "Method": "delete",
+    "Method": "deleteForever",
     "RelativePath": "api/Day/delete",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dayId",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Day.DTOs.Delete.DeleteDayRequest",
+        "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "delete",
+    "RelativePath": "api/Day/delete",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Day.DTOs.Delete.DeleteDayRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
+    "Method": "deletedDay",
+    "RelativePath": "api/Day/deletedDay",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -223,36 +259,15 @@
   },
   {
     "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
-    "Method": "removeHabitFromDay",
-    "RelativePath": "api/Day/removeHabitFromDay",
+    "Method": "RemoveHabit",
+    "RelativePath": "api/Day/removeHabit",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dayId",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "habitId",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
-    "Method": "reorderHabits",
-    "RelativePath": "api/Day/reorderHabits",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
         "Name": "request",
-        "Type": "PanFlow.API.Features.Day.Controllers.ReorderHabitsRequest",
+        "Type": "PanFlow.API.Features.Day.DTOs.AddHabits.RemoveHabitFromDayRequest",
         "IsRequired": true
       }
     ],
@@ -262,13 +277,13 @@
     "ContainingType": "PanFlow.API.Features.Day.Controllers.DayController",
     "Method": "restore",
     "RelativePath": "api/Day/restore",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "request",
-        "Type": "PanFlow.API.Features.Day.Controllers.RestoreDayRequest",
+        "Type": "PanFlow.API.Features.Day.DTOs.Restore.RestoreDayRequest",
         "IsRequired": true
       }
     ],
@@ -294,7 +309,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "PanFlow.API.Features.Day.DTOs.Update.UpdateHabitDayRequest",
+        "Type": "PanFlow.API.Features.Day.DTOs.Update.UpdateDayHabitRequest",
         "IsRequired": true
       }
     ],
@@ -465,7 +480,13 @@
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PanFlow.API.Features.Users.DTOs.Delete.DeleteUserRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

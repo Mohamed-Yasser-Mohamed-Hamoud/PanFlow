@@ -1,5 +1,5 @@
-import { ReadHabitDayResponse } from '../read/read-habit-day-response';
+import { ReadDayHabitResponse } from "../read/read-day-habit-response";
 
 export interface AddHabitsToDayResponse {
-  addedHabits: ReadHabitDayResponse[];
+  addedHabits: ReadDayHabitResponse[];
 }

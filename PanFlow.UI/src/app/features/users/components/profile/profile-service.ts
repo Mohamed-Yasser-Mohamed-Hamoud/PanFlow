@@ -7,11 +7,14 @@ import { UserService } from '../../services/user-service';
 import { SelectedUserResponse } from '../../interfaces/Read/selected-user-response';
 import { UpdatePasswordRequest } from '../../interfaces/Update/update-password-request';
 import { UpdateRequest } from '../../interfaces/Update/update-request';
+import { LanguageService } from '../../../../core/services/language.service';
+import { deleteUserRequest } from '../../interfaces/Delete/deleteUserRequest';
 
 @Injectable() // Scoped Service مع الكومبوننت
 export class ProfileService {
   private userService = inject(UserService);
   private router = inject(Router);
+  private languageService = inject(LanguageService); // 👈 حقن خدمة الترجمة
 
   userData: SelectedUserResponse | null = null;
   userPasswords: UpdatePasswordRequest = { currentPassword: '', newPassword: '' };
@@ -97,10 +100,10 @@ export class ProfileService {
       },
       error: (err) => {
         Swal.fire({
-          title: 'Error',
-          text: 'there is a problem with the Server',
+          title: this.languageService.translate('general.error') || 'Error',
+          text: this.languageService.translate('profile.serverError') || 'There is a problem with the Server',
           icon: 'error',
-          confirmButtonText: 'Ok',
+          confirmButtonText: this.languageService.translate('general.ok') || 'Ok',
           confirmButtonColor: 'red',
         });
       },
@@ -119,7 +122,6 @@ export class ProfileService {
 
     this.userService.updateProfile(updatedData).subscribe({
       next: (response: GeneralResponseDto<any>) => {
-        // 🚀 التعديل هنا: عملنا Re-create للأوبجكت بالكامل عشان نتفادى الـ Read-only
         if (this.userData) {
           this.userData = {
             ...this.userData,
@@ -131,7 +133,7 @@ export class ProfileService {
         cdr.markForCheck();
 
         Swal.fire({
-          title: response.message || 'User name Updated Successfully!',
+          title: this.languageService.translate('profile.userNameUpdated') || 'User name Updated Successfully!',
           icon: 'success',
           toast: true,
           position: 'top-end',
@@ -159,7 +161,6 @@ export class ProfileService {
 
     this.userService.updateProfile(updatedData).subscribe({
       next: (response: GeneralResponseDto<any>) => {
-        // 🚀 التعديل هنا برضه: Re-create للأوبجكت لحماية الـ Immutability
         if (this.userData) {
           this.userData = {
             ...this.userData,
@@ -171,7 +172,7 @@ export class ProfileService {
         cdr.markForCheck();
 
         Swal.fire({
-          title: response.message || 'Email Updated Successfully!',
+          title:  this.languageService.translate('profile.emailUpdated') || 'Email Updated Successfully!',
           icon: 'success',
           toast: true,
           position: 'top-end',
@@ -192,7 +193,6 @@ export class ProfileService {
     this.serverError = '';
     if (this.CurrentPassword.invalid || this.newPassword.invalid) return;
 
-    // 🚀 التعديل هنا: بنبني أوبجكت جديد للـ Passwords وبنروح نبعته علطول
     const passwordsPayload: UpdatePasswordRequest = {
       currentPassword: this.CurrentPassword.value!,
       newPassword: this.newPassword.value!,
@@ -211,7 +211,7 @@ export class ProfileService {
         cdr.markForCheck();
 
         Swal.fire({
-          title: response.message || 'Password Updated Successfully!',
+          title:  this.languageService.translate('profile.passwordUpdated') || 'Password Updated Successfully!',
           icon: 'success',
           toast: true,
           position: 'top-end',
@@ -228,28 +228,62 @@ export class ProfileService {
   }
 
   // 5️⃣ حذف الحساب
-  deleteButton() {
+deleteButton() {
+  Swal.fire({
+    title: this.languageService.translate('profile.areYouSure') || 'Are you sure?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: this.languageService.translate('general.delete') || 'Delete',
+    cancelButtonText: this.languageService.translate('general.cancel') || 'Cancel',
+    confirmButtonColor: '#B00020',
+    cancelButtonColor: '#e09a1a',
+  }).then((result) => {
+
+    if (!result.isConfirmed) return;
+
     Swal.fire({
-      title: 'Are You Sure ?',
-      icon: 'warning',
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel',
+      title: this.languageService.translate('profile.confirmDelete') || 'Confirm Deletion',
+      text: this.languageService.translate('profile.enterPassword') || 'Enter your password to delete your account.',
+      input: 'password',
+      cancelButtonText: this.languageService.translate('general.cancel') || 'Cancel',
+      inputPlaceholder: this.languageService.translate('profile.password') || 'Password',
       showCancelButton: true,
-      cancelButtonColor: '#e09a1a',
+      confirmButtonText: this.languageService.translate('general.delete') || 'Delete',
       confirmButtonColor: '#B00020',
-    }).then((result: any) => {
-      if (result?.isConfirmed) {
-        this.userService.deleteUser().subscribe({
-          next: (response: GeneralResponseDto<any>) => {
-            Swal.fire({
-              title: 'Deleted!',
-              text: response.message || 'Your account has been deleted.',
-              icon: 'success',
-            });
-            this.router.navigate(['/register']);
-          },
-        });
+      inputValidator: (value) => {
+        if (!value) {
+          return this.languageService.translate('profile.passwordRequired') || 'Password is required';
+        }
+        return null;
       }
+    }).then((passwordResult) => {
+
+      if (!passwordResult.isConfirmed) return;
+
+      const request: deleteUserRequest = {
+        password: passwordResult.value
+      };
+
+      this.userService.deleteUser(request).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: this.languageService.translate('profile.deleted') || 'Deleted!',
+          });
+
+          this.router.navigate(['/register']);
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: this.languageService.translate('general.error') || 'Error',
+            text: this.languageService.translate('profile.incorrectPassword') || 'Incorrect password',
+          });
+        }
+      });
+
     });
-  }
+
+  });
+}
 }

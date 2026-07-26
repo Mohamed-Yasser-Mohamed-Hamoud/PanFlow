@@ -13,6 +13,7 @@ import { DeleteHabitRequest } from '../../interfaces/delete/delete-habit-request
 import { UpdateHabitRequest } from '../../interfaces/update/update-habit-request';
 import { GeneralResponseDto } from '../../../../shared/interfaces/general-response-dto';
 import { CreateHabitResponse } from '../../interfaces/create/create-habit-response';
+import { LanguageService } from '../../../../core/services/language.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,9 +40,10 @@ export class HabitService {
   /* ───────── Dependencies ───────── */
 
   private readonly popup = inject(Popup);
-   habitAPI = inject(HabitAPI);
+  habitAPI = inject(HabitAPI);
   private readonly aspectAPI = inject(AspectAPI);
   private readonly fb = inject(FormBuilder);
+  private readonly languageService = inject(LanguageService); // 👈 تفعيل خدمة الترجمة
 
   /* ───────── Form ───────── */
 
@@ -74,28 +76,28 @@ export class HabitService {
     });
   }
 
-openEditMode(habit: ReadHabitResponse) {
-  this.mode.set('edit');
+  openEditMode(habit: ReadHabitResponse) {
+    this.mode.set('edit');
 
-  this.habitId = habit.habitId;
+    this.habitId = habit.habitId;
 
-  this.originalHabit = {
-    habitId: habit.habitId,
-    habitName: habit.habitName,
-    aspectId: habit.aspectId,
-  };
+    this.originalHabit = {
+      habitId: habit.habitId,
+      habitName: habit.habitName,
+      aspectId: habit.aspectId,
+    };
 
-  this.aspectAPI.getAll().subscribe({
-    next: (response) => {
-      this.aspects.set(response.data?.aspects ?? []);
+    this.aspectAPI.getAll().subscribe({
+      next: (response) => {
+        this.aspects.set(response.data?.aspects ?? []);
 
-      this.habitForm.patchValue({
-        habitName: habit.habitName,
-        aspectId: habit.aspectId,
-      });
-    },
-  });
-}
+        this.habitForm.patchValue({
+          habitName: habit.habitName,
+          aspectId: habit.aspectId,
+        });
+      },
+    });
+  }
 
   openListMode() {
     this.habitId = null;
@@ -143,9 +145,9 @@ openEditMode(habit: ReadHabitResponse) {
 
         Swal.fire({
           icon: 'success',
-          title: 'Done',
-          text: response.message,
-          confirmButtonText: 'OK',
+          title: this.languageService.translate('general.done') || 'Done',
+
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
 
@@ -154,8 +156,8 @@ openEditMode(habit: ReadHabitResponse) {
 
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: err.error?.message || err.message,
+          title: this.languageService.translate('general.error') || 'Error',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
@@ -185,9 +187,9 @@ openEditMode(habit: ReadHabitResponse) {
 
       Swal.fire({
         icon: 'info',
-        title: 'Not Updated',
-        text: 'No changes detected.',
-        confirmButtonText: 'OK',
+        title: this.languageService.translate('habit.notUpdated') || 'Not Updated',
+        text: this.languageService.translate('habit.noChangesDetected') || 'No changes detected.',
+        confirmButtonText: this.languageService.translate('general.ok') || 'OK',
       });
 
       return;
@@ -203,9 +205,8 @@ openEditMode(habit: ReadHabitResponse) {
 
         Swal.fire({
           icon: 'success',
-          title: 'Updated',
-          text: response.message,
-          confirmButtonText: 'OK',
+          title: this.languageService.translate('habit.updated') || 'Updated',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
 
@@ -214,8 +215,8 @@ openEditMode(habit: ReadHabitResponse) {
 
         Swal.fire({
           icon: 'error',
-          title: 'Update Failed',
-          text: err.error?.message || err.message,
+          title: this.languageService.translate('habit.updateFailed') || 'Update Failed',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
@@ -232,18 +233,16 @@ openEditMode(habit: ReadHabitResponse) {
 
         Swal.fire({
           icon: 'success',
-          title: 'Deleted',
-          text: response.message,
-          confirmButtonText: 'OK',
+          title: this.languageService.translate('general.deleted') || 'Deleted',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
 
       error: (err) => {
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: err.error?.message || err.message,
-          confirmButtonText: 'OK',
+          title: this.languageService.translate('general.error') || 'Error',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
@@ -266,31 +265,30 @@ openEditMode(habit: ReadHabitResponse) {
 
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'There is a problem with the server.',
-          confirmButtonText: 'OK',
+          title: this.languageService.translate('general.error') || 'Error',
+          text: this.languageService.translate('general.serverError') || 'There is a problem with the server.',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
   }
 
-
   loadDeletedHabits() {
-  this.habitAPI.getDeletedHabits().subscribe({
-    next: (response) => {
-      this.deletedHabits.set(response.data?.habits ?? []);
-    },
+    this.habitAPI.getDeletedHabits().subscribe({
+      next: (response) => {
+        this.deletedHabits.set(response.data?.habits ?? []);
+      },
 
-    error: () => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'There is a problem with the server.',
-        confirmButtonText: 'OK',
-      });
-    },
-  });
-}
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.translate('general.error') || 'Error',
+          text: this.languageService.translate('general.serverError') || 'There is a problem with the server.',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
+        });
+      },
+    });
+  }
 
   /* ───────── Helpers ───────── */
 

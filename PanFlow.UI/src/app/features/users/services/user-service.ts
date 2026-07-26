@@ -6,6 +6,7 @@ import { GeneralResponseDto } from '../../../shared/interfaces/general-response-
 import { SelectedUserResponse } from '../interfaces/Read/selected-user-response';
 import { UpdateRequest } from '../interfaces/Update/update-request';
 import { UpdatePasswordRequest } from '../interfaces/Update/update-password-request';
+import { deleteUserRequest } from '../interfaces/Delete/deleteUserRequest';
 @Injectable({
   providedIn: 'root',
 })
@@ -29,7 +30,7 @@ export class UserService {
   }
 
   // 4. حذف الحساب (أكشن -> بيرجع any)
-  deleteUser(): Observable<GeneralResponseDto<any>> {
-    return this.http.delete<GeneralResponseDto<any>>(`${this.apiUrl}/profile`);
+  deleteUser(request: deleteUserRequest): Observable<GeneralResponseDto<any>> {
+    return this.http.delete<GeneralResponseDto<any>>(`${this.apiUrl}/profile`, { body: request });
   }
 }

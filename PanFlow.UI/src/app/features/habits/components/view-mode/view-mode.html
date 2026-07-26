@@ -2,14 +2,14 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">View</p>
-        <h2>habit</h2>
+        <p class="eyebrow">{{ 'habits.viewEyebrow' | translate }}</p>
+        <h2>{{ 'habits.habitLabel' | translate }}</h2>
       </div>
       <button
         type="button"
         (click)="habitService.openListMode()"
         class="exit"
-        aria-label="Close profile"
+        [attr.aria-label]="'habits.closeView' | translate"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

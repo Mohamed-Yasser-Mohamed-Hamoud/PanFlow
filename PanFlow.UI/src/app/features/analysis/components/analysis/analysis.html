@@ -101,7 +101,7 @@
           </thead>
           <tbody>
             @for (habit of analysisService.allHabits(); track habit.habitId) {
-              <tr>
+              <tr [class.no-data-row]="!habit.hasData">
                 <td>
                   <div class="habit-cell">
                     <div class="habit-color" [style.backgroundColor]="habit.habitColor"></div>
@@ -109,10 +109,14 @@
                   </div>
                 </td>
                 <td>
-                  <div class="progress-bar">
-                    <div class="progress-fill" [style.width.%]="habit.completionRate"></div>
-                    <span class="progress-text">{{ habit.completionRate }}%</span>
-                  </div>
+                  @if (habit.hasData) {
+                    <div class="progress-bar">
+                      <div class="progress-fill" [style.width.%]="habit.completionRate"></div>
+                      <span class="progress-text">{{ habit.completionRate }}%</span>
+                    </div>
+                  } @else {
+                    <span class="not-tracked-badge">{{ 'analysis.notTrackedYet' | translate }}</span>
+                  }
                 </td>
                 <td>{{ habit.totalDays }}</td>
                 <td>{{ habit.completedDays }}</td>

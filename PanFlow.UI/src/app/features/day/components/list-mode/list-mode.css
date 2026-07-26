@@ -76,51 +76,109 @@
   margin-bottom: 0.5rem;
 }
 
-/* ───────── Mini Cards Grid ─────────
-   دلوقتي كل كارد بيعرض بس التاريخ والنسبة، مفيش تفاصيل زيادة
-   (زي ما اتفقنا: صفحة Days بتاعة نظرة سريعة بس، مش تفاصيل) */
+/* ───────── Cards Grid ───────── */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
   padding: 1rem;
 }
 
-.mini-card {
+.card {
   background: var(--clr-bg);
   border: 1px solid var(--clr-border);
   border-left: 6px solid var(--clr-primary);
   border-radius: var(--radius-card);
   box-shadow: 0 8px 24px var(--clr-shadow);
-  padding: 1rem;
+  padding: 1.25rem;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
+  justify-content: space-between;
+  gap: 0.75rem;
 
-  font-family: inherit;
-  cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.mini-card:hover {
+.card:hover {
   transform: translateY(-4px);
   box-shadow: 0 14px 32px var(--clr-shadow);
 }
 
-.mini-date {
+.card .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .title p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--clr-text-body);
   word-break: break-word;
-  text-align: center;
 }
 
-.mini-completion {
-  font-size: 1.1rem;
+.card .title .completion {
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--clr-primary);
+}
+
+/* ───────── Progress Bar ───────── */
+.progress {
+  width: 100%;
+  height: 8px;
+  border-radius: 6px;
+  background: var(--clr-bg-page);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--clr-primary);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.habitsCount {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--clr-text-body);
+}
+
+/* ───────── Card Buttons ───────── */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.buttons button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: var(--clr-bg-page);
+  color: var(--clr-text-body);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.buttons button:hover {
+  transform: scale(1.08);
+}
+
+.buttons .delete-btn:hover {
+  background: var(--clr-error);
+  color: var(--clr-bg);
+}
+
+.buttons .show-btn:hover {
+  background: var(--clr-primary);
+  color: var(--clr-bg);
 }

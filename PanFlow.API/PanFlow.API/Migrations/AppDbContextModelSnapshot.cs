@@ -200,9 +200,14 @@ namespace PanFlow.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("DayId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Days");
                 });
@@ -386,6 +391,10 @@ namespace PanFlow.API.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("PanFlow.API.Models.User", null)
+                        .WithMany("Days")
+                        .HasForeignKey("UserId1");
+
                     b.Navigation("User");
                 });
 
@@ -437,6 +446,8 @@ namespace PanFlow.API.Migrations
             modelBuilder.Entity("PanFlow.API.Models.User", b =>
                 {
                     b.Navigation("Aspects");
+
+                    b.Navigation("Days");
                 });
 #pragma warning restore 612, 618
         }

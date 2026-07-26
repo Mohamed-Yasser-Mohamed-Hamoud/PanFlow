@@ -1,9 +1,8 @@
-import { ReadHabitDayResponse } from './read-habit-day-response';
+import { ReadDayHabitResponse } from './read-day-habit-response';
 
 export interface ReadDayResponse {
   readonly dayId: string;
   readonly date: string;
-  readonly habits: ReadHabitDayResponse[];
+  readonly habits: ReadDayHabitResponse[];
   readonly completionPercentage: number;
-  readonly isDeleted: boolean; // أضفنا هذا الحقل لحل مشكلة الـ TypeScript Error
 }

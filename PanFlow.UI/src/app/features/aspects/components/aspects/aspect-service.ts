@@ -15,6 +15,7 @@ import { ReadAspectRequest } from '../../interfaces/read/read-aspect-request';
 import { ReadHabitResponse } from '../../../habits/interfaces/read/read-habit-response';
 import { HabitAPI } from '../../../habits/services/habit-API';
 import { HabitService } from '../../../habits/components/habits/habit-service';
+import { LanguageService } from '../../../../core/services/language.service'; // 👈 حقن خدمة الترجمة
 
 @Injectable({
   providedIn: 'root',
@@ -41,15 +42,16 @@ export class AspectService {
   /* ───────── Dependencies ───────── */
 
   private readonly popup = inject(Popup);
- readonly aspectAPI = inject(AspectAPI);
+  readonly aspectAPI = inject(AspectAPI);
   private readonly habitAPI = inject(HabitAPI);
   private readonly fb = inject(FormBuilder);
-  habitServices = inject(HabitService)
+  habitServices = inject(HabitService);
+  private readonly languageService = inject(LanguageService); // 👈 تفعيل خدمة الترجمة
+
   /* ───────── Forms ───────── */
 
   aspectForm = this.fb.group({
     aspectName: ['', Validators.required],
-
     aspectColor: ['#ffffff', Validators.required],
   });
 
@@ -89,10 +91,9 @@ export class AspectService {
         error: () => {
           Swal.fire({
             icon: 'error',
-
-            title: 'Error',
-
-            text: 'Cannot load habits',
+            title: this.languageService.t('general.error'),
+            text: this.languageService.t('aspects.cannotLoadHabits') || 'Cannot load habits',
+            confirmButtonText: this.languageService.t('general.ok'),
           });
         },
       });
@@ -109,7 +110,6 @@ export class AspectService {
 
     this.aspectForm.patchValue({
       aspectName: aspect.aspectName,
-
       aspectColor: aspect.aspectColor,
     });
   }
@@ -117,7 +117,6 @@ export class AspectService {
   openListMode() {
     this.aspectForm.reset({
       aspectName: '',
-
       aspectColor: '#ffffff',
     });
 
@@ -133,7 +132,6 @@ export class AspectService {
 
     const body = {
       aspectName: this.aspectForm.value.aspectName!,
-
       aspectColor: this.aspectForm.value.aspectColor!,
     };
 
@@ -148,10 +146,8 @@ export class AspectService {
 
           Swal.fire({
             icon: 'success',
-
-            title: 'Done',
-
-            text: response.message,
+            title: this.languageService.t('general.success') || 'Done',
+            confirmButtonText: this.languageService.t('general.ok'),
           });
         }
       },
@@ -161,10 +157,8 @@ export class AspectService {
 
         Swal.fire({
           icon: 'error',
-
-          title: 'Error',
-
-          text: err.error?.message || err.message,
+          title: this.languageService.t('general.error'),
+          confirmButtonText: this.languageService.t('general.ok'),
         });
       },
     });
@@ -179,9 +173,7 @@ export class AspectService {
 
     const body = {
       aspectId: this.aspectId,
-
       aspectName: this.aspectForm.value.aspectName!,
-
       aspectColor: this.aspectForm.value.aspectColor!,
     };
 
@@ -196,10 +188,9 @@ export class AspectService {
 
       Swal.fire({
         icon: 'info',
-
-        title: 'Not Updated',
-
-        text: 'This is the same data',
+        title: this.languageService.t('general.info') || 'Not Updated',
+        text: this.languageService.t('aspects.sameData') || 'This is the same data',
+        confirmButtonText: this.languageService.t('general.ok'),
       });
 
       return;
@@ -217,10 +208,9 @@ export class AspectService {
 
         Swal.fire({
           icon: 'success',
-
-          title: 'Updated',
-
+          title: this.languageService.t('general.success') || 'Updated',
           text: response.message,
+          confirmButtonText: this.languageService.t('general.ok'),
         });
       },
 
@@ -229,10 +219,8 @@ export class AspectService {
 
         Swal.fire({
           icon: 'error',
-
-          title: 'Update failed',
-
-          text: err.error?.message || err.message,
+          title: this.languageService.t('general.error'),
+          confirmButtonText: this.languageService.t('general.ok'),
         });
       },
     });
@@ -247,10 +235,15 @@ export class AspectService {
 
         Swal.fire({
           icon: 'success',
-
-          title: 'Deleted',
-
-          text: response.message,
+          title: this.languageService.t('general.success') || 'Deleted',
+          confirmButtonText: this.languageService.t('general.ok'),
+        });
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.t('general.error'),
+          confirmButtonText: this.languageService.t('general.ok'),
         });
       },
     });

@@ -6,9 +6,8 @@ import { TokenService } from '../../../../core/services/token-service';
 import { Popup } from '../../../../shared/services/popup';
 import { DayService } from '../../../day/components/day/day-service';
 import { ReadDayResponse } from '../../../day/interfaces/read/read-day-response';
-import { ReadHabitDayResponse } from '../../../day/interfaces/read/read-habit-day-response';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { LanguageService } from '../../../../core/services/language.service';
+import { ReadDayHabitResponse } from '../../../day/interfaces/read/read-day-habit-response';
 
 @Injectable() // 💡 بدون (providedIn: 'root') لتكون Scoped مع الكومبوننت
 export class DashboardService {
@@ -83,9 +82,6 @@ export class DashboardService {
     return `${y}-${m}-${d}`;
   }
 
-  // بيدور هل فيه Day بالفعل للتاريخ المعروض دلوقتي (activeDate) ولا لأ
-  // ملحوظة: مفيش endpoint مباشر لـ "هات اليوم بتاريخ معين"، فبنستخدم
-  // readAll (مفيهاش أي side effect) ونفتش فيها عن التاريخ ده
   refreshCard() {
     this.isLoadingCard.set(true);
     const targetDate = this.formatDateForApi(this.activeDate);
@@ -110,33 +106,48 @@ export class DashboardService {
           },
           error: (err) => {
             this.isLoadingCard.set(false);
-            Swal.fire({ icon: 'error', title: 'Error', text: err.error?.message || err.message });
+            Swal.fire({
+              icon: 'error',
+              title: this.languageService.t('general.error'),
+              confirmButtonText: this.languageService.t('general.ok'),
+            });
           },
         });
       },
       error: (err) => {
         this.isLoadingCard.set(false);
-        Swal.fire({ icon: 'error', title: 'Error', text: err.error?.message || err.message });
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.t('general.error'),
+          confirmButtonText: this.languageService.t('general.ok'),
+        });
       },
     });
   }
 
-  // زرار "Unlock this Day" في نص الكارت المموّه - بينشئ اليوم فاضي (بدون عادات)
   unlockDay() {
     this.isUnlocking.set(true);
     const targetDate = this.formatDateForApi(this.activeDate);
 
-    this.dayAPI.create({ date: targetDate, habitIds: [] }).subscribe({
-      next: () => {
-        this.isUnlocking.set(false);
-        this.refreshCard();
-        this.dayService.loadDays(); // نحدّث كاش صفحة Days كمان
-      },
-      error: (err) => {
-        this.isUnlocking.set(false);
-        Swal.fire({ icon: 'error', title: 'Error', text: err.error?.message || err.message });
-      },
-    });
+    this.dayAPI
+      .create({
+        date: targetDate,
+      })
+      .subscribe({
+        next: () => {
+          this.isUnlocking.set(false);
+          this.refreshCard();
+          this.dayService.loadDays();
+        },
+        error: (err) => {
+          this.isUnlocking.set(false);
+          Swal.fire({
+            icon: 'error',
+            title: this.languageService.t('general.error'),
+            confirmButtonText: this.languageService.t('general.ok'),
+          });
+        },
+      });
   }
 
   /* ───────── Add Task Modal ───────── */
@@ -154,32 +165,91 @@ export class DashboardService {
     const day = this.currentDay();
     if (!day || habitIds.length === 0) return;
 
-    this.dayAPI.addHabits({ dayId: day.dayId, habitIds }).subscribe({
-      next: (res) => {
-        const added = res.data?.addedHabits ?? [];
+    this.dayAPI
+      .addHabits({
+        dayId: day.dayId,
+        habitIds,
+      })
+      .subscribe({
+        next: (res) => {
+          const added = res.data?.addedHabits ?? [];
 
-        this.currentDay.update((d) => {
-          if (!d) return d;
-          const habits = [...d.habits, ...added];
-          const completionPercentage =
-            habits.length === 0
-              ? 0
-              : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) / 100;
-          return { ...d, habits, completionPercentage };
-        });
+          this.currentDay.update((d) => {
+            if (!d) return d;
 
-        this.closeAddTaskModal();
-        this.dayService.loadDays();
-      },
-      error: (err) => {
-        Swal.fire({ icon: 'error', title: 'Error', text: err.error?.message || err.message });
-      },
-    });
+            const habits = [...d.habits, ...added];
+
+            const completionPercentage =
+              habits.length === 0
+                ? 0
+                : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) /
+                    100;
+
+            return {
+              ...d,
+              habits,
+              completionPercentage,
+            };
+          });
+
+          this.closeAddTaskModal();
+          this.dayService.loadDays();
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: this.languageService.t('general.error'),
+            confirmButtonText: this.languageService.t('general.ok'),
+          });
+        },
+      });
+  }
+
+  removeHabitFromDay(habit: ReadDayHabitResponse) {
+    const day = this.currentDay();
+    if (!day) return;
+
+    this.dayAPI
+      .removeHabitFromDay({
+        dayId: day.dayId,
+        habitId: habit.habitId,
+      })
+      .subscribe({
+        next: () => {
+          this.currentDay.update((d) => {
+            if (!d) return d;
+
+            const habits = d.habits.filter((h) => h.habitId !== habit.habitId);
+
+            const completionPercentage =
+              habits.length === 0
+                ? 0
+                : Math.round(
+                    (habits.filter((h) => h.isChecked).length / habits.length) * 10000,
+                  ) / 100;
+
+            return {
+              ...d,
+              habits,
+              completionPercentage,
+            };
+          });
+
+          this.dayService.loadDays();
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: this.languageService.t('general.error'),
+            confirmButtonText: this.languageService.t('general.ok'),
+          });
+        },
+      });
   }
 
   /* ───────── Toggle Habit في الكارت ───────── */
 
-  toggleHabit(habit: ReadHabitDayResponse) {
+  toggleHabit(habit: ReadDayHabitResponse) {
     const day = this.currentDay();
     if (!day) return;
 
@@ -197,14 +267,19 @@ export class DashboardService {
             const completionPercentage =
               habits.length === 0
                 ? 0
-                : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) / 100;
+                : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) /
+                    100;
             return { ...d, habits, completionPercentage };
           });
 
           this.dayService.loadDays();
         },
         error: (err) => {
-          Swal.fire({ icon: 'error', title: 'Error', text: err.error?.message || err.message });
+          Swal.fire({
+            icon: 'error',
+            title: this.languageService.t('general.error'),
+            confirmButtonText: this.languageService.t('general.ok'),
+          });
         },
       });
   }
@@ -244,12 +319,17 @@ export class DashboardService {
               icon: 'success',
               title: this.languageService.t('dashboard.dayDeleted'),
               timer: 1500,
+              showConfirmButton: false,
             });
             this.refreshCard();
             this.dayService.loadDays();
           },
           error: (err) => {
-            Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
+            Swal.fire({
+              icon: 'error',
+              title: this.languageService.t('general.error'),
+              confirmButtonText: this.languageService.t('general.ok'),
+            });
           },
         });
       }
@@ -266,61 +346,17 @@ export class DashboardService {
           icon: 'success',
           title: this.languageService.t('dashboard.dayRestored'),
           timer: 1500,
+          showConfirmButton: false,
         });
         this.refreshCard();
         this.dayService.loadDays();
       },
       error: (err) => {
-        Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
-      },
-    });
-  }
-
-  /* ───────── Remove Habit from Day ───────── */
-
-  removeHabitFromDay(habit: ReadHabitDayResponse) {
-    const day = this.currentDay();
-    if (!day) return;
-
-    this.dayAPI.removeHabitFromDay({ dayId: day.dayId, habitId: habit.habitId }).subscribe({
-      next: () => {
-        this.currentDay.update((d) => {
-          if (!d) return d;
-          const habits = d.habits.filter((h) => h.habitId !== habit.habitId);
-          const completionPercentage =
-            habits.length === 0
-              ? 0
-              : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) / 100;
-          return { ...d, habits, completionPercentage };
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.t('general.error'),
+          confirmButtonText: this.languageService.t('general.ok'),
         });
-        this.dayService.loadDays();
-      },
-      error: (err) => {
-        Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
-      },
-    });
-  }
-
-  /* ───────── Reorder Habits (Drag & Drop) ───────── */
-
-  onHabitDrop(event: CdkDragDrop<ReadHabitDayResponse[]>) {
-    const day = this.currentDay();
-    if (!day) return;
-
-    // Update local state
-    this.currentDay.update((d) => {
-      if (!d) return d;
-      const habits = [...d.habits];
-      const [movedHabit] = habits.splice(event.previousIndex, 1);
-      habits.splice(event.currentIndex, 0, movedHabit);
-      return { ...d, habits };
-    });
-
-    // Send to backend
-    const habitIds = this.currentDay()?.habits.map((h) => h.habitId) ?? [];
-    this.dayAPI.reorderHabits({ dayId: day.dayId, habitIds }).subscribe({
-      error: (err) => {
-        Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
       },
     });
   }

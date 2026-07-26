@@ -1,18 +1,23 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PanFlow.API.Data;
 using PanFlow.API.Features.Users.DTOs.Read;
 using PanFlow.API.Features.Users.DTOs.Update;
 using PanFlow.API.Models;
 using PanFlow.API.Shared.DTOs;
+using Microsoft.EntityFrameworkCore;
+using PanFlow.API.Features.Users.DTOs.Delete;
 
 namespace PanFlow.API.Features.Users.Services;
 
 public class UserService : IUserService
 {
     private readonly UserManager<User> _userManager;
+    private readonly AppDbContext _context;
 
-    public UserService(UserManager<User> userManager)
+    public UserService(UserManager<User> userManager, AppDbContext context)
     {
         _userManager = userManager;
+        _context = context;
     }
 
     // 1️⃣ جلب بيانات المستخدم
@@ -31,7 +36,8 @@ public class UserService : IUserService
         }
 
         // 🚀 باصينا الـ user.Id الصافي كـ string للـ Record بدون Guid.Parse
-        var userData = new SelectedUserResponse { 
+        var userData = new SelectedUserResponse
+        {
             UserName = user.UserName!,
             Email = user.Email!
         };
@@ -116,23 +122,61 @@ public class UserService : IUserService
     }
 
     // 4️⃣ حذف المستخدم (Danger Zone)
-    public async Task<GeneralResponseDto<object>> DeleteUserAsync(string userId)
+    public async Task<GeneralResponseDto<object>> DeleteUserAsync(string userId , DeleteUserRequest request)
     {
         if (string.IsNullOrEmpty(userId))
-        {
             return GeneralResponseDto<object>.Failure("User ID can't be empty");
-        }
 
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
-        {
             return GeneralResponseDto<object>.Failure("User not found");
+
+        var isCorrect = await _userManager.CheckPasswordAsync(user, request.Password);
+
+        if (!isCorrect)
+        {
+            return  GeneralResponseDto<object>.Failure("Incorrect password.");
         }
 
+        // احذف الحساب
+
+
+        // حذف DayHabits الخاصة بأيام المستخدم
+        var dayHabits = await _context.DayHabits
+            .Where(dh => dh.Day.UserId == userId)
+            .ToListAsync();
+
+        _context.DayHabits.RemoveRange(dayHabits);
+
+        // حذف الأيام
+        var days = await _context.Days
+            .Where(d => d.UserId == userId)
+            .ToListAsync();
+
+        _context.Days.RemoveRange(days);
+
+        // حذف العادات
+        var habits = await _context.Habits
+            .Where(h => h.Aspect.UserId == userId)
+            .ToListAsync();
+
+        _context.Habits.RemoveRange(habits);
+
+        // حذف الجوانب
+        var aspects = await _context.Aspects
+            .Where(a => a.UserId == userId)
+            .ToListAsync();
+
+        _context.Aspects.RemoveRange(aspects);
+
+        await _context.SaveChangesAsync();
+
         var result = await _userManager.DeleteAsync(user);
+
         if (!result.Succeeded)
         {
-            return GeneralResponseDto<object>.Failure("Failed to delete user");
+            return GeneralResponseDto<object>.Failure(
+                string.Join(", ", result.Errors.Select(e => e.Description)));
         }
 
         return GeneralResponseDto<object>.Success("User deleted successfully");

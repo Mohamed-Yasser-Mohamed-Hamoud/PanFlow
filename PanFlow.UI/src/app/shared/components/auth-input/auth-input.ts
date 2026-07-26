@@ -1,11 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
 import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-auth-input',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf , TranslatePipe],
   templateUrl: './auth-input.html',
   styleUrl: './auth-input.css',
   viewProviders: [

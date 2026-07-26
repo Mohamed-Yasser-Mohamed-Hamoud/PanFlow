@@ -8,6 +8,7 @@ import { RegisterService } from './register-service';
 // 💡 التأكد من استيراد الأسماء الصحيحة للكلاسات المصدرة بالملي
 import { AuthInput } from '../../../../shared/components/auth-input/auth-input';
 import { PasswordInput } from '../../../../shared/components/password-input/password-input';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ import { PasswordInput } from '../../../../shared/components/password-input/pass
     RouterLink, 
     ReactiveFormsModule, 
     AuthInput,     // 👈 يجب أن يطابق الاسم المستورد فوق تماماً
-    PasswordInput  // 👈 يجب أن يطابق الاسم المستورد فوق تماماً
+    PasswordInput,  // 👈 يجب أن يطابق الاسم المستورد فوق تماماً
+    TranslatePipe
   ],
   templateUrl: './register.html',
   styleUrl: './register.css',

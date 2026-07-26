@@ -6,8 +6,11 @@ import { Popup } from '../../../../shared/services/popup';
 
 import { ReadDaySummaryResponse } from '../../interfaces/read/read-day-summary-response';
 import { ReadDayResponse } from '../../interfaces/read/read-day-response';
-import { ReadHabitDayResponse } from '../../interfaces/read/read-habit-day-response';
+import { ReadDayHabitResponse } from '../../interfaces/read/read-day-habit-response';
+import { DeleteDayRequest } from '../../interfaces/delete/delete-day-request';
+import { RestoreDayRequest } from '../../interfaces/restore/restore-day-request';
 import { GeneralResponseDto } from '../../../../shared/interfaces/general-response-dto';
+import { LanguageService } from '../../../../core/services/language.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +19,7 @@ export class DayService {
   /* ───────── Signals & State ───────── */
 
   days = signal<ReadDaySummaryResponse[]>([]);
+  deletedDays = signal<ReadDaySummaryResponse[]>([]);
 
   selectedDay = signal<ReadDayResponse | null>(null);
 
@@ -29,6 +33,7 @@ export class DayService {
 
   private readonly popup = inject(Popup);
   dayAPI = inject(DayAPI);
+  private readonly languageService = inject(LanguageService); // 👈 تفعيل خدمة الترجمة
 
   /* ───────── Modes ───────── */
 
@@ -55,8 +60,8 @@ export class DayService {
 
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: err.error?.message || err.message,
+          title: this.languageService.translate('general.error') || 'Error',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
@@ -84,8 +89,8 @@ export class DayService {
 
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: err.error?.message || err.message,
+          title: this.languageService.translate('general.error') || 'Error',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
@@ -93,20 +98,18 @@ export class DayService {
 
   /* ───────── Toggle Habit ───────── */
 
-  toggleHabit(habit: ReadHabitDayResponse) {
-    const day = this.selectedDay();
-    if (!day) return;
-
+  toggleHabit(habit: ReadDayHabitResponse) {
     const newStatus = !habit.isChecked;
 
+    // DayHabit عنده Composite Key (dayId + habitId)، فلازم نبعتهم مع بعض
     this.dayAPI
-      .updateHabitStatus({ dayId: day.dayId, habitId: habit.habitId, isChecked: newStatus })
+      .updateHabitStatus({ dayId: habit.dayId, habitId: habit.habitId, isChecked: newStatus })
       .subscribe({
         next: () => {
-          this.selectedDay.update((d) => {
-            if (!d) return d;
+          this.selectedDay.update((day) => {
+            if (!day) return day;
 
-            const habits = d.habits.map((h) =>
+            const habits = day.habits.map((h) =>
               h.habitId === habit.habitId ? { ...h, isChecked: newStatus } : h,
             );
 
@@ -115,7 +118,7 @@ export class DayService {
                 ? 0
                 : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) / 100;
 
-            return { ...d, habits, completionPercentage };
+            return { ...day, habits, completionPercentage };
           });
 
           this.loadDays();
@@ -124,11 +127,60 @@ export class DayService {
         error: (err) => {
           Swal.fire({
             icon: 'error',
-            title: 'Error',
-            text: err.error?.message || err.message,
+            title: this.languageService.translate('general.error') || 'Error',
+            confirmButtonText: this.languageService.translate('general.ok') || 'OK',
           });
         },
       });
+  }
+
+  /* ───────── Delete ───────── */
+
+  delete(request: DeleteDayRequest) {
+    this.dayAPI.delete(request).subscribe({
+      next: (response) => {
+        this.days.update((days) => days.filter((day) => day.dayId !== request.dayId));
+
+        Swal.fire({
+          icon: 'success',
+          title: this.languageService.translate('general.deleted') || 'Deleted',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
+        });
+      },
+
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.translate('general.error') || 'Error',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
+        });
+      },
+    });
+  }
+
+  /* ───────── Restore ───────── */
+
+  restore(request: RestoreDayRequest) {
+    this.dayAPI.restore(request).subscribe({
+      next: (response) => {
+        this.loadDeletedDays();
+        this.loadDays();
+
+        Swal.fire({
+          icon: 'success',
+          title: this.languageService.translate('general.restored') || 'Restored',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
+        });
+      },
+
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.translate('general.error') || 'Error',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
+        });
+      },
+    });
   }
 
   /* ───────── Read ───────── */
@@ -148,16 +200,30 @@ export class DayService {
 
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'There is a problem with the server.',
-          confirmButtonText: 'OK',
+          title: this.languageService.translate('general.error') || 'Error',
+          text: this.languageService.translate('general.serverError') || 'There is a problem with the server.',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
         });
       },
     });
   }
 
-  // ملحوظة: loadDeletedDays اتشالت لأن endpoint الـ deletedDay بتاع Day
-  // اتشال من الباك اند (مفيش soft-delete/trash لليوم خالص)
+  loadDeletedDays() {
+    this.dayAPI.getDeletedDays().subscribe({
+      next: (response) => {
+        this.deletedDays.set(response.data?.days ?? []);
+      },
+
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: this.languageService.translate('general.error') || 'Error',
+          text: this.languageService.translate('general.serverError') || 'There is a problem with the server.',
+          confirmButtonText: this.languageService.translate('general.ok') || 'OK',
+        });
+      },
+    });
+  }
 
   /* ───────── Helpers ───────── */
 

@@ -6,6 +6,7 @@ import { LoginService } from './login-service'; // تأكد من اسم ملف �
 // 💡 استيراد الـ Shared Components بنفس الأسماء الصح
 import { AuthInput } from '../../../../shared/components/auth-input/auth-input';
 import { PasswordInput } from '../../../../shared/components/password-input/password-input';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -13,7 +14,8 @@ import { PasswordInput } from '../../../../shared/components/password-input/pass
     RouterLink, 
     ReactiveFormsModule, 
     AuthInput, 
-    PasswordInput
+    PasswordInput,
+    TranslatePipe
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',

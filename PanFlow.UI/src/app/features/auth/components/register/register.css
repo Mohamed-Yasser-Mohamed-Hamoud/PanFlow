@@ -132,6 +132,9 @@ fieldset {
 
 /* ── Button ── */
 .submit button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: clamp(40px, 7vh, 60px);
   border-radius: var(--radius-pill);

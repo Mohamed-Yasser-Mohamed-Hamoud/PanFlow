@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PanFlow.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc9c22c73c068052dacecdd28c381fd3766ca258")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3688b772e5c28c75aabad9d671b59d38e57c3bd5")]
 [assembly: System.Reflection.AssemblyProductAttribute("PanFlow.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PanFlow.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

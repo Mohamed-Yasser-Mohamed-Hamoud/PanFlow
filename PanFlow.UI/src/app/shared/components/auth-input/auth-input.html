@@ -10,11 +10,11 @@
 <div class="Error" *ngIf="parentForm?.get(controlName)?.touched">
 
   <p *ngIf="parentForm?.get(controlName)?.hasError('required')">
-    *{{ label }} is required
+    *{{ label }} {{ 'validation.required' | translate }}
   </p>
 
   <p *ngIf="parentForm?.get(controlName)?.hasError('email')">
-    *should contain &#64;...
+    *{{ 'validation.email' | translate }}
   </p>
   
 </div>

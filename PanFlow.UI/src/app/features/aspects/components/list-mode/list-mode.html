@@ -2,12 +2,12 @@
   @if (aspectService.isLoading()) {
     <div class="aspects-loader">
       <div class="spinner"></div>
-      <p>Loading aspects information...</p>
+      <p>{{ 'aspects.loading' | translate }}</p>
     </div>
   } @else if (aspectService.aspects().length === 0) {
     <div class="empty-state">
-      <h1>There are no aspects</h1>
-      <p>Create your first aspect to get started.</p>
+      <h1>{{ 'aspects.noAspectsTitle' | translate }}</h1>
+      <p>{{ 'aspects.noAspectsSubtitle' | translate }}</p>
     </div>
 
     <div class="addAspect">
@@ -29,7 +29,7 @@
           <path d="M12 8v8" />
         </svg>
 
-        <span>Add Aspect</span>
+        <span>{{ 'aspects.addAspect' | translate }}</span>
       </button>
     </div>
   } @else {
@@ -44,6 +44,7 @@
             <button
               class="delete-btn"
               (click)="aspectService.delete({ aspectId: aspect.aspectId })"
+              [attr.aria-label]="'aspects.deleteAspect' | translate"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +66,11 @@
               </svg>
             </button>
 
-            <button class="edit-btn" (click)="aspectService.openEditMode(aspect)">
+            <button 
+              class="edit-btn" 
+              (click)="aspectService.openEditMode(aspect)"
+              [attr.aria-label]="'aspects.editAspect' | translate"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="15"
@@ -88,6 +93,7 @@
             <button
               class="show-btn"
               (click)="aspectService.openViewMode({ aspectId: aspect.aspectId })"
+              [attr.aria-label]="'aspects.viewAspect' | translate"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +137,7 @@
           <path d="M12 8v8" />
         </svg>
 
-        <span>Add Aspect</span>
+        <span>{{ 'aspects.addAspect' | translate }}</span>
       </button>
     </div>
   }

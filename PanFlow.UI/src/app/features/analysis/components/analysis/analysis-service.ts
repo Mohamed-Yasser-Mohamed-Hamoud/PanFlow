@@ -1,7 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { DayAPI } from '../../../day/services/day-API';
-import { HabitAPI } from '../../../habits/services/habit-API';
-import { forkJoin } from 'rxjs';
+import { AnalysisAPI } from '../../services/analysis-API';
 
 export interface DayAnalytics {
   dayId: string;
@@ -18,12 +16,12 @@ export interface HabitAnalytics {
   totalDays: number;
   completedDays: number;
   habitColor: string;
+  hasData: boolean;
 }
 
 @Injectable()
 export class AnalysisService {
-  private dayAPI = inject(DayAPI);
-  private habitAPI = inject(HabitAPI);
+  private analysisAPI = inject(AnalysisAPI);
 
   // States
   isLoading = signal<boolean>(false);
@@ -41,13 +39,17 @@ export class AnalysisService {
     return days.length > 0 ? days.reduce((a, b) => a.completionPercentage < b.completionPercentage ? a : b) : null;
   });
 
+  // بنستبعد العادات اللي لسه معملتلهاش أي Day (hasData: false) من المقارنة
+  // عشان منقولش "أسوأ عادة" على عادة لسه ما اتتابعتش أصلاً
+  trackedHabits = computed(() => this.allHabits().filter(h => h.hasData));
+
   bestHabit = computed(() => {
-    const habits = this.allHabits();
+    const habits = this.trackedHabits();
     return habits.length > 0 ? habits.reduce((a, b) => a.completionRate > b.completionRate ? a : b) : null;
   });
 
   worstHabit = computed(() => {
-    const habits = this.allHabits();
+    const habits = this.trackedHabits();
     return habits.length > 0 ? habits.reduce((a, b) => a.completionRate < b.completionRate ? a : b) : null;
   });
 
@@ -60,19 +62,19 @@ export class AnalysisService {
 
   totalDaysCount = computed(() => this.allDays().length);
 
+  /**
+   * الحساب كله بقى شغال في الـ Backend (Analysis Feature)
+   * الـ endpoint الواحد ده بيرجع الأيام والعادات جاهزين بالنسب الصحيحة،
+   * فاختفت مشكلة إن completionRate بتاع العادات كان بيتحط صفر دايمًا.
+   */
   loadAnalytics() {
     this.isLoading.set(true);
 
-    // بنستخدم forkJoin عشان نسحب كل البيانات مرة واحدة
-    forkJoin({
-      daysRes: this.dayAPI.readAll(),
-      habitsRes: this.habitAPI.readAll()
-    }).subscribe({
-      next: ({ daysRes, habitsRes }) => {
-        const days = daysRes.data?.days ?? [];
-        const habits = habitsRes.data?.habits ?? [];
+    this.analysisAPI.read().subscribe({
+      next: (response) => {
+        const days = response.data?.days ?? [];
+        const habits = response.data?.habits ?? [];
 
-        // 1. تحويل بيانات الأيام (التوافق مع ReadDaySummaryResponse)
         const daysAnalytics: DayAnalytics[] = days.map(day => ({
           dayId: day.dayId,
           date: day.date,
@@ -82,28 +84,17 @@ export class AnalysisService {
         }));
         this.allDays.set(daysAnalytics);
 
-        /**
-         * 2. حساب إحصائيات العادات
-         * ملحوظة: الـ readAll للأيام مش بتبعت تفاصيل العادات (بس العدد والنسبة).
-         * عشان نحسب "أفضل عادة" بدقة، لازم نسحب تفاصيل كل يوم، وده تقيل جداً لو الأيام كتير.
-         * كحل وسط، هنعتمد على البيانات المتاحة أو نفترض توزيعاً متساوياً،
-         * بس الصح إن الباك إند هو اللي يحسب دي.
-         * هنا هنخليها أصفار مؤقتاً لحد ما الـ API يدعمها، أو نحسبها لو الـ API بيبعت Habits.
-         */
-        const habitsAnalytics: HabitAnalytics[] = habits.map(habit => {
-          // حالياً الـ ReadDaySummaryResponse مبيبعتش الـ Habits بالتفصيل
-          // فالحساب هنا هيفترض 0 لحد ما نطور الـ API
-          return {
-            habitId: habit.habitId,
-            habitName: habit.habitName,
-            completionRate: 0, 
-            totalDays: 0,
-            completedDays: 0,
-            habitColor: habit.habitColor ?? '#cc8500'
-          };
-        });
-
+        const habitsAnalytics: HabitAnalytics[] = habits.map(habit => ({
+          habitId: habit.habitId,
+          habitName: habit.habitName,
+          completionRate: habit.completionRate ?? 0,
+          totalDays: habit.totalDays ?? 0,
+          completedDays: habit.completedDays ?? 0,
+          habitColor: habit.habitColor ?? '#cc8500',
+          hasData: habit.hasData ?? (habit.totalDays ?? 0) > 0
+        }));
         this.allHabits.set(habitsAnalytics);
+
         this.isLoading.set(false);
       },
       error: () => {

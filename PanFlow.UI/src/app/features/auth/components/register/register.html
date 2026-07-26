@@ -1,7 +1,7 @@
 <div class="container">
   <div class="img">
-    <img class="think" src="Images/lamb.png" alt="Lamb" />
-    <img class="normal" src="Images/normal.png" alt="Normal" />
+    <img class="think" src="Images/lamb.png" [attr.alt]="'register.lamb' | translate" />
+    <img class="normal" src="Images/normal.png" [attr.alt]="'register.normal' | translate" />
   </div>
 
   <form
@@ -18,19 +18,21 @@
         </div>
       }
 
-      <app-auth-input controlName="userName" label="user name"></app-auth-input>
+      <app-auth-input controlName="userName" [label]="'register.userName' | translate"></app-auth-input>
 
-      <app-auth-input controlName="email" label="email" type="email"></app-auth-input>
-<app-password-input 
-  label="password" 
-  [control]="passwordControl">
-</app-password-input>
+      <app-auth-input controlName="email" [label]="'register.email' | translate" type="email"></app-auth-input>
+      
+      <app-password-input 
+        [label]="'register.password' | translate" 
+        [control]="passwordControl">
+      </app-password-input>
 
-<app-password-input 
-  label="confirm password" 
-  [control]="registerService.confirm"
-  [passwordToMatch]="passwordControl">
-</app-password-input>
+      <app-password-input 
+        [label]="'register.confirmPassword' | translate" 
+        [control]="registerService.confirm"
+        [passwordToMatch]="passwordControl">
+      </app-password-input>
+
       <div class="submit">
         <button
           type="submit"
@@ -42,12 +44,12 @@
             !registerService.matchPassword
           "
         >
-          {{ registerService.isLoading ? 'loading...' : 'sign up' }}
+          {{ registerService.isLoading ? ('general.loading' | translate) : ('register.signUp' | translate) }}
         </button>
       </div>
 
       <div class="login">
-        <p>have an account? <a routerLink="/login">login</a></p>
+        <p>{{ 'register.haveAccount' | translate }} <a routerLink="/login">{{ 'register.login' | translate }}</a></p>
       </div>
     </fieldset>
   </form>

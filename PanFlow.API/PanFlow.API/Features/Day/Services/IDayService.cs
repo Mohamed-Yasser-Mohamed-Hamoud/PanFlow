@@ -1,6 +1,8 @@
 using PanFlow.API.Features.Day.DTOs.AddHabits;
 using PanFlow.API.Features.Day.DTOs.Create;
+using PanFlow.API.Features.Day.DTOs.Delete;
 using PanFlow.API.Features.Day.DTOs.Read;
+using PanFlow.API.Features.Day.DTOs.Restore;
 using PanFlow.API.Features.Day.DTOs.Update;
 using PanFlow.API.Shared.DTOs;
 
@@ -8,34 +10,29 @@ namespace PanFlow.API.Features.Day.Services
 {
     public interface IDayService
     {
-        // create Day (ممكن يتعمل بعادات مبدئية، أو فاضي وتتضاف العادات بعدين)
+        // create Day
         public Task<GeneralResponseDto<CreateDayResponse>> Create(CreateDayRequest request, string userId);
 
-
-        // إضافة عادات لليوم بعد إنشائه
-        public Task<GeneralResponseDto<AddHabitsToDayResponse>> AddHabitsToDay(AddHabitsToDayRequest request, string userId);
-
-
+        public Task<GeneralResponseDto<object>> RemoveHabit(RemoveHabitFromDayRequest request);
         // Read
-        public Task<GeneralResponseDto<ReadDayResponse>> Read(ReadDayRequest request, string userId);
+        public Task<GeneralResponseDto<ReadDayResponse>> Read(ReadDayRequest request);
         public Task<GeneralResponseDto<ReadAllDayResponse>> GetAllDays(string userId);
+        public Task<GeneralResponseDto<ReadAllDayResponse>> GetDeletedDays(string userId);
         public Task<GeneralResponseDto<ReadDayResponse>> GetToday(string userId);
 
 
-        // update Habit status inside a Day
-        public Task<GeneralResponseDto<object>> UpdateHabitStatus(UpdateHabitDayRequest request, string userId);
+        // update DayHabit (تيك/إلغاء تيك عادة جوه يوم معين)
+        public Task<GeneralResponseDto<object>> UpdateHabitStatus(UpdateDayHabitRequest request);
+        Task<GeneralResponseDto<AddHabitsToDayResponse>> AddHabits(AddHabitsToDayRequest request);
 
+        // Delete Day
+        public Task<GeneralResponseDto<object>> Delete(DeleteDayRequest request);
+        public Task<GeneralResponseDto<object>> DeleteForEver(DeleteDayRequest request);
 
-        // Delete Day (Soft Delete)
-        public Task<GeneralResponseDto<object>> Delete(string dayId, string userId);
 
         // Restore Day
-        public Task<GeneralResponseDto<object>> Restore(string dayId, string userId);
+        public Task<GeneralResponseDto<object>> Restore(RestoreDayRequest request);
 
-        // Remove habit from day
-        public Task<GeneralResponseDto<object>> RemoveHabitFromDay(string dayId, string habitId, string userId);
 
-        // Reorder habits in day
-        public Task<GeneralResponseDto<object>> ReorderHabits(string dayId, List<string> habitIds, string userId);
     }
 }

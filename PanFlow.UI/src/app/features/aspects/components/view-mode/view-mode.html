@@ -2,14 +2,14 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">View</p>
-        <h2>aspect</h2>
+        <p class="eyebrow">{{ 'aspects.viewEyebrow' | translate }}</p>
+        <h2>{{ 'aspects.aspectLabel' | translate }}</h2>
       </div>
       <button
         type="button"
         (click)="aspectService.openListMode()"
         class="exit"
-        aria-label="Close profile"
+        [attr.aria-label]="'aspects.closeView' | translate"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -42,14 +42,14 @@
 
     <div class="aspectHabit">
       <div class="titleText">
-        <p class="eyebrow">aspect</p>
-        <h3>habits</h3>
+        <p class="eyebrow">{{ 'aspects.eyebrow' | translate }}</p>
+        <h3>{{ 'aspects.habitsTitle' | translate }}</h3>
       </div>
     </div>
 
     <div class="habits">
       @if (aspectService.aspectHabits().length === 0) {
-        <p>No habits for this aspect</p>
+        <p>{{ 'aspects.noHabits' | translate }}</p>
       } @else {
         @for (habit of aspectService.aspectHabits(); track habit.habitId) {
           <div class="habitCard">

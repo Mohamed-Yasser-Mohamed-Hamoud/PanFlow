@@ -2,14 +2,14 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">create</p>
-        <h2>habit</h2>
+        <p class="eyebrow">{{ 'habits.createAction' | translate }}</p>
+        <h2>{{ 'habits.habit' | translate }}</h2>
       </div>
       <button
         type="button"
         (click)="habitService.openListMode()"
         class="exit"
-        aria-label="Close profile"
+        [attr.aria-label]="'general.close' | translate"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,9 +32,9 @@
 
     <form class="form" [formGroup]="habitService.habitForm" (ngSubmit)="habitService.createHabit()">
       <div class="aspectSelect">
-        <label for="aspectId">aspect</label>
+        <label for="aspectId">{{ 'habits.aspect' | translate }}</label>
         <select id="aspectId" formControlName="aspectId">
-          <option value="" disabled>choose an aspect</option>
+          <option value="" disabled>{{ 'habits.chooseAspect' | translate }}</option>
           @for (aspect of habitService.aspects(); track aspect.aspectId) {
             <option [value]="aspect.aspectId">{{ aspect.aspectName }}</option>
           }
@@ -42,7 +42,7 @@
       </div>
 
       <div class="habitName">
-        <app-auth-input label="habit name" controlName="habitName"></app-auth-input>
+        <app-auth-input [label]="'habits.name' | translate" controlName="habitName"></app-auth-input>
       </div>
 
       <div class="submit">
@@ -51,7 +51,7 @@
           [class.disabled]="habitService.habitForm.invalid || habitService.isLoadingCreate()"
           [disabled]="habitService.habitForm.invalid || habitService.isLoadingCreate()"
         >
-          {{ habitService.isLoadingCreate() ? 'loading...' : 'create' }}
+          {{ habitService.isLoadingCreate() ? ('general.loading' | translate) : ('habits.createAction' | translate) }}
         </button>
       </div>
     </form>

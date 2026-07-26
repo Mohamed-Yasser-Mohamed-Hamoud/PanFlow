@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PanFlow.API.Features.Users.DTOs.Delete;
 using PanFlow.API.Features.Users.DTOs.Update;
 using PanFlow.API.Features.Users.Services;
 using PanFlow.API.Shared.Controller;
@@ -49,11 +50,11 @@ public class UsersController : ApiBaseController
     }
 
     [HttpDelete("profile")]
-    public async Task<IActionResult> DeleteUser()
+    public async Task<IActionResult> DeleteUser([FromBody] DeleteUserRequest request)
     {
         if (string.IsNullOrEmpty(CurrentUserId)) return Unauthorized(new { message = "Invalid Token" });
 
-        var result = await _userService.DeleteUserAsync(CurrentUserId);
+        var result = await _userService.DeleteUserAsync(CurrentUserId , request);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 }

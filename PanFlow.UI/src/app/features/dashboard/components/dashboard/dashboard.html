@@ -1,6 +1,7 @@
 <div class="card">
+  <!-- ================= Date Header ================= -->
   <div class="card-date">
-    <button class="date-arrow" aria-label="Previous day" (click)="dashboardService.previouseDay()">
+    <button class="date-arrow" [attr.aria-label]="'dashboard.previousDay' | translate" (click)="dashboardService.previouseDay()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="28"
@@ -21,7 +22,7 @@
 
     <p>{{ dashboardService.today }}</p>
 
-    <button class="date-arrow" aria-label="Next day" (click)="dashboardService.nextDay()">
+    <button class="date-arrow" [attr.aria-label]="'dashboard.nextDay' | translate" (click)="dashboardService.nextDay()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="28"
@@ -41,10 +42,15 @@
     </button>
   </div>
 
-  <!-- الجزء ده بس اللي بيتعمله Blur لما اليوم يكون لسه مقفول (مش متعمل) -->
+  <!-- ================= Lockable Content ================= -->
   <div class="lockable" [class.locked]="dashboardService.isLocked()">
+    <!-- ===== Title Row ===== -->
     <div class="card-title">
-      <button class="add-task" (click)="dashboardService.openAddTaskModal()" [disabled]="dashboardService.isLocked()">
+      <button
+        class="add-task"
+        (click)="dashboardService.openAddTaskModal()"
+        [disabled]="dashboardService.isLocked()"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -60,43 +66,50 @@
           <path d="M8 12h8" />
           <path d="M12 8v8" />
         </svg>
-        <span class="add-task__label">{{ 'dashboard.addTask' | translate }}</span>
+
+        <span class="add-task__label">
+          {{ 'dashboard.addTask' | translate }}
+        </span>
       </button>
 
       <p>{{ dashboardService.dayName }}</p>
 
-      <span class="percent-ring">
-        <span class="percent-num">{{ dashboardService.currentDay()?.completionPercentage ?? 0 }}%</span>
-      </span>
+      <div class="percent-ring">
+        <div class="percent-num">
+          {{ dashboardService.currentDay()?.completionPercentage ?? 0 }}%
+        </div>
+      </div>
     </div>
 
     <hr class="card-divider" />
 
-    <!-- Day Actions (Delete/Restore) -->
+    <!-- Day Actions -->
     @if (!dashboardService.isLocked() && dashboardService.currentDay()) {
       <div class="day-actions">
-        @if (!dashboardService.currentDay()?.isDeleted) {
-          <button class="action-btn delete-btn" (click)="dashboardService.deleteDay()" title="Delete this day">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 6h18" />
-              <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
-              <path d="M10 11v6" />
-              <path d="M14 11v6" />
-            </svg>
-            {{ 'dashboard.deleteDay' | translate }}
-          </button>
-        } @else {
-          <button class="action-btn restore-btn" (click)="dashboardService.restoreDay()" title="Restore this day">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 7v6h6" />
-              <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
-            </svg>
-            {{ 'dashboard.restoreDay' | translate }}
-          </button>
-        }
+        <button class="action-btn delete-btn" (click)="dashboardService.deleteDay()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 6h18" />
+            <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
+            <path d="M10 11v6" />
+            <path d="M14 11v6" />
+          </svg>
+
+          {{ 'dashboard.deleteDay' | translate }}
+        </button>
       </div>
     }
 
+    <!-- Body -->
     <div class="card-body">
       @if (dashboardService.isLoadingCard()) {
         <div class="card-loader">
@@ -107,30 +120,39 @@
           <p>{{ 'dashboard.noHabits' | translate }}</p>
         </div>
       } @else {
-        <ul class="habitsList" cdkDropList (cdkDropListDropped)="dashboardService.onHabitDrop($event)">
+        <ul class="habitsList">
           @for (habit of dashboardService.currentDay()?.habits; track habit.habitId) {
-            <li class="habitItem" [style.border-left]="'6px solid ' + habit.habitColor" cdkDrag>
-              <div class="habit-drag-handle" cdkDragHandle>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="9" cy="5" r="1.5" />
-                  <circle cx="9" cy="12" r="1.5" />
-                  <circle cx="9" cy="19" r="1.5" />
-                  <circle cx="16" cy="5" r="1.5" />
-                  <circle cx="16" cy="12" r="1.5" />
-                  <circle cx="16" cy="19" r="1.5" />
-                </svg>
-              </div>
+            <li class="habitItem" [style.border-left]="'6px solid ' + habit.habitColor">
               <label class="habitLabel">
                 <input
                   type="checkbox"
                   [checked]="habit.isChecked"
                   (change)="dashboardService.toggleHabit(habit)"
                 />
-                <span [class.done]="habit.isChecked">{{ habit.habitName }}</span>
+
+                <span [class.done]="habit.isChecked">
+                  {{ habit.habitName }}
+                </span>
               </label>
-              <button class="habit-remove-btn" (click)="dashboardService.removeHabitFromDay(habit)" title="Remove from today">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 6l-12 12" />
+
+              <!-- زرار الحذف -->
+              <button
+                class="habit-remove-btn"
+                (click)="dashboardService.removeHabitFromDay(habit)"
+                [title]="'dashboard.removeHabit' | translate"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 6L6 18" />
                   <path d="M6 6l12 12" />
                 </svg>
               </button>
@@ -141,7 +163,7 @@
     </div>
   </div>
 
-  <!-- زرار الـ Unlock بيظهر بس لما اليوم يكون مقفول، فوق الطبقة المموّهة -->
+  <!-- Unlock -->
   @if (dashboardService.isLocked() && !dashboardService.isLoadingCard()) {
     <div class="unlock-overlay">
       <button
@@ -149,7 +171,11 @@
         (click)="dashboardService.unlockDay()"
         [disabled]="dashboardService.isUnlocking()"
       >
-        {{ dashboardService.isUnlocking() ? ('dashboard.unlocking' | translate) : ('dashboard.unlock' | translate) }}
+        {{
+          dashboardService.isUnlocking()
+            ? ('dashboard.unlocking' | translate)
+            : ('dashboard.unlock' | translate)
+        }}
       </button>
     </div>
   }
@@ -157,8 +183,9 @@
 
 @if (dashboardService.showAddTaskModal()) {
   <app-add-task-modal
-    [excludeHabitIds]="dashboardService.excludedHabitIds()"
+    [excludedHabitIds]="dashboardService.excludedHabitIds()"
     (close)="dashboardService.closeAddTaskModal()"
     (confirm)="dashboardService.confirmAddHabits($event)"
-  ></app-add-task-modal>
+  >
+  </app-add-task-modal>
 }

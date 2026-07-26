@@ -4,6 +4,7 @@ import { ViewMode } from "../view-mode/view-mode";
 import { CreateMode } from "../create-mode/create-mode";
 import { EditMode } from "../edit-mode/edit-mode";
 import { ListMode } from '../list-mode/list-mode';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-aspects',

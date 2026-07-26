@@ -2,8 +2,8 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">create</p>
-        <h2>aspect</h2>
+        <p class="eyebrow">{{ 'aspect.create' | translate }}</p>
+        <h2>{{ 'aspect.title' | translate }}</h2>
       </div>
       <button
         type="button"
@@ -11,33 +11,18 @@
         class="exit"
         aria-label="Close profile"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-circle-x-icon lucide-circle-x"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="m15 9-6 6" />
-          <path d="m9 9 6 6" />
-        </svg>
+        <svg ...></svg>
       </button>
     </div>
 
     <form class="form" [formGroup]="aspectService.aspectForm">
       <div class="aspectName">
-        <app-auth-input label="aspect name" controlName="aspectName"></app-auth-input>
+        <app-auth-input [label]="'aspect.name' | translate" controlName="aspectName"></app-auth-input>
       </div>
 
       <div class="aspectColor">
         <app-auth-input
-          label="aspect color"
+          [label]="'aspect.color' | translate"
           controlName="aspectColor"
           type="color"
         ></app-auth-input>
@@ -50,7 +35,7 @@
           [class.disabled]="aspectService.aspectForm.invalid || aspectService.isLoadingCreate()"
           [disabled]="aspectService.aspectForm.invalid || aspectService.isLoadingCreate()"
         >
-          {{ aspectService.isLoadingCreate() ? 'loading...' : 'create' }}
+          {{ aspectService.isLoadingCreate() ? ('common.loading' | translate) : ('common.create' | translate) }}
         </button>
       </div>
     </form>

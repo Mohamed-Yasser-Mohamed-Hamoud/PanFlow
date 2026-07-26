@@ -10,6 +10,108 @@
 }
 
 /* =========================================
+   حاوية الأزرار العائمة (أسفل الشاشة بشكل عمودي)
+   ========================================= */
+.actions-container {
+  position: absolute;
+  bottom: 24px;
+  right: 24px; /* الافتراضي (الإنجليزية): في أقصى اليمين */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  z-index: 10;
+}
+
+/* عندما تكون اللغة عربية (RTL)، تنتقل لأقصى الشمال تماماً بعيداً عن الـ Sidebar */
+[dir="rtl"] .actions-container,
+body[dir="rtl"] .actions-container,
+.rtl .actions-container,
+:lang(ar) .actions-container {
+  right: auto;
+  left: 24px;
+}
+
+/* تنسيق الأزرار داخل الحاوية */
+.actions-container .language-btn,
+.actions-container .trashIcon,
+.actions-container .setting {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: static;
+}
+
+/* زر اللغة */
+.actions-container .language-btn {
+  background-color: var(--clr-bg);
+  color: var(--clr-text-body);
+}
+
+.actions-container .language-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.actions-container .language-btn:hover {
+  background-color: var(--clr-primary);
+  color: var(--clr-bg);
+  transform: scale(1.05);
+}
+
+.actions-container .language-btn:hover svg {
+  transform: rotate(20deg);
+}
+
+/* زر السلة (Trash) */
+.actions-container .trashIcon {
+  background-color: #fff1f2;
+  color: var(--clr-error);
+}
+
+.actions-container .trashIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.actions-container .trashIcon:hover {
+  background-color: #ffe4e6;
+  box-shadow: 0 4px 15px rgba(223, 28, 28, 0.2);
+  transform: scale(1.05);
+}
+
+/* زر الإعدادات (Setting) */
+.actions-container .setting {
+  background-color: var(--clr-bg);
+}
+
+.actions-container .setting svg {
+  width: 24px;
+  height: 24px;
+  color: var(--clr-text-body);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.actions-container .setting:hover {
+  background-color: var(--clr-primary);
+  box-shadow: 0 4px 15px rgba(204, 133, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.actions-container .setting:hover svg {
+  color: var(--clr-bg);
+  transform: rotate(90deg);
+}
+
+/* =========================================
    Sidebar
    ========================================= */
 .sidebar {
@@ -44,9 +146,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition:
-    background 0.3s,
-    transform 0.4s;
+  transition: background 0.3s, transform 0.4s;
   margin-bottom: 30px;
 }
 .toggle-btn:hover {
@@ -140,73 +240,8 @@
   overflow: hidden;
 }
 
-/* =========================================
-   الترس والبروفايل الثابتين في الـ Layout
-   ========================================= */
-
-
-.trashIcon {
-  position: absolute;
-  bottom: 80px;        /* أعلى من setting */
-  right: 24px;         /* نفس المسافة من اليمين */
-  width: 48px;
-  height: 48px;
-  background-color: #fff1f2;
-  color: var(--clr-error);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  z-index: 2;          /* أعلى من setting (z-index:1) */
-}
-
-
-/* تأثير الـ Hover للمراية (الأحمر) */
-.trashIcon:hover {
-  background-color: #ffe4e6; /* بيفتح سنة عند الهوفر */
-  box-shadow: 0 4px 15px rgba(223, 28, 28, 0.2); /* شادو أحمر خفيف يتناسب مع لونه */
-  transform: scale(1.05);    /* نفس نسبة التكبير بالظبط */
-}
-
-.setting {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
-  background-color: var(--clr-bg);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  z-index: 1;
-}
-.setting svg {
-  width: 24px;
-  height: 24px;
-  color: var(--clr-text-body);
-  transition:
-    transform 0.3s ease,
-    color 0.3s ease;
-}
-.setting:hover {
-  background-color: var(--clr-primary);
-  box-shadow: 0 4px 15px rgba(204, 133, 0, 0.3);
-  transform: scale(1.05);
-}
-.setting:hover svg {
-  color: var(--clr-bg);
-  transform: rotate(90deg);
-}
-
-.userProfile , .trash {
-  z-index: 3;
+.userProfile, .trash {
+  z-index: 20;
   position: absolute;
 }
 

@@ -1,37 +1,30 @@
 import { Injectable } from '@angular/core';
-import { icons } from 'lucide';
 import Swal from 'sweetalert2';
+import { LanguageService } from '../../core/services/language.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Popup {
   
-  constructor() {}
+  constructor(private languageService: LanguageService) {}
 
-  underWork()
-  {
-
+  underWork() {
     Swal.fire({
-    title : 'still in progress 🚧',
-    icon : 'info',
-    confirmButtonText : 'Ok',
-    confirmButtonColor : '#cc8500',
-    background : '#ffffff',
-    customClass: 
-    {
-      popup : 'my-popup'
-    },
-    showClass:{
-      popup : 'animate__animated animate__fadeInDown'
-    },
-    hideClass:{
-      popup:'animate__animated animate__fadeOutUp'
-    },
-  });
+      title: this.languageService.translate('popup.underWork'), // أو ضع مفتاح الترجمة الخاص بك
+      icon: 'info',
+      confirmButtonText: this.languageService.translate('general.ok'),
+      confirmButtonColor: '#cc8500',
+      background: '#ffffff',
+      customClass: {
+        popup: 'my-popup'
+      },
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      },
+    });
   }
-
-
-
-
 }

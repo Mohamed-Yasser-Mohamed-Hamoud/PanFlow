@@ -145,6 +145,9 @@ fieldset {
   letter-spacing: 2px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-top: clamp(5px, 1.5vh, 15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .submit button:hover {

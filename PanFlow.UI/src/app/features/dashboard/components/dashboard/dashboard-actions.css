@@ -93,7 +93,6 @@
   cursor: grab;
   color: var(--clr-border);
   flex-shrink: 0;
-  cdkDragHandle;
 }
 
 .habit-drag-handle:hover {

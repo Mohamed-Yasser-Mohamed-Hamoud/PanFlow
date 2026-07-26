@@ -2,15 +2,15 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">modify</p>
-        <h2>edit aspect</h2>
+        <p class="eyebrow">{{ 'aspects.modify' | translate }}</p>
+        <h2>{{ 'aspects.editAspect' | translate }}</h2>
       </div>
 
       <button
         type="button"
         (click)="aspectService.openListMode()"
         class="exit"
-        aria-label="Close profile"
+        [attr.aria-label]="'general.close' | translate"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,14 +38,14 @@
     >
       <div class="aspectName">
         <app-auth-input
-          label="aspect name"
+          [label]="'aspects.name' | translate"
           controlName="aspectName"
         ></app-auth-input>
       </div>
 
       <div class="aspectColor">
         <app-auth-input
-          label="aspect color"
+          [label]="'aspects.color' | translate"
           controlName="aspectColor"
           type="color"
         ></app-auth-input>
@@ -59,8 +59,8 @@
         >
           {{
             aspectService.isLoadingEdit()
-              ? 'loading...'
-              : 'save changes'
+              ? ('general.loading' | translate)
+              : ('aspects.saveChanges' | translate)
           }}
         </button>
       </div>

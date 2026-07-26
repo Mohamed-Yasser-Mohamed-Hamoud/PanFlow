@@ -1,27 +1,90 @@
 <div class="container">
   <!-- <div class="startDay">
     <button (click)="dayService.startToday()" [disabled]="dayService.isLoadingStart()">
-      {{ dayService.isLoadingStart() ? 'loading...' : 'start today' }}
+      {{ dayService.isLoadingStart() ? ('daysList.loadingStart' | translate) : ('daysList.startToday' | translate) }}
     </button>
   </div> -->
 
   @if (dayService.isLoading()) {
     <div class="days-loader">
       <div class="spinner"></div>
-      <p>Loading days information...</p>
+      <p>{{ 'daysList.loading' | translate }}</p>
     </div>
   } @else if (dayService.days().length === 0) {
     <div class="empty-state">
-      <h1>There are no days yet</h1>
-      <p>Start today to begin tracking your habits.</p>
+      <h1>{{ 'daysList.noDaysTitle' | translate }}</h1>
+      <p>{{ 'daysList.noDaysSubtitle' | translate }}</p>
     </div>
   } @else {
     <main class="cards">
       @for (day of dayService.days(); track day.dayId) {
-        <button class="mini-card" (click)="dayService.openViewMode(day.dayId)">
-          <p class="mini-date">{{ day.date }}</p>
-          <span class="mini-completion">{{ day.completionPercentage }}%</span>
-        </button>
+        <div class="card">
+          <div class="title">
+            <p>{{ day.date }}</p>
+            <span class="completion">{{ day.completionPercentage }}%</span>
+          </div>
+
+          <div class="progress">
+            <div class="progress-bar" [style.width.%]="day.completionPercentage"></div>
+          </div>
+
+          <p class="habitsCount">
+            {{ day.completedHabits }} / {{ day.totalHabits }} {{ 'daysList.habitsDone' | translate }}
+          </p>
+
+          <div class="buttons">
+            <button
+              class="delete-btn"
+              (click)="dayService.delete({ dayId: day.dayId })"
+              [attr.title]="'daysList.delete' | translate"
+              [attr.aria-label]="'daysList.delete' | translate"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-trash2-icon lucide-trash-2"
+              >
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                <path d="M3 6h18" />
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              </svg>
+            </button>
+
+            <button
+              class="show-btn"
+              (click)="dayService.openViewMode(day.dayId)"
+              [attr.title]="'daysList.view' | translate"
+              [attr.aria-label]="'daysList.view' | translate"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-eye-icon lucide-eye"
+              >
+                <path
+                  d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+        </div>
       }
     </main>
   }

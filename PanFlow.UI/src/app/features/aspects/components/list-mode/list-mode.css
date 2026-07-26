@@ -150,6 +150,9 @@
 .buttons button.edit-btn {
   background-color: #f1f5f9;
   color: #0a4be1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .buttons button.edit-btn:hover {
   background-color: #e2e8f0;
@@ -158,6 +161,9 @@
 .buttons button.delete-btn {
   background-color: #fff1f2;
   color: #df1c1c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .buttons button.delete-btn:hover {
   background-color: #ffe4e6;
@@ -166,6 +172,9 @@
 
 .buttons button.show-btn {
   background-color: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .buttons button.show-btn:hover {
   background-color: #e1e0e0;

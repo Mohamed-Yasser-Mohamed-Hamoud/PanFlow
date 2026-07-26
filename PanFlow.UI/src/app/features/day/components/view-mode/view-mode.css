@@ -1,7 +1,7 @@
 /* ───────── Overlay ───────── */
 .container {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,16 +12,16 @@
 /* ───────── Card ───────── */
 .card {
   width: min(100%, 700px);
-  height: min(100%, 700px);
-
   padding: clamp(24px, 3vw, 36px);
   background: var(--clr-bg);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-card);
   box-shadow: 0 12px 40px var(--clr-shadow);
+  color: var(--clr-text-body);
 
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* ───────── Header ───────── */
@@ -131,16 +131,12 @@
 
 /* ───────── Habits Checklist ───────── */
 .habitsList {
-  flex: 1;
-  overflow-y: auto;
-
   list-style: none;
   margin: 0;
   padding: 0;
-
   display: flex;
   flex-direction: column;
-  gap: .75rem;
+  gap: 0.75rem;
 }
 
 .habitItem {
@@ -176,28 +172,7 @@
 }
 
 .empty-habits {
-  flex: 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   text-align: center;
-}
-
-.habitsList::-webkit-scrollbar {
-  width: 6px;
-}
-
-.habitsList::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.habitsList::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--clr-primary-light) 20%, transparent);
-  border-radius: 999px;
-}
-
-.habitsList::-webkit-scrollbar-thumb:hover {
-  background: var(--clr-primary);
+  padding: 1.5rem 1rem;
+  color: var(--clr-text-body);
 }

@@ -58,6 +58,7 @@
 
 
 .card {
+  max-height: 150px;
   background: var(--clr-bg);
   border: 1px solid var(--clr-border);
   border-left: 6px solid var(--clr-primary);

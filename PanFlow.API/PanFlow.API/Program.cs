@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using PanFlow.API.Data;
+using PanFlow.API.Features.Analysis.Services;
 using PanFlow.API.Features.Aspects.Services;
 using PanFlow.API.Features.Auth.Services;
 using PanFlow.API.Features.Day.Services;
@@ -113,6 +114,7 @@ builder.Services.AddScoped<IUserService , UserService>();
 builder.Services.AddScoped<IAspectService, AspectService>();
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IDayService, DayService>();
+builder.Services.AddScoped<IAnalysisService, AnalysisService>();
 
 var app = builder.Build();
 

@@ -2,15 +2,15 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">modify</p>
-        <h2>edit habit</h2>
+        <p class="eyebrow">{{ 'habits.modifyEyebrow' | translate }}</p>
+        <h2>{{ 'habits.editHabitTitle' | translate }}</h2>
       </div>
 
       <button
         type="button"
         (click)="habitService.openListMode()"
         class="exit"
-        aria-label="Close profile"
+        [attr.aria-label]="'habits.closeEdit' | translate"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,19 +33,19 @@
 
     <form class="form" [formGroup]="habitService.habitForm" (ngSubmit)="habitService.updateHabit()">
       <div class="habitName">
-        <app-auth-input label="habit name" controlName="habitName"></app-auth-input>
+        <app-auth-input [label]="'habits.habitName' | translate" controlName="habitName"></app-auth-input>
       </div>
-<div class="aspect">
-  <label for="aspect">Aspect</label>
+      <div class="aspect">
+        <label for="aspect">{{ 'habits.aspectLabel' | translate }}</label>
 
-  <select id="aspect" formControlName="aspectId">
-    @for (aspect of habitService.aspects(); track aspect.aspectId) {
-      <option [value]="aspect.aspectId">
-        {{ aspect.aspectName }}
-      </option>
-    }
-  </select>
-</div>
+        <select id="aspect" formControlName="aspectId">
+          @for (aspect of habitService.aspects(); track aspect.aspectId) {
+            <option [value]="aspect.aspectId">
+              {{ aspect.aspectName }}
+            </option>
+          }
+        </select>
+      </div>
 
       <div class="submit">
         <button
@@ -53,7 +53,7 @@
           [disabled]="habitService.habitForm.invalid || habitService.isLoadingEdit()"
           [class.disabled]="habitService.habitForm.invalid || habitService.isLoadingEdit()"
         >
-          {{ habitService.isLoadingEdit() ? 'loading...' : 'save changes' }}
+          {{ habitService.isLoadingEdit() ? ('habits.loading' | translate) : ('habits.saveChanges' | translate) }}
         </button>
       </div>
     </form>

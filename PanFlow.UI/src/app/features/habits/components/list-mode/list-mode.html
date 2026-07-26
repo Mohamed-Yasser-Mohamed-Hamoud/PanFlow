@@ -2,12 +2,12 @@
   @if (habitService.isLoading()) {
     <div class="habits-loader">
       <div class="spinner"></div>
-      <p>Loading habits information...</p>
+      <p>{{ 'habits.loading' | translate }}</p>
     </div>
   } @else if (habitService.habits().length === 0) {
     <div class="empty-state">
-      <h1>There are no habits</h1>
-      <p>Create your first habit to get started.</p>
+      <h1>{{ 'habits.noHabits' | translate }}</h1>
+      <p>{{ 'habits.noHabitsSubtitle' | translate }}</p>
     </div>
 
     <div class="addHabit">
@@ -29,13 +29,13 @@
           <path d="M12 8v8" />
         </svg>
 
-        <span>Add Habit</span>
+        <span>{{ 'habits.addHabit' | translate }}</span>
       </button>
     </div>
   } @else {
     <main class="cards">
       @for (habit of habitService.habits(); track habit.habitId) {
-        <div class="card"   [style.border-left]="'6px solid ' + habit.habitColor"   >
+        <div class="card" [style.border-left]="'6px solid ' + habit.habitColor">
           <div class="title">
             <p>{{ habit.habitName }}</p>
           </div>
@@ -44,6 +44,8 @@
             <button
               class="delete-btn"
               (click)="habitService.delete({ habitId: habit.habitId })"
+              [attr.title]="'habits.delete' | translate"
+              [attr.aria-label]="'habits.delete' | translate"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +67,12 @@
               </svg>
             </button>
 
-            <button class="edit-btn" (click)="habitService.openEditMode(habit)">
+            <button 
+              class="edit-btn" 
+              (click)="habitService.openEditMode(habit)"
+              [attr.title]="'habits.edit' | translate"
+              [attr.aria-label]="'habits.edit' | translate"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="15"
@@ -88,6 +95,8 @@
             <button
               class="show-btn"
               (click)="habitService.openViewMode({ habitId: habit.habitId })"
+              [attr.title]="'habits.view' | translate"
+              [attr.aria-label]="'habits.view' | translate"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +140,7 @@
           <path d="M12 8v8" />
         </svg>
 
-        <span>Add Habit</span>
+        <span>{{ 'habits.addHabit' | translate }}</span>
       </button>
     </div>
   }

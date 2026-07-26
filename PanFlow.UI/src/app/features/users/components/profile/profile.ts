@@ -5,6 +5,7 @@ import { ProfileService } from './profile-service';
 // 💡 استيراد المكونات المشتركة النظيفة
 import { AuthInput } from '../../../../shared/components/auth-input/auth-input';
 import { PasswordInput } from '../../../../shared/components/password-input/password-input';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { PasswordInput } from '../../../../shared/components/password-input/pass
   imports: [
     ReactiveFormsModule, 
     AuthInput, 
-    PasswordInput
+    PasswordInput,
+    TranslatePipe
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css',

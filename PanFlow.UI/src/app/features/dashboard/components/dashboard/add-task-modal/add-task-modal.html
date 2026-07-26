@@ -1,17 +1,17 @@
 <div class="modal-backdrop" (click)="onClose()">
   <div class="modal-card" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h3>ضيف عادة لليوم</h3>
-      <button class="modal-close" (click)="onClose()" aria-label="Close">✕</button>
+      <h3>{{ 'addTaskModal.title' | translate }}</h3>
+      <button class="modal-close" (click)="onClose()" [attr.aria-label]="'general.close' | translate">✕</button>
     </div>
 
     <div class="modal-body">
-      <p class="section-label">اختار الجانب</p>
+      <p class="section-label">{{ 'addTaskModal.selectAspect' | translate }}</p>
 
       @if (isLoadingAspects()) {
-        <p class="hint">جاري تحميل الجوانب...</p>
+        <p class="hint">{{ 'addTaskModal.loadingAspects' | translate }}</p>
       } @else if (aspects().length === 0) {
-        <p class="hint">مفيش جوانب لسه. ضيف جانب الأول.</p>
+        <p class="hint">{{ 'addTaskModal.noAspects' | translate }}</p>
       } @else {
         <div class="aspects-row">
           @for (aspect of aspects(); track aspect.aspectId) {
@@ -28,12 +28,12 @@
       }
 
       @if (selectedAspectId()) {
-        <p class="section-label">اختار العادات</p>
+        <p class="section-label">{{ 'addTaskModal.selectHabits' | translate }}</p>
 
         @if (isLoadingHabits()) {
-          <p class="hint">جاري تحميل العادات...</p>
+          <p class="hint">{{ 'addTaskModal.loadingHabits' | translate }}</p>
         } @else if (habits().length === 0) {
-          <p class="hint">مفيش عادات متاحة في الجانب ده (يمكن كلها مضافة بالفعل).</p>
+          <p class="hint">{{ 'addTaskModal.noHabits' | translate }}</p>
         } @else {
           <ul class="habits-list">
             @for (habit of habits(); track habit.habitId) {
@@ -54,8 +54,8 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn-secondary" (click)="onClose()">إلغاء</button>
-      <button class="btn-primary" (click)="onConfirm()">Add</button>
+      <button class="btn-secondary" (click)="onClose()">{{ 'addTaskModal.cancel' | translate }}</button>
+      <button class="btn-primary" (click)="onConfirm()">{{ 'addTaskModal.add' | translate }}</button>
     </div>
   </div>
 </div>

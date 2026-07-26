@@ -15,13 +15,10 @@ namespace PanFlow.API.Features.Day.DTOs.Read
 
         [Required]
         [JsonPropertyName("habits")]
-        public required List<ReadHabitDayResponse> Habits { get; set; }
+        public required List<ReadDayHabitResponse> Habits { get; set; }
 
         [Required]
         [JsonPropertyName("completionPercentage")]
         public required double CompletionPercentage { get; set; }
-        
-        [JsonPropertyName("isDeleted")]
-        public bool IsDeleted { get; set; }
     }
 }

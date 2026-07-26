@@ -212,6 +212,22 @@
   color: var(--clr-text-body);
 }
 
+/* عادة لسه معملتلهاش أي Day خالص - مش "بتفشل"، بس مفيش بيانات عنها */
+.no-data-row {
+  opacity: 0.55;
+}
+
+.not-tracked-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background-color: var(--clr-bg-page);
+  color: var(--clr-border);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: none;
+}
+
 .habit-cell {
   display: flex;
   align-items: center;

@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-password-input',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,TranslatePipe],
   templateUrl: './password-input.html',
   styleUrl: './password-input.css'
   // 💡 شيلنا الـ viewProviders والـ ControlContainer تماماً لمنع التضارب

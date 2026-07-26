@@ -1,9 +1,10 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { HabitService } from '../habits/habit-service';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-view-mode',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './view-mode.html',
   styleUrl: './view-mode.css',
 })

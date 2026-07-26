@@ -2,11 +2,11 @@
   <div class="card">
     <div class="title">
       <div class="titleText">
-        <p class="eyebrow">account</p>
-        <h2>profile</h2>
+        <p class="eyebrow">{{ 'profile.account' | translate }}</p>
+        <h2>{{ 'profile.title' | translate }}</h2>
       </div>
 
-      <button type="button" (click)="closeMe()" class="exit" aria-label="Close profile">
+      <button type="button" (click)="closeMe()" class="exit" [attr.aria-label]="'profile.closeProfile' | translate">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -68,7 +68,7 @@
                 <circle cx="12" cy="8" r="4" />
                 <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7" /></svg
             ></span>
-            <p>User Name</p>
+            <p>{{ 'profile.userName' | translate }}</p>
           </div>
 
           @if (!profileService.isUserNameEditing) {
@@ -77,14 +77,14 @@
             </div>
             <div class="fieldActions">
               <button type="button" class="ghost" (click)="profileService.editUserName()">
-                Change
+                {{ 'profile.change' | translate }}
               </button>
             </div>
           } @else {
             <div class="fieldValue">
               <app-auth-input
                 controlName="newUserName"
-                label="New user name"
+                [label]="'profile.newUserName' | translate"
                 type="text"
               ></app-auth-input>
             </div>
@@ -95,10 +95,10 @@
                 (click)="profileService.updateUserName(cdr)"
                 [disabled]="profileService.newUserName.invalid"
               >
-                Save
+                {{ 'profile.save' | translate }}
               </button>
               <button type="button" class="ghost" (click)="profileService.canceleditUserName()">
-                Cancel
+                {{ 'profile.cancel' | translate }}
               </button>
             </div>
           }
@@ -121,7 +121,7 @@
                 <rect x="3" y="5" width="18" height="14" rx="2" />
                 <path d="m3 7 8.4 6a1 1 0 0 0 1.2 0L21 7" /></svg
             ></span>
-            <p>Email</p>
+            <p>{{ 'profile.email' | translate }}</p>
           </div>
 
           @if (!profileService.isEmailEditing) {
@@ -130,14 +130,14 @@
             </div>
             <div class="fieldActions">
               <button type="button" class="ghost" (click)="profileService.editEmail()">
-                Change
+                {{ 'profile.change' | translate }}
               </button>
             </div>
           } @else {
             <div class="fieldValue">
               <app-auth-input
                 controlName="newEmail"
-                label="New email"
+                [label]="'profile.newEmail' | translate"
                 type="email"
               ></app-auth-input>
             </div>
@@ -148,10 +148,10 @@
                 (click)="profileService.updateEmail(cdr)"
                 [disabled]="profileService.newEmail.invalid"
               >
-                Save
+                {{ 'profile.save' | translate }}
               </button>
               <button type="button" class="ghost" (click)="profileService.canceleditEmail()">
-                Cancel
+                {{ 'profile.cancel' | translate }}
               </button>
             </div>
           }
@@ -174,24 +174,24 @@
                 <rect x="4" y="11" width="16" height="9" rx="2" />
                 <path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg
             ></span>
-            <p>Password</p>
+            <p>{{ 'profile.password' | translate }}</p>
           </div>
 
           @if (!profileService.isPasswordEditing) {
             <div class="fieldValue"><p class="maskedValue">••••••••</p></div>
             <div class="fieldActions">
               <button type="button" class="ghost" (click)="profileService.editPassword()">
-                Change
+                {{ 'profile.change' | translate }}
               </button>
             </div>
           } @else {
             <div class="fieldValue passwordStack">
               <app-password-input
-                label="Current Password"
+                [label]="'profile.currentPassword' | translate"
                 [control]="profileService.CurrentPassword"
               ></app-password-input>
               <app-password-input
-                label="New Password"
+                [label]="'profile.newPassword' | translate"
                 [control]="profileService.newPassword"
               ></app-password-input>
             </div>
@@ -204,10 +204,10 @@
                   profileService.newPassword.invalid || profileService.CurrentPassword.invalid
                 "
               >
-                Save
+                {{ 'profile.save' | translate }}
               </button>
               <button type="button" class="ghost" (click)="profileService.canceleditPassword()">
-                Cancel
+                {{ 'profile.cancel' | translate }}
               </button>
             </div>
           }
@@ -230,7 +230,7 @@
               <path d="M12 8v4" />
               <path d="M12 16h.01" />
             </svg>
-            <span>The new password cannot be the same as your current password.</span>
+            <span>{{ 'profile.samePasswordError' | translate }}</span>
           </div>
         }
 
@@ -251,7 +251,7 @@
               <path d="M12 9v5" />
               <path d="M12 17h.01" />
             </svg>
-            <span>Danger Zone</span>
+            <span>{{ 'profile.dangerZone' | translate }}</span>
           </div>
           <button type="button" class="deleteBtn" (click)="profileService.deleteButton()">
             <svg
@@ -269,14 +269,14 @@
               <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
               <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
             </svg>
-            <span>Delete Account</span>
+            <span>{{ 'profile.deleteAccount' | translate }}</span>
           </button>
         </div>
       </div>
     } @else {
       <div class="profile-loader">
         <div class="spinner"></div>
-        <p>Loading profile information...</p>
+        <p>{{ 'profile.loadingProfile' | translate }}</p>
       </div>
     }
   </div>

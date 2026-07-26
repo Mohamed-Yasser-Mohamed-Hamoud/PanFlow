@@ -3,19 +3,18 @@ import { AspectAPI } from '../../../../aspects/services/aspect-API';
 import { HabitAPI } from '../../../../habits/services/habit-API';
 import { ReadAspectResponse } from '../../../../aspects/interfaces/read/read-aspect-response';
 import { ReadHabitResponse } from '../../../../habits/interfaces/read/read-habit-response';
-
+import { TranslatePipe } from '../../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-add-task-modal',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './add-task-modal.html',
   styleUrl: './add-task-modal.css',
 })
 export class AddTaskModal implements OnInit {
   // الـ Ids بتاعة العادات الموجودة في اليوم بالفعل، عشان نستبعدها من قائمة الاختيار
-  @Input() excludeHabitIds: string[] = [];
-
+  @Input() excludedHabitIds: string[] = [];
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<string[]>();
 
@@ -61,7 +60,7 @@ export class AddTaskModal implements OnInit {
       next: (res) => {
         const list = res.data?.habits ?? [];
         // نستبعد العادات المضافة بالفعل في اليوم الحالي
-        this.habits.set(list.filter((h) => !this.excludeHabitIds.includes(h.habitId)));
+        this.habits.set(list.filter((h) => !this.excludedHabitIds.includes(h.habitId)));
         this.isLoadingHabits.set(false);
       },
       error: () => {

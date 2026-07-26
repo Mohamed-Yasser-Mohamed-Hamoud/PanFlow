@@ -5,6 +5,18 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Analysis/read": {
+      "get": {
+        "tags": [
+          "Analysis"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Aspects/create": {
       "post": {
         "tags": [
@@ -297,8 +309,20 @@
         }
       }
     },
-    "/api/Day/addHabitsToDay": {
-      "post": {
+    "/api/Day/today": {
+      "get": {
+        "tags": [
+          "Day"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/delete": {
+      "delete": {
         "tags": [
           "Day"
         ],
@@ -306,17 +330,46 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddHabitsToDayRequest"
+                "$ref": "#/components/schemas/DeleteDayRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddHabitsToDayRequest"
+                "$ref": "#/components/schemas/DeleteDayRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AddHabitsToDayRequest"
+                "$ref": "#/components/schemas/DeleteDayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Day"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteDayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteDayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteDayRequest"
               }
             }
           }
@@ -328,11 +381,30 @@
         }
       }
     },
-    "/api/Day/today": {
-      "get": {
+    "/api/Day/restore": {
+      "put": {
         "tags": [
           "Day"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDayRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -349,17 +421,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateHabitDayRequest"
+                "$ref": "#/components/schemas/UpdateDayHabitRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateHabitDayRequest"
+                "$ref": "#/components/schemas/UpdateDayHabitRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateHabitDayRequest"
+                "$ref": "#/components/schemas/UpdateDayHabitRequest"
               }
             }
           }
@@ -405,28 +477,7 @@
         }
       }
     },
-    "/api/Day/delete": {
-      "delete": {
-        "tags": [
-          "Day"
-        ],
-        "parameters": [
-          {
-            "name": "dayId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Day/restore": {
+    "/api/Day/addHabits": {
       "post": {
         "tags": [
           "Day"
@@ -435,17 +486,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RestoreDayRequest"
+                "$ref": "#/components/schemas/AddHabitsToDayRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RestoreDayRequest"
+                "$ref": "#/components/schemas/AddHabitsToDayRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RestoreDayRequest"
+                "$ref": "#/components/schemas/AddHabitsToDayRequest"
               }
             }
           }
@@ -457,36 +508,8 @@
         }
       }
     },
-    "/api/Day/removeHabitFromDay": {
+    "/api/Day/removeHabit": {
       "delete": {
-        "tags": [
-          "Day"
-        ],
-        "parameters": [
-          {
-            "name": "dayId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "habitId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Day/reorderHabits": {
-      "put": {
         "tags": [
           "Day"
         ],
@@ -494,21 +517,33 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReorderHabitsRequest"
+                "$ref": "#/components/schemas/RemoveHabitFromDayRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReorderHabitsRequest"
+                "$ref": "#/components/schemas/RemoveHabitFromDayRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ReorderHabitsRequest"
+                "$ref": "#/components/schemas/RemoveHabitFromDayRequest"
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/deletedDay": {
+      "get": {
+        "tags": [
+          "Day"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -781,6 +816,25 @@
         "tags": [
           "Users"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -867,13 +921,6 @@
             "type": "string",
             "format": "date",
             "nullable": true
-          },
-          "habitIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -909,6 +956,19 @@
         },
         "additionalProperties": false
       },
+      "DeleteDayRequest": {
+        "required": [
+          "dayId"
+        ],
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeleteHabitRequest": {
         "required": [
           "habitId"
@@ -916,6 +976,19 @@
         "type": "object",
         "properties": {
           "habitId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteUserRequest": {
+        "required": [
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "password": {
             "minLength": 1,
             "type": "string"
           }
@@ -967,18 +1040,15 @@
         },
         "additionalProperties": false
       },
-      "ReorderHabitsRequest": {
+      "RemoveHabitFromDayRequest": {
         "type": "object",
         "properties": {
           "dayId": {
             "type": "string",
             "nullable": true
           },
-          "habitIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
+          "habitId": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -998,11 +1068,14 @@
         "additionalProperties": false
       },
       "RestoreDayRequest": {
+        "required": [
+          "dayId"
+        ],
         "type": "object",
         "properties": {
           "dayId": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1043,7 +1116,7 @@
         },
         "additionalProperties": false
       },
-      "UpdateHabitDayRequest": {
+      "UpdateDayHabitRequest": {
         "required": [
           "dayId",
           "habitId",
@@ -1138,6 +1211,9 @@
     }
   ],
   "tags": [
+    {
+      "name": "Analysis"
+    },
     {
       "name": "Aspects"
     },
