@@ -7,12 +7,15 @@ import { Popup } from '../../../../shared/services/popup';
 import { DayService } from '../../../day/components/day/day-service';
 import { ReadDayResponse } from '../../../day/interfaces/read/read-day-response';
 import { ReadHabitDayResponse } from '../../../day/interfaces/read/read-habit-day-response';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { LanguageService } from '../../../../core/services/language.service';
 
 @Injectable() // 💡 بدون (providedIn: 'root') لتكون Scoped مع الكومبوننت
 export class DashboardService {
   private _tokenService = inject(TokenService);
   private router = inject(Router);
   private popupService = inject(Popup);
+  private languageService = inject(LanguageService);
 
   private dayAPI = inject(DayAPI);
   private dayService = inject(DayService); // بنستخدمه بس عشان الكاش المشترك بتاع قائمة الأيام (صفحة Days)
@@ -218,5 +221,107 @@ export class DashboardService {
   logout() {
     this._tokenService.remove();
     this.router.navigate(['/login']);
+  }
+
+  /* ───────── Delete / Restore Day ───────── */
+
+  deleteDay() {
+    const day = this.currentDay();
+    if (!day) return;
+
+    Swal.fire({
+      title: this.languageService.t('dashboard.deleteDay'),
+      text: this.languageService.t('dashboard.deleteDayConfirm'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: this.languageService.t('general.confirm'),
+      cancelButtonText: this.languageService.t('general.cancel'),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.dayAPI.delete({ dayId: day.dayId }).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: this.languageService.t('dashboard.dayDeleted'),
+              timer: 1500,
+            });
+            this.refreshCard();
+            this.dayService.loadDays();
+          },
+          error: (err) => {
+            Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
+          },
+        });
+      }
+    });
+  }
+
+  restoreDay() {
+    const day = this.currentDay();
+    if (!day) return;
+
+    this.dayAPI.restore({ dayId: day.dayId }).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: this.languageService.t('dashboard.dayRestored'),
+          timer: 1500,
+        });
+        this.refreshCard();
+        this.dayService.loadDays();
+      },
+      error: (err) => {
+        Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
+      },
+    });
+  }
+
+  /* ───────── Remove Habit from Day ───────── */
+
+  removeHabitFromDay(habit: ReadHabitDayResponse) {
+    const day = this.currentDay();
+    if (!day) return;
+
+    this.dayAPI.removeHabitFromDay({ dayId: day.dayId, habitId: habit.habitId }).subscribe({
+      next: () => {
+        this.currentDay.update((d) => {
+          if (!d) return d;
+          const habits = d.habits.filter((h) => h.habitId !== habit.habitId);
+          const completionPercentage =
+            habits.length === 0
+              ? 0
+              : Math.round((habits.filter((h) => h.isChecked).length / habits.length) * 10000) / 100;
+          return { ...d, habits, completionPercentage };
+        });
+        this.dayService.loadDays();
+      },
+      error: (err) => {
+        Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
+      },
+    });
+  }
+
+  /* ───────── Reorder Habits (Drag & Drop) ───────── */
+
+  onHabitDrop(event: CdkDragDrop<ReadHabitDayResponse[]>) {
+    const day = this.currentDay();
+    if (!day) return;
+
+    // Update local state
+    this.currentDay.update((d) => {
+      if (!d) return d;
+      const habits = [...d.habits];
+      const [movedHabit] = habits.splice(event.previousIndex, 1);
+      habits.splice(event.currentIndex, 0, movedHabit);
+      return { ...d, habits };
+    });
+
+    // Send to backend
+    const habitIds = this.currentDay()?.habits.map((h) => h.habitId) ?? [];
+    this.dayAPI.reorderHabits({ dayId: day.dayId, habitIds }).subscribe({
+      error: (err) => {
+        Swal.fire({ icon: 'error', title: this.languageService.t('general.error'), text: err.error?.message || err.message });
+      },
+    });
   }
 }

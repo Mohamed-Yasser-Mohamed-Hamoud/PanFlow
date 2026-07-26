@@ -8,6 +8,7 @@ import { Dashboard } from './features/dashboard/components/dashboard/dashboard';
 import { Aspects } from './features/aspects/components/aspects/aspects';
 import { Habits } from './features/habits/components/habits/habits';
 import { Day } from './features/day/components/day/day';
+import { Analysis } from './features/analysis/components/analysis/analysis';
 
 export const routes: Routes = [
   { path: 'register', component: Register },
@@ -22,7 +23,8 @@ export const routes: Routes = [
       { path: '', component: Dashboard },
       { path: 'aspects', component: Aspects },
       {path:'habits' , component: Habits},
-      {path: 'days' , component: Day}
+      {path: 'days' , component: Day},
+      {path: 'analysis' , component: Analysis}
     ]
   },
 ];

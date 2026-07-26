@@ -1,0 +1,174 @@
+/* Day Actions */
+.day-actions {
+  display: flex;
+  gap: 10px;
+  padding: 12px var(--card-padding-x);
+  border-bottom: 1px solid var(--clr-border);
+  background-color: rgba(204, 133, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--clr-border);
+  background-color: var(--clr-bg);
+  color: var(--clr-text-body);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.action-btn:hover {
+  background-color: var(--clr-bg-page);
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+}
+
+.delete-btn {
+  border-color: #F44336;
+  color: #F44336;
+}
+
+.delete-btn:hover {
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.restore-btn {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.restore-btn:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+/* Habit Item with Drag & Drop */
+.habitItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--clr-bg);
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.habitItem:hover {
+  background-color: var(--clr-bg-page);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.habitItem.cdk-drop-list-dragging .habitItem:hover {
+  cursor: grab;
+}
+
+.habitItem.cdk-drag-preview {
+  opacity: 0.8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.habitItem.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .habitItem:not(.cdk-drag-preview) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Drag Handle */
+.habit-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: grab;
+  color: var(--clr-border);
+  flex-shrink: 0;
+  cdkDragHandle;
+}
+
+.habit-drag-handle:hover {
+  color: var(--clr-primary);
+}
+
+.habit-drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Habit Label */
+.habitLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  cursor: pointer;
+  text-transform: none;
+}
+
+.habitLabel input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--clr-primary);
+}
+
+.habitLabel span {
+  font-size: 1rem;
+  color: var(--clr-text-body);
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.habitLabel span.done {
+  text-decoration: line-through;
+  color: var(--clr-border);
+}
+
+/* Remove Habit Button */
+.habit-remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid var(--clr-border);
+  border-radius: 6px;
+  color: var(--clr-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.habit-remove-btn:hover {
+  background-color: rgba(244, 67, 54, 0.1);
+  border-color: #F44336;
+  color: #F44336;
+}
+
+/* RTL Support */
+html[dir="rtl"] .habitItem {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .habit-drag-handle {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+html[dir="rtl"] .habitLabel {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .day-actions {
+  flex-direction: row-reverse;
+}

@@ -53,4 +53,28 @@ export class DayAPI {
       request,
     );
   }
+
+  // Delete day (soft delete)
+  delete(request: { dayId: string }): Observable<GeneralResponseDto<any>> {
+    return this.http.delete<GeneralResponseDto<any>>(`${this.apiUrl}/delete`, {
+      params: { dayId: request.dayId },
+    });
+  }
+
+  // Restore day
+  restore(request: { dayId: string }): Observable<GeneralResponseDto<any>> {
+    return this.http.post<GeneralResponseDto<any>>(`${this.apiUrl}/restore`, request);
+  }
+
+  // Remove habit from day
+  removeHabitFromDay(request: { dayId: string; habitId: string }): Observable<GeneralResponseDto<any>> {
+    return this.http.delete<GeneralResponseDto<any>>(`${this.apiUrl}/removeHabitFromDay`, {
+      params: { dayId: request.dayId, habitId: request.habitId },
+    });
+  }
+
+  // Reorder habits in day
+  reorderHabits(request: { dayId: string; habitIds: string[] }): Observable<GeneralResponseDto<any>> {
+    return this.http.put<GeneralResponseDto<any>>(`${this.apiUrl}/reorderHabits`, request);
+  }
 }

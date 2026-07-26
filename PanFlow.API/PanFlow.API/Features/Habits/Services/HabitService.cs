@@ -84,18 +84,31 @@ namespace PanFlow.API.Features.Habits.Services
         public async Task<GeneralResponseDto<object>> Delete(DeleteHabitRequest request)
         {
             // find habit 
-            var habit = await _context.Habits.FindAsync(request.HabitId);
+            var habit = await _context.Habits
+                .Include(h => h.Aspect)
+                .FirstOrDefaultAsync(h => h.HabitId == request.HabitId);
 
             if (habit == null)
             {
                 return GeneralResponseDto<object>.Failure("can't find habit");
             }
+            
+            // Check if habit is used in today's day
+            var today = DateOnly.FromDateTime(DateTime.UtcNow);
+            var isUsedToday = await _context.DayHabits
+                .AnyAsync(dh => dh.HabitId == request.HabitId && dh.Day.DayDate == today && !dh.Day.IsDeleted);
+            
+            if (isUsedToday)
+            {
+                return GeneralResponseDto<object>.Failure("لا يمكن حذف عادة تم إضافتها لليوم الحالي. قم بإزالتها من اليوم أولاً.");
+            }
+
             if (habit.IsDeleted)
             {
                 return GeneralResponseDto<object>.Success("Habit is already deleted");
             }
             habit.IsDeleted = true;
-            var row = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return GeneralResponseDto<object>.Success("deleted habit successfully");
         }

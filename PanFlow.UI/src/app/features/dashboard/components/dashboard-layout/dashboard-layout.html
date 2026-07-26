@@ -6,7 +6,7 @@
 }
 <div class="layout-container">
   <aside class="sidebar" [class.collapsed]="!dashboardService.siderOpen">
-    <button class="toggle-btn" (click)="dashboardService.changeSiderState()">
+    <button class="toggle-btn" aria-label="Toggle sidebar" (click)="dashboardService.changeSiderState()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"
@@ -27,25 +27,31 @@
         <li class="nav-item">
           <button class="nav-btn" routerLink="/">
             <span class="icon">🏠</span>
-            <span class="label">Home</span>
+            <span class="label">{{ 'nav.home' | translate }}</span>
           </button>
         </li>
         <li class="nav-item">
           <button class="nav-btn" routerLink="/aspects">
             <span class="icon">🌱</span>
-            <span class="label">Aspects</span>
+            <span class="label">{{ 'nav.aspects' | translate }}</span>
           </button>
         </li>
         <li class="nav-item">
           <button class="nav-btn" routerLink="/habits">
             <span class="icon">🎯</span>
-            <span class="label">Habits</span>
+            <span class="label">{{ 'nav.habits' | translate }}</span>
           </button>
         </li>
         <li class="nav-item">
           <button class="nav-btn" routerLink="/days">
             <span class="icon">🗓️</span>
-            <span class="label">Days</span>
+            <span class="label">{{ 'nav.days' | translate }}</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" routerLink="/analysis">
+            <span class="icon">📊</span>
+            <span class="label">{{ 'nav.analysis' | translate }}</span>
           </button>
         </li>
       </ul>
@@ -53,7 +59,7 @@
     <div class="logout-section">
       <button class="nav-btn logout-btn" (click)="dashboardService.logout()">
         <span class="icon">➜</span>
-        <span class="label">Log Out</span>
+        <span class="label">{{ 'nav.logout' | translate }}</span>
       </button>
     </div>
   </aside>
@@ -61,7 +67,7 @@
   <main class="content-area">
     <router-outlet></router-outlet>
 
-    <div class="trashIcon"  (click)="dashboardService.openTrash()">
+    <div class="trashIcon" aria-label="Trash" (click)="dashboardService.openTrash()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -82,7 +88,7 @@
       </svg>
     </div>
 
-    <div class="setting" (click)="dashboardService.openProfile()">
+    <div class="setting" aria-label="Settings" (click)="dashboardService.openProfile()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

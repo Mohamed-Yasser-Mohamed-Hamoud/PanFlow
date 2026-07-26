@@ -52,6 +52,7 @@
   padding: 0;
   box-sizing: border-box;
   text-transform: capitalize;
+  transition: direction 0.3s ease;
 }
 
 html, body {
@@ -60,6 +61,34 @@ html, body {
   height: 100%;
   font-family: 'Caveat', 'Kalam', cursive ,'Playpen Sans Arabic', sans-serif;
   background-color: var(--clr-bg-page);
+}
+
+/* RTL Support */
+html[dir="rtl"] * {
+  text-align: inherit;
+}
+
+html[dir="rtl"] .sidebar {
+  border-radius: 15px 0 0 15px;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.05);
+}
+
+html[dir="rtl"] .toggle-btn {
+  align-self: flex-start;
+}
+
+html[dir="rtl"] .nav-btn {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .trashIcon,
+html[dir="rtl"] .setting {
+  left: auto;
+  right: 20px;
+}
+
+html[dir="rtl"] .trashIcon {
+  right: 80px;
 }
 
 /* ── Animation Helpers ───────────────── */

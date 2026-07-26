@@ -21,7 +21,6 @@ namespace PanFlow.API.Features.Day.Controllers
             _dayService = dayService;
         }
 
-
         [HttpPost("create")]
         public async Task<IActionResult> create([FromBody] CreateDayRequest request)
         {
@@ -32,7 +31,6 @@ namespace PanFlow.API.Features.Day.Controllers
             }
             return Ok(result);
         }
-
 
         [HttpPost("addHabitsToDay")]
         public async Task<IActionResult> addHabitsToDay([FromBody] AddHabitsToDayRequest request)
@@ -45,7 +43,6 @@ namespace PanFlow.API.Features.Day.Controllers
             return Ok(result);
         }
 
-
         [HttpGet("today")]
         public async Task<IActionResult> today()
         {
@@ -56,7 +53,6 @@ namespace PanFlow.API.Features.Day.Controllers
             }
             return Ok(result);
         }
-
 
         [HttpPut("updateHabitStatus")]
         public async Task<IActionResult> updateHabitStatus([FromBody] UpdateHabitDayRequest request)
@@ -69,7 +65,6 @@ namespace PanFlow.API.Features.Day.Controllers
             return Ok(result);
         }
 
-
         [HttpGet("read")]
         public async Task<IActionResult> read([FromQuery] ReadDayRequest request)
         {
@@ -80,7 +75,6 @@ namespace PanFlow.API.Features.Day.Controllers
             }
             return Ok(result);
         }
-
 
         [HttpGet("readAll")]
         public async Task<IActionResult> readAll()
@@ -93,8 +87,59 @@ namespace PanFlow.API.Features.Day.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("delete")]
+        public async Task<IActionResult> delete([FromQuery] string dayId)
+        {
+            var result = await _dayService.Delete(dayId, CurrentUserId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        // ملحوظة: delete / restore / deletedDay اتشالوا بالكامل
-        // بناءً على إن Day مفيهوش IsDeleted, واتفقنا نلغي فكرة soft-delete للـ Day
+        [HttpPost("restore")]
+        public async Task<IActionResult> restore([FromBody] RestoreDayRequest request)
+        {
+            var result = await _dayService.Restore(request.DayId, CurrentUserId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("removeHabitFromDay")]
+        public async Task<IActionResult> removeHabitFromDay([FromQuery] string dayId, [FromQuery] string habitId)
+        {
+            var result = await _dayService.RemoveHabitFromDay(dayId, habitId, CurrentUserId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut("reorderHabits")]
+        public async Task<IActionResult> reorderHabits([FromBody] ReorderHabitsRequest request)
+        {
+            var result = await _dayService.ReorderHabits(request.DayId, request.HabitIds, CurrentUserId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+    }
+
+    public class RestoreDayRequest
+    {
+        public string DayId { get; set; }
+    }
+
+    public class ReorderHabitsRequest
+    {
+        public string DayId { get; set; }
+        public List<string> HabitIds { get; set; }
     }
 }

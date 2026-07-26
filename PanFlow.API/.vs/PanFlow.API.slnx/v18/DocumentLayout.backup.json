@@ -1,85 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\day\\dtos\\addhabits\\addhabitstodayrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\day\\dtos\\addhabits\\addhabitstodayrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\features\\day\\dtos\\create\\createdayrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\features\\day\\dtos\\create\\createdayrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|d:\\system\\desktop\\panflow\\panflow.api\\panflow.api\\migrations\\20260725205535_endgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B858946-B093-7E53-8B57-9F216316406C}|PanFlow.API\\PanFlow.API.csproj|solutionrelative:panflow.api\\migrations\\20260725205535_endgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AddHabitsToDayRequest.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Day\\DTOs\\AddHabits\\AddHabitsToDayRequest.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Day\\DTOs\\AddHabits\\AddHabitsToDayRequest.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Day\\DTOs\\AddHabits\\AddHabitsToDayRequest.cs",
-              "RelativeToolTip": "PanFlow.API\\Features\\Day\\DTOs\\AddHabits\\AddHabitsToDayRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-25T21:17:21.799Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CreateDayRequest.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Day\\DTOs\\Create\\CreateDayRequest.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Features\\Day\\DTOs\\Create\\CreateDayRequest.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Features\\Day\\DTOs\\Create\\CreateDayRequest.cs",
-              "RelativeToolTip": "PanFlow.API\\Features\\Day\\DTOs\\Create\\CreateDayRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-25T20:56:27.353Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "20260725205535_endGame.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Migrations\\20260725205535_endGame.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Migrations\\20260725205535_endGame.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Migrations\\20260725205535_endGame.cs",
-              "RelativeToolTip": "PanFlow.API\\Migrations\\20260725205535_endGame.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-25T20:55:35.819Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "PanFlow.API\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\System\\Desktop\\PanFlow\\PanFlow.API\\PanFlow.API\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "PanFlow.API\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-25T20:53:11.434Z"
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

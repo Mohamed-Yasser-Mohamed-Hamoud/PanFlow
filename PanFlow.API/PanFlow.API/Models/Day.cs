@@ -20,6 +20,10 @@ namespace PanFlow.API.Models
         public User User { get; set; } = null!;
 
         //Navigation properties
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedAt { get; set; }
+
+        //Navigation properties
         public ICollection<DayHabit> DayHabits { get; set; }
     }
 }

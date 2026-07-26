@@ -8,8 +8,9 @@ namespace PanFlow.API.Models
         public string HabitId { get; set; } 
         public string DayId { get; set; } 
         public bool IsChecked { get; set; } = false;
-
-        //Navigation properties
+        public int Order { get; set; } = 0;
+	
+	        //Navigation properties
         public Day Day { get; set; }
         public Habit Habit { get; set; }
 

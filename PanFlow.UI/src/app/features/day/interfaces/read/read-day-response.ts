@@ -5,4 +5,5 @@ export interface ReadDayResponse {
   readonly date: string;
   readonly habits: ReadHabitDayResponse[];
   readonly completionPercentage: number;
+  readonly isDeleted: boolean; // أضفنا هذا الحقل لحل مشكلة الـ TypeScript Error
 }

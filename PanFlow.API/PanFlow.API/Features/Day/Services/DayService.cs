@@ -21,12 +21,8 @@ namespace PanFlow.API.Features.Day.Services
             _userManager = UserManager;
         }
 
-
-
-
         public async Task<GeneralResponseDto<CreateDayResponse>> Create(CreateDayRequest request, string userId)
         {
-            // Cheack there is user Id
             if (string.IsNullOrWhiteSpace(userId))
             {
                 return GeneralResponseDto<CreateDayResponse>.Failure("there is no User Id");
@@ -39,16 +35,13 @@ namespace PanFlow.API.Features.Day.Services
 
             var date = request.Date ?? DateOnly.FromDateTime(DateTime.UtcNow);
 
-            // ملكية اليوم بقت مباشرة عن طريق Day.UserId (مش عن طريق DayHabit)
             var existingDay = await _context.Days
-                .FirstOrDefaultAsync(d => d.UserId == userId && d.DayDate == date);
+                .FirstOrDefaultAsync(d => d.UserId == userId && d.DayDate == date && !d.IsDeleted);
             if (existingDay != null)
             {
                 return GeneralResponseDto<CreateDayResponse>.Failure("Day already exists for this date");
             }
 
-            // العادات دي اختيارية دلوقتي - المستخدم هو اللي بيحدد أنهي عادات
-            // تتضاف لليوم ده، مش كل العادات النشطة عنده
             var habitIds = request.HabitIds?.Distinct().ToList() ?? new List<string>();
 
             var habits = new List<Models.Habit>();
@@ -59,8 +52,6 @@ namespace PanFlow.API.Features.Day.Services
                     .Where(h => habitIds.Contains(h.HabitId) && h.Aspect.UserId == userId && h.IsDeleted == false)
                     .ToListAsync();
 
-                // لو فيه Id مش موجود أو مش بتاع المستخدم ده، نرفض العملية كلها
-                // بدل ما نتجاهله بصمت
                 if (habits.Count != habitIds.Count)
                 {
                     return GeneralResponseDto<CreateDayResponse>.Failure("في عادات مش موجودة أو مش بتاعتك ضمن القائمة اللي بعتها");
@@ -80,13 +71,14 @@ namespace PanFlow.API.Features.Day.Services
                 return GeneralResponseDto<CreateDayResponse>.Failure("Can't create day");
             }
 
-            foreach (var habit in habits)
+            for (int i = 0; i < habits.Count; i++)
             {
                 await _context.DayHabits.AddAsync(new Models.DayHabit
                 {
                     DayId = day.DayId,
-                    HabitId = habit.HabitId,
+                    HabitId = habits[i].HabitId,
                     IsChecked = false,
+                    Order = i
                 });
             }
             if (habits.Count > 0)
@@ -98,9 +90,6 @@ namespace PanFlow.API.Features.Day.Services
             return GeneralResponseDto<CreateDayResponse>.Success("Day created successfully", response);
         }
 
-
-
-
         public async Task<GeneralResponseDto<AddHabitsToDayResponse>> AddHabitsToDay(AddHabitsToDayRequest request, string userId)
         {
             if (request.HabitIds == null || request.HabitIds.Count == 0)
@@ -110,22 +99,19 @@ namespace PanFlow.API.Features.Day.Services
 
             var day = await _context.Days
                 .Include(d => d.DayHabits)
-                .FirstOrDefaultAsync(d => d.DayId == request.DayId);
+                .FirstOrDefaultAsync(d => d.DayId == request.DayId && !d.IsDeleted);
 
             if (day == null)
             {
                 return GeneralResponseDto<AddHabitsToDayResponse>.Failure("can't find day");
             }
 
-            // ownership check بسيط ومضمون دلوقتي بفضل Day.UserId
             if (day.UserId != userId)
             {
                 return GeneralResponseDto<AddHabitsToDayResponse>.Failure("can't find day");
             }
 
             var habitIds = request.HabitIds.Distinct().ToList();
-
-            // منع تكرار إضافة عادة موجودة بالفعل في نفس اليوم (composite PK هيرمي exception غير كده)
             var alreadyAdded = day.DayHabits.Select(dh => dh.HabitId).ToHashSet();
             var newHabitIds = habitIds.Where(id => !alreadyAdded.Contains(id)).ToList();
 
@@ -144,6 +130,8 @@ namespace PanFlow.API.Features.Day.Services
                 return GeneralResponseDto<AddHabitsToDayResponse>.Failure("في عادات مش موجودة أو مش بتاعتك ضمن القائمة اللي بعتها");
             }
 
+            int currentMaxOrder = day.DayHabits.Any() ? day.DayHabits.Max(dh => dh.Order) : -1;
+
             foreach (var habit in habits)
             {
                 await _context.DayHabits.AddAsync(new Models.DayHabit
@@ -151,6 +139,7 @@ namespace PanFlow.API.Features.Day.Services
                     DayId = day.DayId,
                     HabitId = habit.HabitId,
                     IsChecked = false,
+                    Order = ++currentMaxOrder
                 });
             }
             await _context.SaveChangesAsync();
@@ -168,25 +157,15 @@ namespace PanFlow.API.Features.Day.Services
                 new AddHabitsToDayResponse { AddedHabits = addedResponse });
         }
 
-
-
-
         public async Task<GeneralResponseDto<ReadDayResponse>> Read(ReadDayRequest request, string userId)
         {
-            // find day
             var day = await _context.Days
-                .Include(d => d.DayHabits)
+                .Include(d => d.DayHabits.OrderBy(dh => dh.Order))
                     .ThenInclude(dh => dh.Habit)
                         .ThenInclude(h => h.Aspect)
                 .FirstOrDefaultAsync(d => d.DayId == request.DayId);
 
-            if (day == null)
-            {
-                return GeneralResponseDto<ReadDayResponse>.Failure("can't find day");
-            }
-
-            // ownership check بسيط دلوقتي عن طريق Day.UserId مباشرة
-            if (day.UserId != userId)
+            if (day == null || day.UserId != userId)
             {
                 return GeneralResponseDto<ReadDayResponse>.Failure("can't find day");
             }
@@ -208,30 +187,22 @@ namespace PanFlow.API.Features.Day.Services
                 DayId = day.DayId,
                 Date = day.DayDate,
                 Habits = habits,
-                CompletionPercentage = completion
+                CompletionPercentage = completion,
+                IsDeleted = day.IsDeleted
             };
 
             return GeneralResponseDto<ReadDayResponse>.Success("find Day", responseData);
         }
 
-
-
-
         public async Task<GeneralResponseDto<ReadAllDayResponse>> GetAllDays(string userId)
         {
-            // Cheack there is user Id
             if (string.IsNullOrWhiteSpace(userId))
             {
                 return GeneralResponseDto<ReadAllDayResponse>.Failure("there is no User Id");
             }
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null)
-            {
-                return GeneralResponseDto<ReadAllDayResponse>.Failure("User does not exist");
-            }
 
             var days = await _context.Days
-                .Where(d => d.UserId == userId)
+                .Where(d => d.UserId == userId && !d.IsDeleted)
                 .Include(d => d.DayHabits)
                 .OrderByDescending(d => d.DayDate)
                 .ToListAsync();
@@ -252,12 +223,8 @@ namespace PanFlow.API.Features.Day.Services
             return GeneralResponseDto<ReadAllDayResponse>.Success("Find Days Successfully", response);
         }
 
-
-
-
         public async Task<GeneralResponseDto<ReadDayResponse>> GetToday(string userId)
         {
-            // Cheack there is user Id
             if (string.IsNullOrWhiteSpace(userId))
             {
                 return GeneralResponseDto<ReadDayResponse>.Failure("there is no User Id");
@@ -266,10 +233,8 @@ namespace PanFlow.API.Features.Day.Services
             var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
             var day = await _context.Days
-                .FirstOrDefaultAsync(d => d.UserId == userId && d.DayDate == today);
+                .FirstOrDefaultAsync(d => d.UserId == userId && d.DayDate == today && !d.IsDeleted);
 
-            // لو مفيش يوم للنهارده، بيتعمل فاضي (من غير عادات)
-            // والمستخدم بعدين بيضيف العادات اللي عايزها عن طريق /addHabitsToDay
             if (day == null)
             {
                 var createResult = await Create(new CreateDayRequest { Date = today, HabitIds = new List<string>() }, userId);
@@ -284,36 +249,81 @@ namespace PanFlow.API.Features.Day.Services
             return await Read(new ReadDayRequest { DayId = day.DayId }, userId);
         }
 
-
-
-
         public async Task<GeneralResponseDto<object>> UpdateHabitStatus(UpdateHabitDayRequest request, string userId)
         {
-            // find day habit using composite key (HabitId + DayId)
             var dayHabit = await _context.DayHabits
                 .Include(dh => dh.Day)
                 .FirstOrDefaultAsync(dh => dh.DayId == request.DayId && dh.HabitId == request.HabitId);
 
-            if (dayHabit == null)
+            if (dayHabit == null || dayHabit.Day.UserId != userId || dayHabit.Day.IsDeleted)
             {
                 return GeneralResponseDto<object>.Failure("can't find habit in this day");
-            }
-
-            // ownership check عن طريق Day.UserId مباشرة
-            if (dayHabit.Day.UserId != userId)
-            {
-                return GeneralResponseDto<object>.Failure("can't find habit in this day");
-            }
-
-            if (dayHabit.IsChecked == request.IsChecked)
-            {
-                return GeneralResponseDto<object>.Success("No changes detected");
             }
 
             dayHabit.IsChecked = request.IsChecked;
             await _context.SaveChangesAsync();
 
             return GeneralResponseDto<object>.Success("Updated successfully");
+        }
+
+        public async Task<GeneralResponseDto<object>> Delete(string dayId, string userId)
+        {
+            var day = await _context.Days.FirstOrDefaultAsync(d => d.DayId == dayId && d.UserId == userId);
+            if (day == null) return GeneralResponseDto<object>.Failure("Day not found");
+
+            day.IsDeleted = true;
+            day.DeletedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return GeneralResponseDto<object>.Success("Day deleted successfully");
+        }
+
+        public async Task<GeneralResponseDto<object>> Restore(string dayId, string userId)
+        {
+            var day = await _context.Days.FirstOrDefaultAsync(d => d.DayId == dayId && d.UserId == userId);
+            if (day == null) return GeneralResponseDto<object>.Failure("Day not found");
+
+            day.IsDeleted = false;
+            day.DeletedAt = null;
+            await _context.SaveChangesAsync();
+
+            return GeneralResponseDto<object>.Success("Day restored successfully");
+        }
+
+        public async Task<GeneralResponseDto<object>> RemoveHabitFromDay(string dayId, string habitId, string userId)
+        {
+            var dayHabit = await _context.DayHabits
+                .Include(dh => dh.Day)
+                .FirstOrDefaultAsync(dh => dh.DayId == dayId && dh.HabitId == habitId);
+
+            if (dayHabit == null || dayHabit.Day.UserId != userId)
+                return GeneralResponseDto<object>.Failure("Habit not found in this day");
+
+            _context.DayHabits.Remove(dayHabit);
+            await _context.SaveChangesAsync();
+
+            return GeneralResponseDto<object>.Success("Habit removed from day successfully");
+        }
+
+        public async Task<GeneralResponseDto<object>> ReorderHabits(string dayId, List<string> habitIds, string userId)
+        {
+            var day = await _context.Days
+                .Include(d => d.DayHabits)
+                .FirstOrDefaultAsync(d => d.DayId == dayId && d.UserId == userId);
+
+            if (day == null) return GeneralResponseDto<object>.Failure("Day not found");
+
+            for (int i = 0; i < habitIds.Count; i++)
+            {
+                var dh = day.DayHabits.FirstOrDefault(h => h.HabitId == habitIds[i]);
+                if (dh != null)
+                {
+                    dh.Order = i;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return GeneralResponseDto<object>.Success("Habits reordered successfully");
         }
     }
 }

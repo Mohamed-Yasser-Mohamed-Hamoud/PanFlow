@@ -20,5 +20,8 @@ namespace PanFlow.API.Features.Day.DTOs.Read
         [Required]
         [JsonPropertyName("completionPercentage")]
         public required double CompletionPercentage { get; set; }
+        
+        [JsonPropertyName("isDeleted")]
+        public bool IsDeleted { get; set; }
     }
 }

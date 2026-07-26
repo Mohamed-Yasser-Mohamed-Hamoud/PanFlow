@@ -60,7 +60,7 @@
           <path d="M8 12h8" />
           <path d="M12 8v8" />
         </svg>
-        <span class="add-task__label">add task</span>
+        <span class="add-task__label">{{ 'dashboard.addTask' | translate }}</span>
       </button>
 
       <p>{{ dashboardService.dayName }}</p>
@@ -72,6 +72,31 @@
 
     <hr class="card-divider" />
 
+    <!-- Day Actions (Delete/Restore) -->
+    @if (!dashboardService.isLocked() && dashboardService.currentDay()) {
+      <div class="day-actions">
+        @if (!dashboardService.currentDay()?.isDeleted) {
+          <button class="action-btn delete-btn" (click)="dashboardService.deleteDay()" title="Delete this day">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18" />
+              <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
+              <path d="M10 11v6" />
+              <path d="M14 11v6" />
+            </svg>
+            {{ 'dashboard.deleteDay' | translate }}
+          </button>
+        } @else {
+          <button class="action-btn restore-btn" (click)="dashboardService.restoreDay()" title="Restore this day">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7v6h6" />
+              <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+            </svg>
+            {{ 'dashboard.restoreDay' | translate }}
+          </button>
+        }
+      </div>
+    }
+
     <div class="card-body">
       @if (dashboardService.isLoadingCard()) {
         <div class="card-loader">
@@ -79,12 +104,22 @@
         </div>
       } @else if ((dashboardService.currentDay()?.habits?.length ?? 0) === 0) {
         <div class="empty-hint">
-          <p>مفيش عادات مضافة النهارده لسه. دوس "add task" عشان تضيف.</p>
+          <p>{{ 'dashboard.noHabits' | translate }}</p>
         </div>
       } @else {
-        <ul class="habitsList">
+        <ul class="habitsList" cdkDropList (cdkDropListDropped)="dashboardService.onHabitDrop($event)">
           @for (habit of dashboardService.currentDay()?.habits; track habit.habitId) {
-            <li class="habitItem" [style.border-left]="'6px solid ' + habit.habitColor">
+            <li class="habitItem" [style.border-left]="'6px solid ' + habit.habitColor" cdkDrag>
+              <div class="habit-drag-handle" cdkDragHandle>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="9" cy="5" r="1.5" />
+                  <circle cx="9" cy="12" r="1.5" />
+                  <circle cx="9" cy="19" r="1.5" />
+                  <circle cx="16" cy="5" r="1.5" />
+                  <circle cx="16" cy="12" r="1.5" />
+                  <circle cx="16" cy="19" r="1.5" />
+                </svg>
+              </div>
               <label class="habitLabel">
                 <input
                   type="checkbox"
@@ -93,6 +128,12 @@
                 />
                 <span [class.done]="habit.isChecked">{{ habit.habitName }}</span>
               </label>
+              <button class="habit-remove-btn" (click)="dashboardService.removeHabitFromDay(habit)" title="Remove from today">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6l-12 12" />
+                  <path d="M6 6l12 12" />
+                </svg>
+              </button>
             </li>
           }
         </ul>
@@ -108,7 +149,7 @@
         (click)="dashboardService.unlockDay()"
         [disabled]="dashboardService.isUnlocking()"
       >
-        {{ dashboardService.isUnlocking() ? 'جاري الإنشاء...' : 'Unlock this Day' }}
+        {{ dashboardService.isUnlocking() ? ('dashboard.unlocking' | translate) : ('dashboard.unlock' | translate) }}
       </button>
     </div>
   }

@@ -26,7 +26,16 @@ namespace PanFlow.API.Features.Day.Services
         public Task<GeneralResponseDto<object>> UpdateHabitStatus(UpdateHabitDayRequest request, string userId);
 
 
-        // ملحوظة: Delete / Restore / DeleteForEver / GetDeletedDays اتشالوا بالكامل
-        // لأن Day مفيهوش IsDeleted, واتفقنا نلغي فكرة الـ soft-delete للـ Day خالص
+        // Delete Day (Soft Delete)
+        public Task<GeneralResponseDto<object>> Delete(string dayId, string userId);
+
+        // Restore Day
+        public Task<GeneralResponseDto<object>> Restore(string dayId, string userId);
+
+        // Remove habit from day
+        public Task<GeneralResponseDto<object>> RemoveHabitFromDay(string dayId, string habitId, string userId);
+
+        // Reorder habits in day
+        public Task<GeneralResponseDto<object>> ReorderHabits(string dayId, List<string> habitIds, string userId);
     }
 }

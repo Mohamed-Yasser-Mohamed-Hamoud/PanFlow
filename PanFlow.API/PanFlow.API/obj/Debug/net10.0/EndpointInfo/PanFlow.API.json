@@ -405,6 +405,117 @@
         }
       }
     },
+    "/api/Day/delete": {
+      "delete": {
+        "tags": [
+          "Day"
+        ],
+        "parameters": [
+          {
+            "name": "dayId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/restore": {
+      "post": {
+        "tags": [
+          "Day"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/removeHabitFromDay": {
+      "delete": {
+        "tags": [
+          "Day"
+        ],
+        "parameters": [
+          {
+            "name": "dayId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "habitId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Day/reorderHabits": {
+      "put": {
+        "tags": [
+          "Day"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderHabitsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderHabitsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderHabitsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Habits/create": {
       "post": {
         "tags": [
@@ -856,6 +967,23 @@
         },
         "additionalProperties": false
       },
+      "ReorderHabitsRequest": {
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "type": "string",
+            "nullable": true
+          },
+          "habitIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RestoreAspectRequest": {
         "required": [
           "aspectId"
@@ -865,6 +993,16 @@
           "aspectId": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RestoreDayRequest": {
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

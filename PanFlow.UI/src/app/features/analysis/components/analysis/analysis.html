@@ -1,0 +1,144 @@
+<div class="analysis-container">
+  <div class="analysis-header">
+    <h1>{{ 'analysis.title' | translate }}</h1>
+  </div>
+
+  @if (analysisService.isLoading()) {
+    <div class="analysis-loader">
+      <div class="spinner"></div>
+      <p>{{ 'general.loading' | translate }}</p>
+    </div>
+  } @else if ((analysisService.allDays().length === 0)) {
+    <div class="empty-state">
+      <p>{{ 'analysis.noData' | translate }}</p>
+    </div>
+  } @else {
+    <!-- Summary Stats -->
+    <div class="summary-stats">
+      <div class="stat-card">
+        <div class="stat-label">{{ 'analysis.totalDays' | translate }}</div>
+        <div class="stat-value">{{ analysisService.totalDaysCount() }}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">{{ 'analysis.averageCompletion' | translate }}</div>
+        <div class="stat-value">{{ analysisService.averageCompletion() }}%</div>
+      </div>
+    </div>
+
+    <!-- Best & Worst Days -->
+    <div class="best-worst-section">
+      <div class="best-worst-card best-day">
+        <h3>{{ 'analysis.bestDay' | translate }}</h3>
+        @if (analysisService.bestDay()) {
+          <div class="day-info">
+            <p class="day-date">{{ analysisService.bestDay()?.date }}</p>
+            <p class="day-completion">{{ analysisService.bestDay()?.completionPercentage }}%</p>
+            <p class="day-habits">{{ analysisService.bestDay()?.completedHabits }} / {{ analysisService.bestDay()?.totalHabits }} {{ 'nav.habits' | translate }}</p>
+          </div>
+        } @else {
+          <p class="no-data">{{ 'analysis.noData' | translate }}</p>
+        }
+      </div>
+
+      <div class="best-worst-card worst-day">
+        <h3>{{ 'analysis.worstDay' | translate }}</h3>
+        @if (analysisService.worstDay()) {
+          <div class="day-info">
+            <p class="day-date">{{ analysisService.worstDay()?.date }}</p>
+            <p class="day-completion">{{ analysisService.worstDay()?.completionPercentage }}%</p>
+            <p class="day-habits">{{ analysisService.worstDay()?.completedHabits }} / {{ analysisService.worstDay()?.totalHabits }} {{ 'nav.habits' | translate }}</p>
+          </div>
+        } @else {
+          <p class="no-data">{{ 'analysis.noData' | translate }}</p>
+        }
+      </div>
+    </div>
+
+    <!-- Best & Worst Habits -->
+    <div class="best-worst-section">
+      <div class="best-worst-card best-habit">
+        <h3>{{ 'analysis.bestHabit' | translate }}</h3>
+        @if (analysisService.bestHabit()) {
+          <div class="habit-info">
+            <div class="habit-color-bar" [style.backgroundColor]="analysisService.bestHabit()?.habitColor"></div>
+            <p class="habit-name">{{ analysisService.bestHabit()?.habitName }}</p>
+            <p class="habit-rate">{{ analysisService.bestHabit()?.completionRate }}%</p>
+            <p class="habit-stats">{{ analysisService.bestHabit()?.completedDays }} / {{ analysisService.bestHabit()?.totalDays }} {{ 'nav.days' | translate }}</p>
+          </div>
+        } @else {
+          <p class="no-data">{{ 'analysis.noData' | translate }}</p>
+        }
+      </div>
+
+      <div class="best-worst-card worst-habit">
+        <h3>{{ 'analysis.worstHabit' | translate }}</h3>
+        @if (analysisService.worstHabit()) {
+          <div class="habit-info">
+            <div class="habit-color-bar" [style.backgroundColor]="analysisService.worstHabit()?.habitColor"></div>
+            <p class="habit-name">{{ analysisService.worstHabit()?.habitName }}</p>
+            <p class="habit-rate">{{ analysisService.worstHabit()?.completionRate }}%</p>
+            <p class="habit-stats">{{ analysisService.worstHabit()?.completedDays }} / {{ analysisService.worstHabit()?.totalDays }} {{ 'nav.days' | translate }}</p>
+          </div>
+        } @else {
+          <p class="no-data">{{ 'analysis.noData' | translate }}</p>
+        }
+      </div>
+    </div>
+
+    <!-- Habits Statistics Table -->
+    <div class="habits-stats-section">
+      <h2>{{ 'analysis.habitStats' | translate }}</h2>
+      <div class="habits-table-container">
+        <table class="habits-table">
+          <thead>
+            <tr>
+              <th>{{ 'nav.habits' | translate }}</th>
+              <th>{{ 'analysis.completionRate' | translate }}</th>
+              <th>{{ 'analysis.totalDays' | translate }}</th>
+              <th>{{ 'general.completed' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (habit of analysisService.allHabits(); track habit.habitId) {
+              <tr>
+                <td>
+                  <div class="habit-cell">
+                    <div class="habit-color" [style.backgroundColor]="habit.habitColor"></div>
+                    <span>{{ habit.habitName }}</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="habit.completionRate"></div>
+                    <span class="progress-text">{{ habit.completionRate }}%</span>
+                  </div>
+                </td>
+                <td>{{ habit.totalDays }}</td>
+                <td>{{ habit.completedDays }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Days Statistics -->
+    <div class="days-stats-section">
+      <h2>{{ 'analysis.dayStats' | translate }}</h2>
+      <div class="days-chart">
+        @for (day of analysisService.allDays(); track day.dayId) {
+          <div class="day-bar-container">
+            <div class="day-bar">
+              <div class="day-bar-fill" [style.width.%]="day.completionPercentage" [style.backgroundColor]="day.completionPercentage >= 75 ? '#4CAF50' : day.completionPercentage >= 50 ? '#FFC107' : '#F44336'"></div>
+            </div>
+            <div class="day-bar-label">
+              <span class="day-date">{{ day.date }}</span>
+              <span class="day-percentage">{{ day.completionPercentage }}%</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

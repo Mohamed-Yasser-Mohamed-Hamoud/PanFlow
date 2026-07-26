@@ -4,11 +4,12 @@ import { Profile } from '../../../users/components/profile/profile';
 import { DashboardService } from '../dashboard/dashboard-service';
 import { Popup } from '../../../../shared/services/popup';
 import { Trash } from '../../../../shared/components/trash/trash';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-dashboard-layout',
   standalone: true,
-  imports: [RouterOutlet, Profile, RouterLinkWithHref , Trash],
+  imports: [RouterOutlet, Profile, RouterLinkWithHref , Trash, TranslatePipe],
   templateUrl: './dashboard-layout.html',
   styleUrl: './dashboard-layout.css',
   providers: [DashboardService], // السيرفيس هنا بقت Scoped للـ Layout والـ Children بتوعه
