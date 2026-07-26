@@ -9,12 +9,14 @@ import { UpdatePasswordRequest } from '../../interfaces/Update/update-password-r
 import { UpdateRequest } from '../../interfaces/Update/update-request';
 import { LanguageService } from '../../../../core/services/language.service';
 import { deleteUserRequest } from '../../interfaces/Delete/deleteUserRequest';
+import { TokenService } from '../../../../core/services/token-service';
 
 @Injectable() // Scoped Service مع الكومبوننت
 export class ProfileService {
   private userService = inject(UserService);
   private router = inject(Router);
   private languageService = inject(LanguageService); // 👈 حقن خدمة الترجمة
+  private _tokenService = inject(TokenService);
 
   userData: SelectedUserResponse | null = null;
   userPasswords: UpdatePasswordRequest = { currentPassword: '', newPassword: '' };
@@ -270,7 +272,7 @@ deleteButton() {
             icon: 'success',
             title: this.languageService.translate('profile.deleted') || 'Deleted!',
           });
-
+              this._tokenService.remove();
           this.router.navigate(['/register']);
         },
         error: (err) => {
