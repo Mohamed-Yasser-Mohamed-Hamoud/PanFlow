@@ -46,8 +46,10 @@
 
 .modal-body {
   padding: 1rem 1.25rem;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  overflow: hidden; /* 🎯 إلغاء السكرول العام من البودي */
 }
 
 .section-label {
@@ -89,10 +91,13 @@
 .habits-list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 4px 0 0; /* إضافة مساحة بسيطة للـ scrollbar لو احتجت */
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  overflow-y: auto;   /* 🎯 جعل السكرول خاص بالقائمة فقط */
+  flex: 1;            /* 🎯 تأخذ المساحة المتبقية من الـ modal */
+  min-height: 0;      /* 🎯 مهم جداً في الـ Flexbox لكي يعمل الـ scroll بشكل صحيح */
 }
 
 .habit-label {
@@ -136,4 +141,21 @@
 
 .btn-primary:hover {
   opacity: 0.9;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--clr-primary-light) 20%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
 }

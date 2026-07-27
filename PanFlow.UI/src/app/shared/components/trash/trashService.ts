@@ -109,7 +109,6 @@ export class TrashService {
           Swal.fire({
             icon: 'success',
             title: this.languageService.t('general.success'),
-            text: response.message,
             confirmButtonText: this.languageService.t('general.ok'),
           });
         },
@@ -119,7 +118,6 @@ export class TrashService {
           Swal.fire({
             icon: 'error',
             title: this.languageService.t('general.error'),
-            text: err.error?.message || err.message,
             confirmButtonText: this.languageService.t('general.ok'),
             confirmButtonColor: 'red',
           });
@@ -143,7 +141,7 @@ export class TrashService {
         Swal.fire({
           icon: 'error',
           title: this.languageService.t('general.error'),
-          text: err.error?.message || this.languageService.t('general.error'),
+          text: this.languageService.t('general.error'),
           confirmButtonText: this.languageService.t('general.ok'),
           confirmButtonColor: 'red',
         });
@@ -162,7 +160,6 @@ export class TrashService {
         Swal.fire({
           icon: 'success',
           title: this.languageService.t('general.success'),
-          text: response.message,
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },
@@ -172,7 +169,6 @@ export class TrashService {
         Swal.fire({
           icon: 'error',
           title: this.languageService.t('general.error'),
-          text: err.error?.message || err.message,
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },
@@ -201,7 +197,6 @@ export class TrashService {
           Swal.fire({
             icon: 'success',
             title: this.languageService.t('general.success'),
-            text: response.message,
             confirmButtonText: this.languageService.t('general.ok'),
           });
         },
@@ -211,7 +206,6 @@ export class TrashService {
           Swal.fire({
             icon: 'error',
             title: this.languageService.t('general.error'),
-            text: err.error?.message || err.message,
             confirmButtonText: this.languageService.t('general.ok'),
           });
         },
@@ -234,7 +228,7 @@ export class TrashService {
         Swal.fire({
           icon: 'error',
           title: this.languageService.t('general.error'),
-          text: err.error?.message || this.languageService.t('general.error'),
+          text: this.languageService.t('general.error'),
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },
@@ -253,7 +247,6 @@ export class TrashService {
         Swal.fire({
           icon: 'success',
           title: this.languageService.t('general.success'),
-          text: response.message,
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },
@@ -263,7 +256,6 @@ export class TrashService {
         Swal.fire({
           icon: 'error',
           title: this.languageService.t('general.error'),
-          text: err.error?.message || err.message,
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },
@@ -301,7 +293,6 @@ export class TrashService {
           Swal.fire({
             icon: 'error',
             title: this.languageService.t('general.error'),
-            text: err.error?.message || err.message,
             confirmButtonText: this.languageService.t('general.ok'),
           });
         },

@@ -10,32 +10,18 @@ namespace PanFlow.API.Features.Habits.Services
 {
     public interface IHabitService
     {
-        // create Habit
-                public Task<GeneralResponseDto<CreateHabitResponse>> Create(CreateHabitRequest request);
+        public Task<GeneralResponseDto<CreateHabitResponse>> Create(CreateHabitRequest request, string userId);
 
-
-        //Read 
-            public Task<GeneralResponseDto<ReadHabitResponse>> Read(ReadHabitRequest request);
-            public Task<GeneralResponseDto<ReadAllHabitResponse>> GetAllHabits(string userId);
-        public Task<GeneralResponseDto<ReadAllHabitResponse>> GetAspectHabits(ReadAspectHabitsRequest request);
+        public Task<GeneralResponseDto<ReadHabitResponse>> Read(ReadHabitRequest request, string userId);
+        public Task<GeneralResponseDto<ReadAllHabitResponse>> GetAllHabits(string userId);
+        public Task<GeneralResponseDto<ReadAllHabitResponse>> GetAspectHabits(ReadAspectHabitsRequest request, string userId);
         public Task<GeneralResponseDto<ReadAllHabitResponse>> GetDeletedHabits(string userId);
 
+        public Task<GeneralResponseDto<object>> Update(UpdateHabitRequest request, string userId);
 
-        // update Habit
-        public Task<GeneralResponseDto<object>> Update(UpdateHabitRequest request);
+        public Task<GeneralResponseDto<object>> Delete(DeleteHabitRequest request, string userId);
+        public Task<GeneralResponseDto<object>> DeleteForEver(DeleteHabitRequest request, string userId);
 
-
-        // Delete Habit
-        public Task<GeneralResponseDto<object>> Delete(DeleteHabitRequest request);
-        public Task<GeneralResponseDto<object>> DeleteForEver(DeleteHabitRequest request);
-
-
-        //Restore Habit 
-        public Task<GeneralResponseDto<object>> Restore(RestoreHabitRequest request);
-
-
-
-
-
+        public Task<GeneralResponseDto<object>> Restore(RestoreHabitRequest request, string userId);
     }
 }

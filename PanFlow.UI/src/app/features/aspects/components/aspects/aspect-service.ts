@@ -209,7 +209,6 @@ export class AspectService {
         Swal.fire({
           icon: 'success',
           title: this.languageService.t('general.success') || 'Updated',
-          text: response.message,
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },

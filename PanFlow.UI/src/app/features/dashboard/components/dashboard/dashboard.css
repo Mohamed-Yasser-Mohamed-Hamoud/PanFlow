@@ -164,9 +164,10 @@
 
 .card-body {
   flex: 1;
-  overflow-y: auto;
+  display: flex;          /* 🎯 أضفنا هذه */
+  flex-direction: column; /* 🎯 أضفنا هذه */
   padding: 12px 16px;
-  min-height: 0;
+  min-height: 0;          /* 🎯 مهم جداً لكي يعمل الـ scroll بشكل صحيح */
 }
 
 .card-loader {
@@ -232,6 +233,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+
+  overflow-y: auto;   /* 🎯 جعل السكرول خاص بالقائمة فقط */
+  flex: 1;            /* 🎯 تأخذ المساحة المتبقية داخل الكارت */
+  min-height: 0;      /* 🎯 منع التمدد الزائد */
 }
 
 .habitItem {
@@ -430,4 +435,23 @@ html[dir="rtl"] .day-actions { flex-direction: row-reverse; }
 /* انعكاس اتجاه أسهم التاريخ تلقائياً في وضع اللغة العربية */
 html[dir="rtl"] .date-arrow svg {
   transform: scaleX(-1);
+}
+
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--clr-primary-light) 20%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
 }

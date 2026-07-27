@@ -12,6 +12,7 @@
 /* ───────── Card ───────── */
 .card {
   width: min(100%, 700px);
+  max-height: 85vh; /* 🎯 تحديد أقصى ارتفاع للبطاقة لكي لا تخرج عن الشاشة */
   padding: clamp(24px, 3vw, 36px);
   background: var(--clr-bg);
   border: 1px solid var(--clr-border);
@@ -22,6 +23,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow: hidden; /* 🎯 إخفاء أي محتوى زائد خارج حدود الكارت */
 }
 
 /* ───────── Header ───────── */
@@ -30,6 +32,7 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+  flex-shrink: 0; /* 🎯 منع الهيدر من الانكماش */
 }
 
 .eyebrow {
@@ -112,6 +115,7 @@
   border-radius: 6px;
   background: var(--clr-bg-page);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .progress-bar {
@@ -127,16 +131,21 @@
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--clr-primary);
+  flex-shrink: 0;
 }
 
 /* ───────── Habits Checklist ───────── */
 .habitsList {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 4px 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  overflow-y: auto; /* 🎯 ظهور السكرول داخل القائمة فقط عند الحاجة */
+  flex: 1;          /* 🎯 تأخذ المساحة المتبقية داخل الكارت */
+  min-height: 0;    /* 🎯 مهم جداً لعمل الـ Flex Scroll */
 }
 
 .habitItem {
@@ -175,4 +184,22 @@
   text-align: center;
   padding: 1.5rem 1rem;
   color: var(--clr-text-body);
+}
+
+/* ───────── Scrollbar Customization ───────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--clr-primary-light) 20%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
 }

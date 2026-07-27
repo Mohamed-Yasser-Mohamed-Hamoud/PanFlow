@@ -6,16 +6,16 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-dashboard',
-  standalone: true, // تأكد إنها مكتوبة لو مش موجودة
-  imports: [DragDropModule, TranslatePipe, AddTaskModal], // 🎯 شيلنا الـ Profile من هنا لأن الأب خلاص شايفه
+  standalone: true,
+  imports: [DragDropModule, TranslatePipe, AddTaskModal],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
-  // 🎯 شيلنا الـ providers تماماً عشان يورث نفس السيرفيس من الأب (DashboardLayout)
 })
 export class Dashboard implements OnInit {
   public dashboardService = inject(DashboardService);
 
   ngOnInit(): void {
-    this.dashboardService.updateDateDisplay();
+    // 🎯 استبدلنا updateDateDisplay بـ refreshCard لجلب كارت اليوم فقط
+    this.dashboardService.refreshCard();
   }
 }

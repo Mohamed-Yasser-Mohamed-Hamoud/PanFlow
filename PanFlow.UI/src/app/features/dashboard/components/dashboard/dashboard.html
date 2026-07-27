@@ -20,7 +20,7 @@
       </svg>
     </button>
 
-    <p>{{ dashboardService.today }}</p>
+    <p>{{ dashboardService.today() }}</p>
 
     <button class="date-arrow" [attr.aria-label]="'dashboard.nextDay' | translate" (click)="dashboardService.nextDay()">
       <svg
@@ -72,7 +72,7 @@
         </span>
       </button>
 
-      <p>{{ dashboardService.dayName }}</p>
+      <p>{{ dashboardService.dayName() }}</p>
 
       <div class="percent-ring">
         <div class="percent-num">

@@ -26,68 +26,50 @@ namespace PanFlow.API.Features.Habits.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> create([FromBody] CreateHabitRequest request)
         {
-            var result = await _habitService.Create(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.Create(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> deleteForever([FromBody] DeleteHabitRequest request)
         {
-            var result = await _habitService.DeleteForEver(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.DeleteForEver(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
         }
 
         [HttpPut("delete")]
         public async Task<IActionResult> delete([FromBody] DeleteHabitRequest request)
         {
-            var result = await _habitService.Delete(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.Delete(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
         }
 
         [HttpPut("restore")]
-        public async Task<IActionResult> restore([FromBody] RestoreHabitRequest request) 
+        public async Task<IActionResult> restore([FromBody] RestoreHabitRequest request)
         {
-            var result = await _habitService.Restore(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.Restore(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
         }
 
+
         [HttpPut("update")]
-        public async Task<IActionResult> update([FromBody] UpdateHabitRequest request) 
+        public async Task<IActionResult> update([FromBody] UpdateHabitRequest request)
         {
-            var result = await _habitService.Update(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.Update(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
         }
 
         [HttpGet("read")]
-        public async Task<IActionResult> read([FromQuery] ReadHabitRequest request) 
+        public async Task<IActionResult> read([FromQuery] ReadHabitRequest request)
         {
-            var result = await _habitService.Read(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.Read(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
-
         }
 
 
@@ -106,11 +88,8 @@ namespace PanFlow.API.Features.Habits.Controllers
         [HttpGet("aspectHabit")]
         public async Task<IActionResult> aspectHabit([FromQuery] ReadAspectHabitsRequest request)
         {
-            var result = await _habitService.GetAspectHabits(request);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
+            var result = await _habitService.GetAspectHabits(request, CurrentUserId);
+            if (!result.IsSuccess) return BadRequest(result);
             return Ok(result);
         }
 

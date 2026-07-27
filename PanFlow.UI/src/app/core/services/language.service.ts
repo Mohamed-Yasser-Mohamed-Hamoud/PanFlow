@@ -55,6 +55,7 @@ export class LanguageService {
       'habits.viewEyebrow': 'عرض',
       'habits.habitLabel': 'عادة',
       'habits.habit': 'عادة',
+      'habit.updated': 'تم التحديث',
 
       // Days (Details)
       'days.eyebrow': 'يوم',
@@ -109,6 +110,7 @@ export class LanguageService {
 
       // Common / General
       'common.create': 'إنشاء',
+      'common.loading': 'جاري التحميل...',
 
       // Auth
       'auth.email': 'البريد الإلكتروني',
@@ -270,6 +272,8 @@ export class LanguageService {
       'dashboard.dayDeleted': 'Day deleted successfully',
       'dashboard.dayRestored': 'Day restored successfully',
 
+      'dashboard.dayName': 'Today',
+
       // Habits
       'habits.title': 'Habits',
       'habits.create': 'Create Habit',
@@ -296,6 +300,7 @@ export class LanguageService {
       'habits.saveChanges': 'Save Changes',
       'habits.viewEyebrow': 'View',
       'habits.habitLabel': 'Habit',
+      'habit.updated': 'Updated',
 
       // Days (Details)
       'days.eyebrow': 'day',
@@ -350,6 +355,7 @@ export class LanguageService {
 
       // Common / General
       'common.create': 'Create',
+      'common.loading': 'Loading...',
 
       // Auth
       'auth.email': 'Email',
