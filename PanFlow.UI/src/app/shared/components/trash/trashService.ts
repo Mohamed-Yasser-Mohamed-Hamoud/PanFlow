@@ -69,7 +69,6 @@ export class TrashService {
         Swal.fire({
           icon: 'success',
           title: this.languageService.t('general.success'),
-          text: response.message,
           confirmButtonText: this.languageService.t('general.ok'),
         });
       },

@@ -72,6 +72,9 @@ namespace PanFlow.API.Features.Habits.Services
             return GeneralResponseDto<CreateHabitResponse>.Success("Create Successfully", response);
         }
 
+
+
+
         public async Task<GeneralResponseDto<object>> Delete(DeleteHabitRequest request, string userId)
         {
             var habit = await _context.Habits
@@ -83,14 +86,14 @@ namespace PanFlow.API.Features.Habits.Services
                 return GeneralResponseDto<object>.Failure("can't find habit");
             }
 
-            var today = DateOnly.FromDateTime(DateTime.UtcNow);
-            var isUsedToday = await _context.DayHabits
-                .AnyAsync(dh => dh.HabitId == request.HabitId && dh.Day.DayDate == today && !dh.Day.IsDeleted);
+            //var today = DateOnly.FromDateTime(DateTime.UtcNow);
+            //var isUsedToday = await _context.DayHabits
+            //    .AnyAsync(dh => dh.HabitId == request.HabitId && dh.Day.DayDate == today && !dh.Day.IsDeleted);
 
-            if (isUsedToday)
-            {
-                return GeneralResponseDto<object>.Failure("لا يمكن حذف عادة تم إضافتها لليوم الحالي. قم بإزالتها من اليوم أولاً.");
-            }
+            //if (isUsedToday)
+            //{
+            //    return GeneralResponseDto<object>.Failure("لا يمكن حذف عادة تم إضافتها لليوم الحالي. قم بإزالتها من اليوم أولاً.");
+            //}
 
             if (habit.IsDeleted)
             {
@@ -101,6 +104,9 @@ namespace PanFlow.API.Features.Habits.Services
 
             return GeneralResponseDto<object>.Success("deleted habit successfully");
         }
+
+
+
 
         public async Task<GeneralResponseDto<object>> DeleteForEver(DeleteHabitRequest request, string userId)
         {
